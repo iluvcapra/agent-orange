@@ -19,10 +19,10 @@
 lib_path = File.dirname(__FILE__) + "/lib/"
 $: << lib_path
 
-APP_NAME = "qs"
+APP_NAME = "agent-orange"
 APP_AUTHOR = "Jamie Hardt"
-APP_LONG_VERSION = "Version 0.99.2 2006-04-26"
-APP_VERSION = 0.992
+APP_LONG_VERSION = "Version 0.99.3 2006-05-11"
+APP_VERSION = 0.993
 
 
 begin
