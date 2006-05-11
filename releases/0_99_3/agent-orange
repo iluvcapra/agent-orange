@@ -1,0 +1,244 @@
+#!/usr/bin/ruby
+
+# This file is part of "agent-orange".
+# 
+# "agent-orange" is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# "agent-orange" is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with "agent-orange"; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+lib_path = File.dirname(__FILE__) + "/lib/"
+$: << lib_path
+
+APP_NAME = "qs"
+APP_AUTHOR = "Jamie Hardt"
+APP_LONG_VERSION = "Version 0.99.2 2006-04-26"
+APP_VERSION = 0.992
+
+
+begin
+  require 'pdf_qs'
+  require 'pt/session'
+  require 'pt/track'
+  require 'pt/region'
+
+  require 'ostruct'
+  require 'optparse'
+
+  include PT
+rescue
+  $stderr.print "An error occurred while loading qs libraries, \
+    you may have an old version of the ruby interpreter.\n"
+  exit 17001
+end
+PAPER_SIZES = {'LETTER' => 'LETTER',
+               'TABLOID' => [ 0 , 0 , 792 , 1224 ],
+               'LEGAL' => 'LEGAL'}
+
+OptionParser.accept(Range,/(\d+)-(\d+)/) do |r,start,fin|
+  Range.new(start.to_i,fin.to_i)
+end
+
+options = OpenStruct.new( :paper => 'LETTER',
+                          :given_title => nil,
+                          :given_strip_count => nil,
+                          :given_outfile => nil,
+                          :interpret_tags => true,
+                          :verbose_logging => false,
+                          :print_frames => false,
+                          :line_endings => nil ,
+                          :frames => false ,
+                          :info => false,
+                          :blend => 1,
+                          :shading => :all,
+                          :watermark => nil)
+
+opts = OptionParser.new do |opts|
+  
+  opts.banner =  "Usage: qs [OPTIONS] file"
+  opts.separator "A Ruby script for generating cuesheets from text files."
+  opts.separator ""
+  
+  opts.on("-p PAPER" , 
+          "--paper=PAPER" , 
+          "Paper size (TABLOID, LETTER, and LEGAL are supported , default is LETTER)") do |v|
+    options.paper = v if v == 'TABLOID' or v == 'LETTER' or v == 'LEGAL'
+  end
+
+  opts.on("-f" , 
+          "--frames", 
+          "Print times with frames") do |v|
+    options.frames = true
+  end
+  
+  opts.on("-s NUM" , 
+          "--strips=NUM", 
+          "Number of strips per page (default 8 for letter, 16 for tabloid)") do |v|
+    options.given_strip_count = v.to_i
+  end
+  
+  opts.on( "--shade-asterisks", 
+          "Shade regions whose names start with '*'") do |v|
+    options.shading = :asterisks
+  end
+  
+  opts.on( "--shade-nothing", 
+          "Turn of region shading") do |v|
+    options.shading = :none
+  end
+  
+  opts.on( "--cue-font-size=NUM",
+           "Set Cue Font size") do |v|
+    options.cue_font_size = v.to_i         
+  end
+  
+  opts.on("-t TITLE" , 
+          "--title=TITLE" , 
+          "Title to print on top (default is session name)") do |v|
+    options.given_title = v
+  end
+
+  opts.on("-b BLEND" , 
+          "--blend=BLEND" ,
+          Float, 
+          "Blend duration (in seconds; only applies when interpreting tagging)") do |v|
+    options.blend = v.to_f
+  end
+
+  opts.on("-o FILENAME" , 
+          "--outfile=FILENAME" , 
+          "Output file to FILENAME.") do |v|
+    options.given_outfile = v
+  end
+
+  opts.on("-l LINEFEED" , 
+          "--line-endings=LINEFEED" , 
+          "Specify the linefeed (CR, LF, or CRLF; automatic is default).") do |v|
+    case v
+    when 'CR'
+        options.line_endings = "\r"
+    when 'CRLF'
+        options.line_endings = "\r\n"
+    when 'LF'
+        options.line_endings = "\n"
+    end
+  end
+
+  opts.on("-x","--info","Print information about the session and then exit.") do
+        options.info = true
+  end
+
+  opts.on("-i" , "--ignore-tags", 
+          "Ignore 'tagging'") do |v|
+    options.interpret_tags = false
+  end
+
+  opts.on("-h","--help","-?","Show this message") do
+    puts opts
+    exit 1
+  end
+  opts.on("-v" , "--version", 
+          "Show version") do
+    puts "#{APP_NAME} - #{APP_LONG_VERSION}\n"
+    exit
+  end
+  
+#  opts.on("-w IMG_FILE" , "--watermark=IMG_FILE" , 
+#   "Use the IMG_FILE as a centered watermark for the cuesheet.",
+#   "PNG and JPEG files may be used.") do |imgfile|
+#   options.watermark = imgfile     
+#  end
+  
+  opts.separator ""
+  opts.separator "By default, cuesheet outputs PDFs to the current working"
+  opts.separator "directory, with file names matching the session names in put."
+end
+
+##$stderr.print "Starting cuesheet\n"
+begin
+  rest = opts.parse!($*)
+rescue
+  puts opts 
+  exit 1
+end
+
+files = rest
+
+options.strip_count = if options.given_strip_count then
+                        options.given_strip_count
+                      else
+                        case options.paper
+                         when 'LETTER'; 8
+                         when 'TABLOID'; 16
+                         when 'LEGAL'; 12
+                        end
+                      end
+
+##$stderr.print "Paper type: #{options.paper}\n"
+##$stderr.print "Strips per page: #{options.strip_count}\n"
+##$stderr.print "File : #{file}\n"
+files.each do |file|
+  the_session = Session.new
+
+  if file == nil then
+    $stderr.print "No file was specified for input.\n"
+    puts opts
+    exit 1
+  end
+
+  begin
+    File.open(file,"rb") do |f|
+      the_session.read_file(f,options.line_endings)
+    end
+  rescue SystemCallError
+    $stderr.print "An error ocurred opening the file : " + $! + "\n"
+    exit 1
+  end
+  
+  if options.info then
+    puts   "--------------------------------------------------"
+    puts   "Session Name         : #{the_session.title}"
+    puts   "Base Unit            : #{the_session.time_format == :tc ? 'TC Second' : '35mm Foot' }"
+    puts   "Frames Per Base Unit : #{the_session.fps}"
+    puts   "Number of Tracks     : #{the_session.tracks.size}"
+  else
+    
+    #test options.watermark for readability
+    the_session.watermark = options.watermark if (options.watermark) && (File.readable? options.watermark)
+    the_session.cue_font_size = options.cue_font_size if options.cue_font_size
+    the_session.blend = options.blend
+    the_session.title = options.given_title if options.given_title
+    the_session.interpret_tagging! if options.interpret_tags
+    the_session.reframe! unless options.frames
+    the_session.shading = options.shading # the order these are called on the_session is important for various reasons
+    
+    if options.given_outfile == nil then
+      file_to_open = Dir.getwd + "/" + the_session.title
+    else
+      file_to_open = options.given_outfile
+    end
+
+    begin
+      file_to_open = file_to_open + ".pdf" if file_to_open[-4,4] != ".pdf"
+      File.open(file_to_open,"w") do |outfile|
+        pdf = pdf_for_session(the_session , PAPER_SIZES[options.paper], options.strip_count)
+        outfile.write pdf.render
+      end
+    rescue SystemCallError
+      $stderr.print "An error occurred writing to the file " + 
+        " '#{options.given_outfile}' : "+ $! +"\n"
+      exit 1
+    end
+  end
+end
+  #$stderr.print "Finished running\n"
+  exit 0
