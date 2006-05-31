@@ -14,6 +14,8 @@
 # along with "agent-orange"; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
+require 'pt/region'
+
 module PT
   class Track
 
@@ -79,7 +81,7 @@ module PT
       @regions = []
       blend_duration = @session.blend * 600
       last_o = 0 - blend_duration - 1
-    
+	  
       my_regions.each do |region |
         if region.start - last_o > blend_duration then
           sequences << []

@@ -15,6 +15,8 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 require 'csv'
+require 'pt/track'
+
 module PT
   class Session
     
@@ -28,6 +30,8 @@ module PT
     attr_accessor :cue_font_size
     attr_accessor :proportional
     attr_accessor :watermark
+    attr_accessor :interprets_tagging
+    attr_accessor :min_closed_cue_length
     
     def initialize
       @title = "New Session"
@@ -40,6 +44,7 @@ module PT
       @cue_font_size = 10
       @proportional = true
       @watermark = nil
+      @min_closed_cue_length = 600
     end
     
     def reframe!
@@ -48,6 +53,7 @@ module PT
     end
     
     def interpret_tagging!
+      @interprets_tagging = true
       @tracks.each {|t| t.interpret_tagging! }
     end
 

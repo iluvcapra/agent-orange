@@ -14,6 +14,9 @@
 # along with "agent-orange"; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
+require 'pt/track'
+require 'pt/session'
+
 module PT
   class Region
 
@@ -98,10 +101,14 @@ module PT
       ! @track.session.print_frames
     end
 
+    def draw_open?
+      @session.interprets_tagging && @finish - @start < @session.min_closed_cue_length
+    end
+
     def session
       @track.session
     end
-
+	
    private
 
     def divs_per_second

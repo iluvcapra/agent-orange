@@ -22,15 +22,13 @@ $: << lib_path
 
 APP_NAME = "agent-orange"
 APP_AUTHOR = "Jamie Hardt"
-APP_LONG_VERSION = "Version 0.99.3 2006-05-11"
-APP_VERSION = 0.993
+APP_LONG_VERSION = "Version 0.99.4 2006-05-31"
+APP_VERSION = 0.994
 
 
 begin
   require 'pdf_qs'
   require 'pt/session'
-  require 'pt/track'
-  require 'pt/region'
 
   require 'ostruct'
   require 'optparse'
