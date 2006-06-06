@@ -57,6 +57,10 @@ module PT
       @tracks.each {|t| t.interpret_tagging! }
     end
 
+    def apply_open_cues! 
+      
+    end
+
     def add_track(name)
       t = Track.new(self)
       name != "" ? t.name = name : t.name = "A" + @tracks.size.succ.to_s
@@ -93,12 +97,9 @@ module PT
           #$stderr.print "Reading name as #{row[1]}\n"
         when 'TIME CODE FORMAT:'
           @fps =  case row[1]
-                    when /29|30/
-                      @fps = 30
-                    when /25/
-                      @fps = 25
-                    when /24|23/
-                      @fps = 24
+                    when /29|30/  ; 30
+                    when /25/     ; 25
+                    when /24|23/  ; 24
                   end
           #$stderr.print "Reading frame count as #{@fps}\n"        
         when 'TRACK NAME:'

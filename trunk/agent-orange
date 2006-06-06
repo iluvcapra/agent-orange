@@ -30,6 +30,7 @@ begin
   require 'pdf_qs'
   require 'pt/session'
 
+  require 'pathname'
   require 'ostruct'
   require 'optparse'
 
@@ -221,7 +222,7 @@ files.each do |file|
     the_session.shading = options.shading # the order these are called on the_session is important for various reasons
     
     if options.given_outfile == nil then
-      file_to_open = Dir.getwd + "/" + the_session.title
+      file_to_open = Dir.getwd + "/" + Pathname.new(file).basename(".txt") + ".pdf"
     else
       file_to_open = options.given_outfile
     end
