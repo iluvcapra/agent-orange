@@ -20,8 +20,8 @@ require 'pt/session'
 module PT
   class Region
 
-    attr_reader :track 
-    attr_reader :start , :finish
+    attr_reader :track , :region_name
+    attr_reader :start , :finish 
     attr_accessor :line_break
     
     def initialize(track)
@@ -65,12 +65,17 @@ module PT
     end
     
     def reframe!
-      modulus = session.time_format == :footage ? divs_per_foot : divs_per_second
-      self.start = @start - @start % modulus
-      self.finish = @finish - (@finish % modulus) + modulus \
-      	unless @finish % modulus == 0
+      if @start != @finish then 
+        modulus = session.time_format == :footage ? divs_per_foot : divs_per_second
+        self.start = @start - @start % modulus
+        self.finish = @finish - (@finish % modulus) + modulus unless @finish % modulus == 0
+      end #if
     end
-
+    
+    def print_open?
+      duration < session.min_closed_cue_length
+    end
+    
     def start=(i)
       @start = i
       @track.impose! self
@@ -95,6 +100,10 @@ module PT
 
     def finish_time
       tc_to_str(@finish)    
+    end
+    
+    def duration
+      @finish - @start
     end
     
     def feet_only

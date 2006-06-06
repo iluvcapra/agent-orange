@@ -57,10 +57,6 @@ module PT
       @tracks.each {|t| t.interpret_tagging! }
     end
 
-    def apply_open_cues! 
-      
-    end
-
     def add_track(name)
       t = Track.new(self)
       name != "" ? t.name = name : t.name = "A" + @tracks.size.succ.to_s

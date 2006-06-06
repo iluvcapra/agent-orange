@@ -67,14 +67,15 @@ module PT
         region.finish > imposing_region.finish
       end
       trim_head.start = imposing_region.finish if trim_head
-      
     end
-    
+
     def interpret_tagging!
       legal_tags = [ "]" , "[" , "[[" , "]]" ,
                      "}" , "{" , "{{" , "}}" ,
                      ">" , "<" , "<<" , ">>" ,
                      "&" , "!" , "!!" ]
+      
+      open_tags = ["[" , "<" , "{"]
       
       sequences = []
       my_regions = @regions.dup
@@ -82,12 +83,13 @@ module PT
       blend_duration = @session.blend * 600
       last_o = 0 - blend_duration - 1
 	  
-      my_regions.each do |region |
+      my_regions.each do |region|
+        
         if region.start - last_o > blend_duration then
           sequences << []
         end
         last_o = region.finish
-        (sequences.last).last.finish = region.start if sequences.last.last
+          (sequences.last).last.finish = region.start if sequences.last.last
         sequences.last << region
       end
       
@@ -100,19 +102,21 @@ module PT
           new_region = nil 
         end
         
-        one_tagged = seq.inject(false) do |memo,region|
+        tags_count = seq.inject(0) do |memo,region|
           clean_name , tag = scan_region_name(region)
-          legal_tags.include? tag or memo
+          (legal_tags.include? tag ) ? memo + 1 :  memo
         end
         
         seq.each do |region|
           clean_name , tag = scan_region_name(region)
+
           if legal_tags.include? tag then
             curly_start = (stick_open ? region.start : seq_start)
+
             case tag
               when "]" , "["
                 new_region = add_primative_region(clean_name , region.start , region.finish)
-               
+                
               when "]]" , "[["
                 stick_open = true
                 new_region = add_primative_region(clean_name , region.start , region.finish)
@@ -153,7 +157,7 @@ module PT
             end
             seq_start = region.finish
           else
-            if one_tagged then
+            if tags_count > 0 then
               if new_region then
                 new_region.finish = region.finish
                 seq_start = region.finish
@@ -168,12 +172,16 @@ module PT
               end
             end
           end
-        end
-      end # sequences.each       
+        end #seq.each |region|
+      end # sequences.each
+      
+      @regions.each do |region|
+        region.finish = region.start if region.duration < @session.min_closed_cue_length
+      end
+          
     end
 
     def scan_region_name(region)
-#       md = /(.*)(-\]|-\[|-\}|-\{|-<|->|-\]\]|-\[\[|-\}\}|-\{\{|-<<|->>|-&|-!|-!!)$/.match(region.name)
         md = /(.*)-([^-]*)$/.match(region.name)
         return md[1] , md[2] if md
         return region.name , nil
