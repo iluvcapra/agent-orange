@@ -328,8 +328,14 @@ def pdf_for_session(s_obj , paper, strips_per_page)
         #strip header
         y = grid_top - 2 - strip_header_font_size
         size = strip_header_font_size
-        strip_header = strip.name
-        rest = p.add_text_wrap(strip_x+ 3,y,strip_width- 6,strip_header  ,size,:center )
+        if i = strip.name.index("^") then
+        	strip_header = strip.name[0,i]
+        	rest = strip.name[i+1,strip.name.size - i]
+        else
+        	strip_header = strip.name
+        end
+        extra = p.add_text_wrap(strip_x+ 3,y,strip_width- 6,strip_header  ,size,:center )
+        rest = extra if extra != ""
         y = y - (strip_header_font_size + 2)
         p.add_text_wrap(strip_x,y,strip_width,rest,size,:center ) if rest
         
