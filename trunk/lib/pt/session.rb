@@ -27,11 +27,6 @@ module PT
     attr_accessor :time_format
     attr_accessor :blend
     attr_accessor :shading
-    attr_accessor :cue_font_size
-    attr_accessor :proportional
-    attr_accessor :watermark
-    attr_accessor :interprets_tagging
-    attr_accessor :min_closed_cue_length
     
     def initialize
       @title = "New Session"
@@ -40,11 +35,7 @@ module PT
       @fps = 24
       @time_format = :footage
       @blend = 1.0
-      @shading = :all # :none | :asterisks | :all
-      @cue_font_size = 10
-      @proportional = true
-      @watermark = nil
-      @min_closed_cue_length = 600
+      init_for_printing
     end
     
     def reframe!
@@ -86,37 +77,53 @@ module PT
       end
       
       io.each(my_line_ending) do |line|
-      row = parse[line]
-      case row[0]
-        when 'SESSION NAME:'
-          self.title = row[1]
-          #$stderr.print "Reading name as #{row[1]}\n"
-        when 'TIME CODE FORMAT:'
-          @fps =  case row[1]
-                    when /29|30/  ; 30
-                    when /25/     ; 25
-                    when /24|23/  ; 24
-                  end
-          #$stderr.print "Reading frame count as #{@fps}\n"        
-        when 'TRACK NAME:'
-          curr_tr = add_track(row[1])
-          #$stderr.print "Reading track named #{row[1]}\n"        
-        when 'CHANNEL'
-          reading = true if curr_tr && row[1] == 'EVENT' 
-          #$stderr.print "Channel detected for #{curr_tr.name}\n"
-        when '1'
-          if reading then
-            name = row[2].strip
-            name = "(blank)" unless name
-            r = curr_tr.add_region(name, row[3], row[4])
-            #$stderr.print "- Reading region #{name} at #{row[3]} - #{r.start_time}\n"
-          end
-        when nil
-          curr_str , reading = nil , false
-        end
-      end
-    end
+        row = parse[line]
+        case row[0]
+          when 'SESSION NAME:'
+            self.title = row[1]
+            #$stderr.print "Reading name as #{row[1]}\n"
+          when 'TIME CODE FORMAT:'
+            @fps =  case row[1]
+                      when /29|30/  ; 30
+                      when /25/     ; 25
+                      when /24|23/  ; 24
+                    end
+            #$stderr.print "Reading frame count as #{@fps}\n"        
+          when 'TRACK NAME:'
+            curr_tr = add_track(row[1])
+            #$stderr.print "Reading track named #{row[1]}\n"        
+          when 'CHANNEL'
+            reading = true if curr_tr && row[1] == 'EVENT' 
+            #$stderr.print "Channel detected for #{curr_tr.name}\n"
+          when '1'
+            if reading then
+              name = row[2].strip
+              name = "(blank)" unless name
+              r = curr_tr.add_region(name, row[3], row[4])
+              #$stderr.print "- Reading region #{name} at #{row[3]} - #{r.start_time}\n"
+            end
+          when nil
+            curr_str , reading = nil , false
+        end #case
+      end #each
+    end #def
+  end
   
+  class Session #print-related stuff
+    attr_accessor :cue_font_size
+    attr_accessor :proportional
+    attr_accessor :watermark
+    attr_accessor :interprets_tagging
+    attr_accessor :min_closed_cue_length
+    
+    def init_for_printing
+      @shading = :all # :none | :asterisks | :all
+      @cue_font_size = 10
+      @proportional = true
+      @watermark = nil
+      @min_closed_cue_length = 600
+    end
+    
     def display_tracks
       @tracks
     end
@@ -145,5 +152,8 @@ module PT
     def strips_per_page
       16
     end
-  end
+    
+  end #class
+  
+  
 end #Module
