@@ -72,10 +72,6 @@ module PT
       end #if
     end
     
-    def print_open?
-      duration < session.min_closed_cue_length
-    end
-    
     def start=(i)
       @start = i
       @track.impose! self
@@ -108,10 +104,6 @@ module PT
     
     def feet_only
       ! @track.session.print_frames
-    end
-
-    def draw_open?
-      @session.interprets_tagging && @finish - @start < @session.min_closed_cue_length
     end
 
     def session

@@ -230,7 +230,11 @@ files.each do |file|
     begin
       file_to_open = file_to_open + ".pdf" if file_to_open[-4,4] != ".pdf"
       File.open(file_to_open,"w") do |outfile|
-        pdf = pdf_for_session(the_session , PAPER_SIZES[options.paper], options.strip_count)
+        cuesheet = Cuesheet.new(the_session) do |q|
+          q.paper = PAPER_SIZES[options.paper]
+          q.strips_per_page = options.strip_count
+        end
+        pdf = cuesheet.to_pdf
         outfile.write pdf.render
       end
     rescue SystemCallError

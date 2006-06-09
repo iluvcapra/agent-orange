@@ -14,7 +14,6 @@
 # along with "agent-orange"; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-require 'csv'
 require 'pt/track'
 
 module PT
@@ -26,7 +25,6 @@ module PT
     attr_reader :fps
     attr_accessor :time_format
     attr_accessor :blend
-    attr_accessor :shading
     
     def initialize
       @title = "New Session"
@@ -107,53 +105,5 @@ module PT
         end #case
       end #each
     end #def
-  end
-  
-  class Session #print-related stuff
-    attr_accessor :cue_font_size
-    attr_accessor :proportional
-    attr_accessor :watermark
-    attr_accessor :interprets_tagging
-    attr_accessor :min_closed_cue_length
-    
-    def init_for_printing
-      @shading = :all # :none | :asterisks | :all
-      @cue_font_size = 10
-      @proportional = true
-      @watermark = nil
-      @min_closed_cue_length = 600
-    end
-    
-    def display_tracks
-      @tracks
-    end
-
-    def display_regions
-      display_tracks.inject([]) {|all , track| all + track.regions}
-    end
-
-    def time_font_size
-      13
-    end
-
-    def finish_time_font_size
-      @cue_font_size
-    end
-  
-    def paper_format
-      #'LETTER' 
-      [ 0 , 0 , 792 , 1224 ] #tabloid
-    end
-  
-    def paper_orientation
-      :landscape
-    end
-  
-    def strips_per_page
-      16
-    end
-    
-  end #class
-  
-  
+  end #class Session
 end #Module

@@ -175,10 +175,6 @@ module PT
         end #seq.each |region|
       end # sequences.each
       
-      @regions.each do |region|
-        region.finish = region.start if region.duration < @session.min_closed_cue_length
-      end
-          
     end
 
     def scan_region_name(region)
