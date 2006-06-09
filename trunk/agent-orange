@@ -1,5 +1,7 @@
-#!/usr/bin/ruby
+#!/usr/local/bin/ruby
 
+# agent-orange
+# Author: Jamie Hardt
 
 # This file is part of "agent-orange".
 # 
@@ -27,6 +29,7 @@ APP_VERSION = 0.994
 
 
 begin
+  require 'rubygems'
   require 'pdf_qs'
   require 'pt/session'
 
@@ -36,7 +39,7 @@ begin
 
   include PT
 rescue
-  $stderr.print "An error occurred while loading qs libraries, \
+  $stderr.print "An error occurred while loading agent-orange libraries, \
     you may have an old version of the ruby interpreter.\n"
   exit 17001
 end

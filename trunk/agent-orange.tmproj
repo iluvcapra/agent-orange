@@ -40,14 +40,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>32</integer>
+				<integer>55</integer>
 				<key>line</key>
-				<integer>59</integer>
+				<integer>56</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>84</integer>
+			<integer>39</integer>
 		</dict>
 		<key>lib/pt/region.rb</key>
 		<dict>
@@ -103,6 +103,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{232, 72}, {943, 760}}</string>
+	<string>{{239, 192}, {943, 760}}</string>
 </dict>
 </plist>
