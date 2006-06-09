@@ -1,6 +1,6 @@
 #!/usr/local/bin/ruby
 
-# ao-cuecleaner
+# ao-qc : The Agent-Orange Cue-Cleaner
 # Author: Jamie Hardt
 
 # This file is part of "agent-orange".
@@ -24,13 +24,12 @@ $: << lib_path
 
 APP_NAME = "ao-qc"
 APP_AUTHOR = "Jamie Hardt"
-APP_LONG_VERSION = "Version 0.99.4 2006-05-31"
-APP_VERSION = 0.994
+APP_LONG_VERSION = "Version 0.1 2006-06-09"
+APP_VERSION = 0.1
 
 
 begin
   require 'rubygems'
-  require 'pdf_qs'
   require 'pt/session'
 
   require 'pathname'
@@ -43,3 +42,5 @@ rescue
     you may have an old version of the ruby interpreter.\n"
   exit 17001
 end
+
+
