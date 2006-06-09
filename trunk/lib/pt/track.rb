@@ -18,6 +18,36 @@ require 'pt/region'
 
 module PT
   class Track
+    
+    class RegionSequence < Array; end
+    
+    class Blender
+      attr_accessor :blend_druation
+      attr_accessor :interpret_tags
+      attr_reader :regions
+      
+      def initialize(region_array)
+        @regions = region_array.dup
+        if block_given? then
+          yield self
+        end
+      end
+      
+      def blend!
+        @regions.each do |region|
+          ## FIXME
+        end
+        
+        @regions
+      end
+      
+    private
+      def blend(a,b)
+        first , second = *([a,b].sort)
+        ##FIXME
+      end
+    end
+
 
     attr_reader :session
     attr_reader :regions
@@ -69,6 +99,23 @@ module PT
       trim_head.start = imposing_region.finish if trim_head
     end
 
+    def blend!(duration = nil, interpret_tags = true)
+      blend_duration = duration || @session.blend * 600
+
+      my_regions = @regions.dup
+      @regions = []     
+
+      my_regions.each do |region|
+        if my_regions.last && \
+          Region.blend(my_regions.last,region,interpret_tags,blend_duration) then
+        end
+        my_regions << region
+      end #do
+      
+      @regions = my_regions
+      
+    end #def
+
     def interpret_tagging!
       legal_tags = [ "]" , "[" , "[[" , "]]" ,
                      "}" , "{" , "{{" , "}}" ,
@@ -77,22 +124,11 @@ module PT
       
       open_tags = ["[" , "<" , "{"]
       
-      sequences = []
-      my_regions = @regions.dup
-      @regions = []
-      blend_duration = @session.blend * 600
-      last_o = 0 - blend_duration - 1
-	  
-      my_regions.each do |region|
-        
-        if region.start - last_o > blend_duration then
-          sequences << []
-        end
-        last_o = region.finish
-          (sequences.last).last.finish = region.start if sequences.last.last
-        sequences.last << region
-      end
+      blend! nil , true
       
+      sequences = []
+      
+       ##FIXME!
       stick_open = false 
       new_region = nil
       

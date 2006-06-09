@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>lib/pdf_qs.rb</string>
+	<string>lib/pt/track.rb</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -26,83 +26,113 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>30</integer>
+				<integer>33</integer>
 				<key>line</key>
-				<integer>234</integer>
+				<integer>218</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>204</integer>
+			<integer>208</integer>
+		</dict>
+		<key>ao-qc</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>59</integer>
+				<key>line</key>
+				<integer>46</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>55</integer>
 		</dict>
 		<key>lib/pdf_qs.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>55</integer>
+				<integer>6</integer>
 				<key>line</key>
-				<integer>56</integer>
+				<integer>53</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>39</integer>
+			<integer>17</integer>
 		</dict>
 		<key>lib/pt/region.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>31</integer>
+				<integer>4</integer>
 				<key>line</key>
-				<integer>67</integer>
+				<integer>25</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>45</integer>
+			<integer>18</integer>
 		</dict>
 		<key>lib/pt/session.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>24</integer>
+				<integer>33</integer>
 				<key>line</key>
-				<integer>26</integer>
+				<integer>136</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>70</integer>
+			<integer>18</integer>
 		</dict>
 		<key>lib/pt/track.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>47</integer>
+				<integer>15</integer>
 				<key>line</key>
-				<integer>180</integer>
+				<integer>130</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>84</integer>
+			<integer>110</integer>
+		</dict>
+		<key>tests/tagging_tests</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
 		<string>agent-orange</string>
 		<string>lib/pdf_qs.rb</string>
-		<string>lib/pt/region.rb</string>
+		<string>ao-qc</string>
 		<string>lib/pt/session.rb</string>
+		<string>tests/tagging_tests</string>
 		<string>lib/pt/track.rb</string>
+		<string>lib/pt/region.rb</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{239, 192}, {943, 760}}</string>
+	<string>{{-1016, 190}, {943, 760}}</string>
 </dict>
 </plist>
