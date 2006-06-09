@@ -28,12 +28,25 @@ module PT
     
     def initialize
       @title = "New Session"
+      @sample_rate , @bit_depth = 48000 , 16
+      @time_code_format = "30 Frame"
       @tracks = []
       @print_frames = true
-      @fps = 24
       @time_format = :footage
+      @audio_file_count = 0
       @blend = 1.0
-      init_for_printing
+    end
+    
+    def audio_regions
+      @tracks.inject([]) { |memo,trk| trk.regions + memo }
+    end
+    
+    def fps
+      case @time_code_format
+        when /29|30/  ; 30
+        when /25/     ; 25
+        when /24|23/  ; 24
+      end
     end
     
     def reframe!
@@ -79,31 +92,57 @@ module PT
         case row[0]
           when 'SESSION NAME:'
             self.title = row[1]
-            #$stderr.print "Reading name as #{row[1]}\n"
           when 'TIME CODE FORMAT:'
-            @fps =  case row[1]
-                      when /29|30/  ; 30
-                      when /25/     ; 25
-                      when /24|23/  ; 24
-                    end
-            #$stderr.print "Reading frame count as #{@fps}\n"        
+            @time_code_format = row[1]    
+          when 'SAMPLE RATE:'
+            @sample_rate = row[1].to_f
+          when 'BIT DEPTH:'
+            @bit_depth = row[1][0..1].to_i
+          when '# OF AUDIO FILES:'
+            @audio_file_count = row[1].to_i
           when 'TRACK NAME:'
             curr_tr = add_track(row[1])
-            #$stderr.print "Reading track named #{row[1]}\n"        
           when 'CHANNEL'
             reading = true if curr_tr && row[1] == 'EVENT' 
-            #$stderr.print "Channel detected for #{curr_tr.name}\n"
           when '1'
             if reading then
               name = row[2].strip
               name = "(blank)" unless name
               r = curr_tr.add_region(name, row[3], row[4])
-              #$stderr.print "- Reading region #{name} at #{row[3]} - #{r.start_time}\n"
             end
           when nil
             curr_str , reading = nil , false
         end #case
       end #each
     end #def
+    
+    def to_text_export(line_ending = "\n")
+      output = ""
+      output << ["SESSION NAME:", @title ].join(9.chr) << line_ending
+      output << ["SAMPLE RATE:" , "%.6f" % @sample_rate   ].join(9.chr) << line_ending
+      output << ["BIT DEPTH:", "%i-bit" % @bit_depth.to_i ].join(9.chr) << line_ending
+      output << ["TIME CODE FORMAT:",@time_code_format    ].join(9.chr) << line_ending
+      output << ["# OF AUDIO TRACKS:",@tracks.size].join(9.chr) << line_ending
+      output << ["# OF AUDIO REGIONS:",audio_regions.size ].join(9.chr) << line_ending
+      output << ["# OF AUDIO FILES:", @audio_file_count].join(9.chr) << line_ending
+      output << line_ending << line_ending
+      
+      if @tracks then
+        output << "T R A C K  L I S T I N G" << line_ending
+        @tracks.each do |track|
+          output << ["TRACK NAME:" , track.name ].join(9.chr) << line_ending
+          output << ["USER DELAY:" , "0 Samples" ].join(9.chr) << line_ending        
+          output << ["CHANNEL","EVENT","REGION NAME","START TIME","END TIME","DURATION" ].join(9.chr) << line_ending 
+          track.regions.each_with_index do |region,i|
+            output << ["1","#{i+1}",region.name,region.start_time,region.finish_time,region.duration_time].join(9.chr)
+            output << line_ending
+          end
+          output << line_ending << line_ending
+        end
+      end #if
+      
+      output
+    end
+    
   end #class Session
 end #Module

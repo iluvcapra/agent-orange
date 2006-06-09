@@ -22,7 +22,7 @@ module PT
     attr_accessor :proportional
     attr_accessor :watermark
     attr_accessor :shading
-  
+    
     def init_for_printing
       @shading = :all # :none | :asterisks | :all
       @cue_font_size = 10

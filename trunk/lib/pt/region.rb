@@ -40,11 +40,7 @@ module PT
     end
     
     def name
-      if session.shading == :asterisks then
-        @region_name[0,1] == "*" ? @region_name[1,256] : @region_name
-      else
-        @region_name
-      end
+      @region_name
     end
     
     def shade?
@@ -100,6 +96,10 @@ module PT
     
     def duration
       @finish - @start
+    end
+    
+    def duration_time
+      tc_to_str(duration)
     end
     
     def feet_only

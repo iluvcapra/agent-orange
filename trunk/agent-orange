@@ -216,6 +216,7 @@ files.each do |file|
   else
     
     #test options.watermark for readability
+    the_session.init_for_printing
     the_session.watermark = options.watermark if (options.watermark) && (File.readable? options.watermark)
     the_session.cue_font_size = options.cue_font_size if options.cue_font_size
     the_session.blend = options.blend

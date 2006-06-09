@@ -43,4 +43,60 @@ rescue
   exit 17001
 end
 
+cli_options = OpenStruct.new(:blend_duration => 1.0,
+                             :min_closed_cue_length => 1.0,
+                             :interpret_tagging => true )
 
+opts = OptionParser.new do |opts|
+  
+  opts.banner =  "Usage: ao-qc [OPTIONS] file"
+  opts.separator "The Agent-Orange Cue-Cleaner, a script for pre-processing"
+  opts.separator "text files formatted for cuesheeting."
+  opts.separator ""
+  
+  opts.on("-b SECONDS","--blend-duration=SECONDS",Float,"Blend regions which occur",
+                                                       "within this duration.") do |v|
+    cli_options.blend_duration = v
+  end
+                                                         
+  opts.on("-m SECONDS","--min-closed-cue-length=SECONDS", Float,"Minimum closed cue length.") do |v|
+    cli_options.min_closed_cue_length = v
+  end
+
+  opts.on("-i","--ignore-tagging", "Ignore tagging.") do
+    cli_options.interpret_tagging = false
+  end
+
+
+  opts.on_tail("-h","--help","Show this message.") do
+    puts opts
+    exit 0
+  end                                                    
+end #OptionParser
+
+##$stderr.print "Starting cuesheet\n"
+begin
+  rest = opts.parse!($*)
+rescue
+  puts opts 
+  exit 1
+end
+
+rest.each do |path|
+
+  a_session = Session.new
+
+  begin
+    File.open(path,"r") do |file|
+      a_session.read_file(file)
+      
+      a_session.interpret_tagging! if cli_options.interpret_tagging
+      
+      puts a_session.to_text_export
+
+    end #File.open
+  rescue SystemCallError
+      $stderr.print "An error ocurred opening the file : " + $! + "\n"
+      exit 4
+  end
+end
