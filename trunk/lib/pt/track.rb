@@ -22,30 +22,61 @@ module PT
     class RegionSequence < Array; end
     
     class Blender
-      attr_accessor :blend_druation
+      attr_accessor :blend_duration
       attr_accessor :interpret_tags
       attr_reader :regions
       
+      BLEND_TAGS = ["]]",">>","}}"]
+      
       def initialize(region_array)
-        @regions = region_array.dup
+        @regions = region_array
         if block_given? then
           yield self
         end
       end
       
       def blend!
-        @regions.each do |region|
-          ## FIXME
+        @blend_duration_memo = nil
+        @blend_tag_active = false
+        (@regions.size - 1).times do |i|
+          first , second = @regions[i] , @regions[i.succ]
+          first.finish = second.start if should_blend?(first,second)
+          read_tags(first,second) if @interpret_tags
         end
-        
         @regions
       end
       
     private
-      def blend(a,b)
-        first , second = *([a,b].sort)
-        ##FIXME
+      
+      def should_blend?(first,second)
+        if @interpret_tags then
+          closeness_forces_blend?(first,second) or tag_forces_blend?(first,second)
+        else
+          closeness_forces_blend?(first,second)
+        end
       end
+      
+      def closeness_forces_blend?(first,second)
+        second.start - first.finish < @blend_duration
+      end
+      
+      def tag_forces_blend?(first,second)
+          @blend_tag_active = true if BLEND_TAGS.include?(first.tag)
+          @blend_tag_active
+      end
+      
+      def read_tags(first,second)
+        if first.tag && first.tag == "!" then
+          @blend_tag_active = false 
+          @blend_duration_memo = @blend_duration
+          @blend_duration = 0
+        elsif first.finish < second.start && @blend_duration_memo then
+          @blend_duration = @blend_duration_memo
+          @blend_duration_memo = nil
+        end
+        @blend_tag_active = false if second.tag && second.tag == "!!"
+      end
+      
     end
 
 
@@ -68,7 +99,7 @@ module PT
       r
     end
     
-    def add_primative_region(name,start,finish)
+    def add_primitive_region(name,start,finish)
       r = Region.new(self)
       r.name, r.start, r.finish = name , start , finish
       @regions << r
@@ -80,6 +111,7 @@ module PT
     end
 
     def impose!(imposing_region)
+      
       overwritten = @regions.delete_if do |region|
         region.start >= imposing_region.start && \
         region.finish <= imposing_region.finish && \
@@ -88,31 +120,27 @@ module PT
       
       trim_tail = @regions.find do |region|
         region.finish > imposing_region.start && \
-        region.start < imposing_region.start
+        region.start < imposing_region.start && \
+        region.finish < imposing_region.finish
       end
       trim_tail.finish = imposing_region.start if trim_tail
       
       trim_head = @regions.find do |region|
         region.start < imposing_region.finish && \
-        region.finish > imposing_region.finish
+        region.finish > imposing_region.finish && \
+        region.start > imposing_region.start
       end
       trim_head.start = imposing_region.finish if trim_head
     end
 
     def blend!(duration = nil, interpret_tags = true)
-      blend_duration = duration || @session.blend * 600
 
-      my_regions = @regions.dup
-      @regions = []     
-
-      my_regions.each do |region|
-        if my_regions.last && \
-          Region.blend(my_regions.last,region,interpret_tags,blend_duration) then
-        end
-        my_regions << region
-      end #do
+      b = Blender.new(@regions) do |blender|
+        blender.blend_duration = duration || @session.blend * Region.divs_per_second
+        blender.interpret_tags = interpret_tags
+      end
       
-      @regions = my_regions
+      b.blend!
       
     end #def
 
@@ -151,33 +179,33 @@ module PT
 
             case tag
               when "]" , "["
-                new_region = add_primative_region(clean_name , region.start , region.finish)
+                new_region = add_primitive_region(clean_name , region.start , region.finish)
                 
               when "]]" , "[["
                 stick_open = true
-                new_region = add_primative_region(clean_name , region.start , region.finish)
+                new_region = add_primitive_region(clean_name , region.start , region.finish)
                 
               when "}" , "{"
-                new_region = add_primative_region(clean_name , curly_start ,region.finish)
+                new_region = add_primitive_region(clean_name , curly_start ,region.finish)
                  
               when "}}" , "}}"
                 stick_open = true
-                new_region = add_primative_region(clean_name , curly_start ,region.finish)                
+                new_region = add_primitive_region(clean_name , curly_start ,region.finish)                
               when ">" , "<"
-                add_primative_region("Fill" , seq_start , region.start) unless new_region
-                new_region = add_primative_region(clean_name , region.start , region.finish)
+                add_primitive_region("Fill" , seq_start , region.start) unless new_region
+                new_region = add_primitive_region(clean_name , region.start , region.finish)
                 
               when ">>" , "<<"
                 stick_open = true
-                add_primative_region("Fill" , seq_start , region.start) unless new_region
-                new_region = add_primative_region(clean_name , region.start , region.finish)
+                add_primitive_region("Fill" , seq_start , region.start) unless new_region
+                new_region = add_primitive_region(clean_name , region.start , region.finish)
                                 
               when "&"
                 if new_region then
                   new_region.name = (new_region.name + " " + clean_name)
                   new_region.finish = region.finish
                 else
-                  new_region = add_primative_region(clean_name , curly_start ,region.finish)                 
+                  new_region = add_primitive_region(clean_name , curly_start ,region.finish)                 
                 end
               when "!"
                 if stick_open then
@@ -204,7 +232,7 @@ module PT
               if new_region then
                 new_region.finish = region.finish
               else
-                new_region = add_primative_region(clean_name,region.start,region.finish)
+                new_region = add_primitive_region(clean_name,region.start,region.finish)
               end
             end
           end
