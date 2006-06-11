@@ -22,6 +22,7 @@ module PT
     attr_accessor :title
     attr_reader :tracks
     attr_accessor :print_frames
+    attr_accessor :time_code_format
     attr_reader :fps
     attr_accessor :time_format
     attr_accessor :blend

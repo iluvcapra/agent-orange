@@ -1,18 +1,46 @@
+# blend_test.rb
+# Author:: Jamie Hardt
+
+# This file is part of "agent-orange".
+# 
+# "agent-orange" is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# "agent-orange" is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with "agent-orange"; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
 require 'test/unit'
 $: << "lib/"
 require 'pt/session'
 require 'pt/track'
 require 'pt/region'
 
+
+# The BlendTest class performs various tests which exercise the Track::Blender
+# and make sure that the results of its action are appropriate.
+#
+# These work by instantiating a PT::Track, adding regions to it with known starts
+# and finishes, and then calling a blend on it and seeing what comes out.
 class BlendTest < Test::Unit::TestCase
   
+  
+  # A test to make sure that regions that fall within the blend duration
+  # are indeed blended.
   def test_proximity_blend
     track = PT::Track.new(nil)
     
     track.add_primitive_region('test 1',0,600)
     track.add_primitive_region('test 2',900,1100)
     
-    track.blend!(600,false)
+    track.blend!(600)
     
     assert(track.regions.size == 2)
     assert(track.regions[0].start == 0)
@@ -21,68 +49,19 @@ class BlendTest < Test::Unit::TestCase
     assert(track.regions[1].finish == 1100)
   end
   
+  # A test to make sure that regions outside of the blend duration
+  # are NOT blended.
   def test_proximity_no_blend
     track = PT::Track.new(nil)
     
     track.add_primitive_region('test 1',0,600)
     track.add_primitive_region('test 2',900,1100)
     
-    track.blend!(100,false)
+    track.blend!(100)
     
     assert(track.regions.size == 2)
     assert(track.regions[0].finish == 600)
     assert(track.regions[1].start == 900)
-  end
-
-  def test_tag_forces_no_blend
-    track = PT::Track.new(nil)
-    
-    track.add_primitive_region('test 1',0,600)
-    track.add_primitive_region('test 2-!',700,1000)
-    track.add_primitive_region('test 3',1000,1300)
-    track.add_primitive_region('test 4',1400,1800)
-    track.add_primitive_region('test 5',5000,5300)
-    track.add_primitive_region('test 6',5400,5800)
-    
-    track.blend!(300,true)
-    
-    assert_equal(track.regions.size , 6)
-    assert_equal(track.regions[0].start,   0)
-    assert_equal(track.regions[0].finish,  700)
-    assert_equal(track.regions[1].start,   700)
-    assert_equal(track.regions[1].finish,  1000)    
-    assert_equal(track.regions[2].start,   1000)
-    assert_equal(track.regions[2].finish,  1300) #shouldn't blend into next!
-    assert_equal(track.regions[3].start,   1400)
-    assert_equal(track.regions[3].finish,  1800)
-    assert_equal(track.regions[4].start,   5000)
-    assert_equal(track.regions[4].finish,  5400)    
-    assert_equal(track.regions[5].start,   5400)
-    assert_equal(track.regions[5].finish,  5800)
-  end
-
-  def test_tag_forces_blend
-    track = PT::Track.new(nil)
-    
-    track.add_primitive_region('test 1-]]',0,   600)
-    track.add_primitive_region('test 2',   700, 1000)
-    track.add_primitive_region('test 3-!!',2000,3000)
-    track.add_primitive_region('test 4',   4000,9000)
-
-    track.blend!(200,true)
-    
-    assert_equal(track.regions.size , 4)
-    assert_equal(track.regions[0].start,   0)
-    assert_equal(track.regions[0].finish,  700)
-    
-    assert_equal(track.regions[1].start,   700)
-    assert_equal(track.regions[1].finish,  2000)
-     
-    assert_equal(track.regions[2].start,   2000)
-    assert_equal(track.regions[2].finish,  3000)
-    
-    assert_equal(track.regions[3].start,   4000)
-    assert_equal(track.regions[3].finish,  9000)
   end
 
   

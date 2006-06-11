@@ -20,65 +20,6 @@ module PT
   class Track
     
     class RegionSequence < Array; end
-    
-    class Blender
-      attr_accessor :blend_duration
-      attr_accessor :interpret_tags
-      attr_reader :regions
-      
-      BLEND_TAGS = ["]]",">>","}}"]
-      
-      def initialize(region_array)
-        @regions = region_array
-        if block_given? then
-          yield self
-        end
-      end
-      
-      def blend!
-        @blend_duration_memo = nil
-        @blend_tag_active = false
-        (@regions.size - 1).times do |i|
-          first , second = @regions[i] , @regions[i.succ]
-          first.finish = second.start if should_blend?(first,second)
-          read_tags(first,second) if @interpret_tags
-        end
-        @regions
-      end
-      
-    private
-      
-      def should_blend?(first,second)
-        if @interpret_tags then
-          closeness_forces_blend?(first,second) or tag_forces_blend?(first,second)
-        else
-          closeness_forces_blend?(first,second)
-        end
-      end
-      
-      def closeness_forces_blend?(first,second)
-        second.start - first.finish < @blend_duration
-      end
-      
-      def tag_forces_blend?(first,second)
-          @blend_tag_active = true if BLEND_TAGS.include?(first.tag)
-          @blend_tag_active
-      end
-      
-      def read_tags(first,second)
-        if first.tag && first.tag == "!" then
-          @blend_tag_active = false 
-          @blend_duration_memo = @blend_duration
-          @blend_duration = 0
-        elsif first.finish < second.start && @blend_duration_memo then
-          @blend_duration = @blend_duration_memo
-          @blend_duration_memo = nil
-        end
-        @blend_tag_active = false if second.tag && second.tag == "!!"
-      end
-      
-    end
-
 
     attr_reader :session
     attr_reader :regions
@@ -133,18 +74,16 @@ module PT
       trim_head.start = imposing_region.finish if trim_head
     end
 
-    def blend!(duration = nil, interpret_tags = true)
-
-      b = Blender.new(@regions) do |blender|
-        blender.blend_duration = duration || @session.blend * Region.divs_per_second
-        blender.interpret_tags = interpret_tags
-      end
+    def blend!(duration = nil)
+      dur = duration || @session.blend
       
-      b.blend!
-      
+       (@regions.size - 1).times do |i|
+         first , second = @regions[i] , @regions[i.succ]
+         first.finish = second.start if (second.start - first.finish) <= dur
+       end
     end #def
 
-    def interpret_tagging!
+    def interpret_tagging!(duration = nil)
       legal_tags = [ "]" , "[" , "[[" , "]]" ,
                      "}" , "{" , "{{" , "}}" ,
                      ">" , "<" , "<<" , ">>" ,
@@ -152,7 +91,7 @@ module PT
       
       open_tags = ["[" , "<" , "{"]
       
-      blend! nil , true
+      blend! duration
       
       sequences = []
       
