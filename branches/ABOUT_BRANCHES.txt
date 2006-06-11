@@ -1,0 +1,13 @@
+ABOUT THE BRANCHES
+==================
+
+branch_1 :
+  
+   branch_1 contains a bunch of modifications I Jamie have been working on, 
+   mainly having to do with regularizing testing, so that fixes we do from
+   here on do not break previous work we've done.  This is particularly
+   important for the tagging system.
+
+   Once the testing infrastructure is laid out, this branch will be merged 
+   into the trunk and the test cases and test mechanisms will be useable
+   for all who wish to commit back into a-o.
