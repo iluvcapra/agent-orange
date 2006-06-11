@@ -39,9 +39,21 @@ module PT
     end
 
   end #class
-  
-end
 
+  class Region
+    def shade?
+      case session.shading
+      when :all
+        return true
+      when :asterisks
+        return @region_name[0,1] == "*"
+      when :none
+        return false
+      end
+    end
+  end 
+
+end #module
 
 class Cuesheet
 

@@ -23,6 +23,10 @@ module PT
     attr_reader :track , :region_name
     attr_reader :start , :finish 
     attr_accessor :line_break
+        
+    def <=>(other)
+      @start <=> other.start
+    end
     
     def initialize(track)
       @track= track
@@ -34,24 +38,28 @@ module PT
     
     def name=(str)
       @region_name = str
-      if @asterisk_shade == false then
-        @asterisk_shade = (@region_name[0,1] == "*")
-      end
     end
     
     def name
       @region_name
     end
     
-    def shade?
-      case session.shading
-      when :all
-        return true
-      when :asterisks
-        return @region_name[0,1] == "*"
-      when :none
-        return false
+    def tag
+      md = tag_match_data
+      md ? md[2] : nil
+    end
+    
+    def tag=(str)
+      md = tag_match_data
+      @region_name = if str then
+        md ? md[1] + "-" + str : @region_name + "-" + str
+      else
+        md[1]
       end
+    end
+    
+    def tag_match_data
+      /(.*)-([^-]*)$/.match(@region_name)
     end
     
     def name_lines
@@ -110,17 +118,21 @@ module PT
       @track.session
     end
 	
-   private
-
-    def divs_per_second
+	class << self
+	  def divs_per_second
       600
     end
-
-    def divs_per_foot
+	
+	  def divs_per_foot
       divs_per_second * 2 / 3
     end
-
+  end
+	
+   private
+   
+   
     def str_to_tc(str)
+      divs_per_foot , divs_per_second = self.class.divs_per_foot , self.class.divs_per_second
       if md = /(\d+)\+(\d+)/.match(str) then
         val =  md[1].to_i * divs_per_foot
         val += md[2].to_i * (divs_per_second / 24)
@@ -138,6 +150,7 @@ module PT
     end
 
     def tc_to_str(divs)
+      divs_per_foot , divs_per_second = self.class.divs_per_foot , self.class.divs_per_second
       case session.time_format
       when :footage
         rem = divs % divs_per_foot
