@@ -40,6 +40,25 @@ class TaggingTest < Test::Unit::TestCase
     @session.title = "TaggingTest"
     @session.blend = 2.0
   end
+  
+  # Test for untagged regions.
+  #
+  # Any sequence made up of untagged regions should be made into one region, with the name
+  # of the first region.
+  def test_untagged
+    track = @session.add_track("Untagged")
+    
+    track.add_region("test 1" , "90+0", "95+0")
+    track.add_region("test 2" , "95+0", "99+0")
+    track.add_region("test 3" , "99+0", "110+0")
+    
+    track.interpret_tagging!
+    
+    assert_equal(track.regions.size , 1)
+    assert_equal(track.regions[0].clean_name , "test 1")
+    assert_equal(track.regions[0].start  , 90 * PT::Region.divs_per_foot)
+    assert_equal(track.regions[0].finish , 110 * PT::Region.divs_per_foot)
+  end
 
   # Test for the closed-brace-tag *-}*.
   #
@@ -117,4 +136,23 @@ class TaggingTest < Test::Unit::TestCase
     assert_equal(track.regions[0].start,   45 * PT::Region.divs_per_foot)
     assert_equal(track.regions[0].finish,  58 * PT::Region.divs_per_foot) 
   end
+  
+  # Test of simple cue insertion with "-]"
+  def test_insert_cue
+    track = @session.add_track("Insert cue with -]")
+    
+    track.add_region('test 1-]',  "100+0" , "105+0")
+    track.add_region('test 2-]',  "105+0" , "110+0")
+    
+    track.interpret_tagging!
+    
+    assert_equal(track.regions.size , 2)
+    assert_equal(track.regions[0].clean_name , "test 1")
+    assert_equal(track.regions[0].start ,  100 * PT::Region.divs_per_foot)
+    assert_equal(track.regions[0].finish , 105 * PT::Region.divs_per_foot)
+    assert_equal(track.regions[1].clean_name , "test 2")
+    assert_equal(track.regions[1].start ,  105 * PT::Region.divs_per_foot)
+    assert_equal(track.regions[1].finish , 110 * PT::Region.divs_per_foot)
+  end
+  
 end #class
