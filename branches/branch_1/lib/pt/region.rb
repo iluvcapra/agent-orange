@@ -44,6 +44,11 @@ module PT
       @region_name
     end
     
+    def clean_name
+      md = tag_match_data
+      md ? md[1] : @region_name
+    end
+    
     def tag
       md = tag_match_data
       md ? md[2] : nil

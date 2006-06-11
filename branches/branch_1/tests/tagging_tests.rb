@@ -24,12 +24,97 @@ require 'pt/track'
 require 'pt/region'
 
 
-# This TestCase tests some simple tagging operations.
+# This TestCase tests some simple tagging operations.  All of these tagging operations
+# are *LAW* and any if your patches break any of these tests, you patch will not be
+# applied.
+#
+# It is not recommended for you to add your own test cases to this TestCase; these
+# are for foundational operations of tagging and if you find a particular tagging
+# operation that doesn't come out the way you're expecting, contact Jamie and writeup
+# a text import-export test for your full file.  If your scenario is particularly
+# compelling Jamie will add it.
 class TaggingTest < Test::Unit::TestCase
 
-  def test_simple_closed
+  def setup # :nodoc:
+    @session = PT::Session.new
+    @session.title = "TaggingTest"
+    @session.blend = 2.0
+  end
+
+  # Test for the closed-brace-tag *-}*.
+  #
+  # Definitively, a closed brace tag cause the region so tagged to start where it's
+  # containing sequence starts.
+  def test_brace_closed
+    track = @session.add_track("Simple -}")
     
+    track.add_region('test 1'  ,"9+0"  ,"12+0")
+    track.add_region('test 2-}',"12+0" , "18+0")
     
+    track.interpret_tagging!
+    
+    assert_equal(track.regions.size, 1)
+    assert_equal(track.regions[0].clean_name, "test 2")
+    assert_equal(track.regions[0].start,    9 * PT::Region.divs_per_foot)
+    assert_equal(track.regions[0].finish , 18 * PT::Region.divs_per_foot)
   end
   
+  # Test for the closed-bracket-tag "-]".
+  #
+  # Definitively, a closed bracket tag causes the sequence of regions leading up to
+  # a region so tagged to be omitted.
+  def test_bracket_closed
+    track = @session.add_track("Simple -]")
+    
+    track.add_region('test 1', "100+0", "105+0")
+    track.add_region('test 2-]', "105+0", "120+0")
+      
+    track.interpret_tagging!
+ 
+    assert_equal(track.regions.size , 1)
+    assert_equal(track.regions[0].clean_name,   "test 2")
+    assert_equal(track.regions[0].start,   105 * PT::Region.divs_per_foot)
+    assert_equal(track.regions[0].finish,  120 * PT::Region.divs_per_foot)
+  end
+ 
+  # Test for the closed-angle-bracket-tag "->".
+  #
+  # Definitively, a closed angle bracket causes the sequence of regions leading up to the
+  # region so tagged to be labeled "Fill".
+  def test_angle_bracket_closed
+    track = @session.add_track("Simple ->")
+    
+    track.add_region('test 1', "30+0", "35+0")
+    track.add_region('test 2->', "35+0", "40+0")
+      
+    track.interpret_tagging!
+ 
+    assert_equal(track.regions.size , 2)
+    assert_equal(track.regions[0].clean_name,   "Fill")
+    assert_equal(track.regions[0].start,   30 * PT::Region.divs_per_foot)
+    assert_equal(track.regions[0].finish,  35 * PT::Region.divs_per_foot)
+    assert_equal(track.regions[1].clean_name ,  "test 2")    
+    assert_equal(track.regions[1].start,   35 * PT::Region.divs_per_foot)
+    assert_equal(track.regions[1].finish,  40 * PT::Region.divs_per_foot)
+  end
+  
+  # Test the ampersand tag "-&"
+  # 
+  # Within a sequence of regions, an ampersand causes the clean text of a second region 
+  # to be concatenated with a space " " to the clean text of a first tagged region.  
+  # The amperand-tagged region itself is omitted, and the first region is lengthened 
+  # to cover the space occupied by her victim.
+  def test_ampersand
+    track = @session.add_track("Simple -&")
+    
+    track.add_region('test 1-]',   "45+0" , "51+0")
+    track.add_region('test 2-&', "51+0" , "58+0")
+    
+    track.interpret_tagging!
+    
+    assert_equal(track.regions.size , 1)
+    assert_equal(track.regions[0].clean_name,   "test 1 test 2")
+    assert_equal(track.regions[0].start,   45 * PT::Region.divs_per_foot)
+    assert_equal(track.regions[0].finish,  58 * PT::Region.divs_per_foot) 
+  end
 end #class

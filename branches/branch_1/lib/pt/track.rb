@@ -75,13 +75,17 @@ module PT
     end
 
     def blend!(duration = nil)
-      dur = duration || @session.blend
+      dur = duration || @session.blend * Region.divs_per_second
       
        (@regions.size - 1).times do |i|
          first , second = @regions[i] , @regions[i.succ]
          first.finish = second.start if (second.start - first.finish) <= dur
        end
     end #def
+
+    def delete_all_regions!
+      @regions = []
+    end
 
     def interpret_tagging!(duration = nil)
       legal_tags = [ "]" , "[" , "[[" , "]]" ,
@@ -94,8 +98,15 @@ module PT
       blend! duration
       
       sequences = []
+      last_in = -1
+      @regions.each do |region|
+        sequences << RegionSequence.new if region.start > last_in
+        sequences.last << region
+        last_in = region.finish
+      end
       
-       ##FIXME!
+      delete_all_regions!
+      
       stick_open = false 
       new_region = nil
       
@@ -106,12 +117,11 @@ module PT
         end
         
         tags_count = seq.inject(0) do |memo,region|
-          clean_name , tag = scan_region_name(region)
-          (legal_tags.include? tag ) ? memo + 1 :  memo
+          (legal_tags.include? region.tag ) ? memo + 1 :  memo
         end
         
         seq.each do |region|
-          clean_name , tag = scan_region_name(region)
+          clean_name , tag = region.clean_name , region.tag
 
           if legal_tags.include? tag then
             curly_start = (stick_open ? region.start : seq_start)
@@ -141,7 +151,7 @@ module PT
                                 
               when "&"
                 if new_region then
-                  new_region.name = (new_region.name + " " + clean_name)
+                  new_region.name = (new_region.clean_name + " " + clean_name)
                   new_region.finish = region.finish
                 else
                   new_region = add_primitive_region(clean_name , curly_start ,region.finish)                 
