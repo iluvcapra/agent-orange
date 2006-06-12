@@ -1,4 +1,4 @@
-# blend_test.rb
+# tagging_tests.rb
 # Author:: Jamie Hardt
 
 # This file is part of "agent-orange".
