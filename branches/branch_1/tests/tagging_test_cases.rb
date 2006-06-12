@@ -28,23 +28,26 @@ require 'pt/region'
 class TaggingTestCases < Test::Unit::TestCase
 
   def setup
-    @infile_dir =  Dir.new("./tagging_test_cases/in/")
-    @outfile_dir = Dir.new("./tagging_test_cases/out/")
+    @infile_dir =  Dir.pwd + "/tagging_test_cases/in/"
+    @outfile_dir = Dir.pwd + "/tagging_test_cases/out/"
   end
   
   def test_tagging_cases
-    
-    @infile_dir.each do |file|
+    Dir.new(@infile_dir).each do |file|
+      next unless (File.file?(@infile_dir + file))
+      
       File.open(@infile_dir + file,"r") do |infile|
+
         session = PT::Session.new
-        seesion.read_file(infile)
+        session.read_file(infile)
         session.interpret_tagging!
         
         File.open(@outfile_dir + file,"r") do |outfile|
-          assert_equal(outfile.to_s,session.to_test_export)
+          assert_equal(outfile.read,
+            session.to_text_export, 
+            "#{file} (#{session.title}) failed testing.")
         end 
       end
-      
     end
     
   end
