@@ -1,6 +1,6 @@
 # tagging_test_cases.rb
 # Author:: Jamie Hardt
-
+#
 # This file is part of "agent-orange".
 # 
 # "agent-orange" is free software; you can redistribute it and/or modify
@@ -24,7 +24,18 @@ require 'pt/track'
 require 'pt/region'
 
 
-
+# == Tagging Test Cases
+#
+# This unit test runs all of the text files in +tagging_test_cases+/+in+ through the
+# tag interpretation machinery and compares them to files with the same name in
+# +tagging_test_cases+/+out+.  If the files match, the test is passed, otherwise, the
+# test fails.
+#
+# If you want to test a particular tagging situation to make sure agent-orange handles
+# the tagging process properly, you use Pro Tools to export a session that's been tagged
+# a particular way.  You put this file in the +tagging_test_cases+/+in+ folder.  Then, make
+# a copy of this file and edit it with a text editor until the output looks exactly like the
+# output ot Session#interpret_tagging! should.  Put this file in +tagging_test_cases+/+out+.
 class TaggingTestCases < Test::Unit::TestCase
 
   def setup
