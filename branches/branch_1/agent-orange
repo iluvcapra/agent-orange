@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 
-# agent-orange : The Agent Orange Cuesheet Generator
-# Author: Jamie Hardt
+# == agent-orange - The Agent Orange Cuesheet Generator
+# Author:: Jamie Hardt
 
 # This file is part of "agent-orange".
 # 
