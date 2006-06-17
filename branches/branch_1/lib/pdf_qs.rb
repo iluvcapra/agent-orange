@@ -22,7 +22,7 @@ require 'pdf/writer'
 class Cuesheet
 
   # A subclass of PDF/Writer.  
-  # It provides methods services that make our lives easier.
+  # It provides methods that make our lives easier.
   class CuesheetPDF < PDF::Writer
     
     #Draws an right-facing arrow, with its point at x,y on the current page
@@ -35,7 +35,22 @@ class Cuesheet
       line_to(x - 8 , y + 6).line_to(x-8,y-6).fill_stroke
       restore_state
     end
-  end
+    
+    # Draws a block of text, breaking the text into lines based on the region's
+    # name_lines member.
+    def draw_region_name(x,y,region,width,font_size)
+      text_ary , y_acc = region.name_lines , y
+      text_ary.each do |line|
+        text_acc , more_text = line , true
+        while (more_text) do
+          #$stderr.print "-- Drawing cue name line \"#{text_acc}\"\n"
+          text_acc = add_text_wrap(x, y_acc, width ,text_acc,font_size,:left)
+          y_acc -= font_size
+          more_text = false if text_acc == ''
+        end #while
+      end #each
+    end #def
+  end #class
 
 
   class Styler
@@ -50,7 +65,7 @@ class Cuesheet
       @attributes[:default] = { :face => "Helvetica" , 
                                 :size => 12 , 
                                 :bold => false , 
-                                :italic => false}
+                                :italic => false }
     end
 
     def method_missing(sym, arg)
@@ -434,7 +449,7 @@ class Cuesheet
             p.line(bracket_x , y1 , bracket_x , y2).stroke
             text = runthru.name
             y1 -= cue_font_size  
-            draw_cue_name(p , name_x , y1 , runthru , name_width , cue_font_size)
+            p.draw_region_name( name_x , y1 , runthru , name_width , cue_font_size)
           else
             jumpin = strip.regions.find do |r|
               (r.start < row_start) and (r.finish >= row_start) and (r.finish <= row_finish) 
@@ -465,7 +480,7 @@ class Cuesheet
               p.line(bracket_x , y1  , bracket_x , y2).stroke           
               #p.line(bracket_x , y2 , bracket_x+5 , y2).stroke #test!!
               y1 -= cue_font_size
-              draw_cue_name(p , name_x , y1 , jumpin , name_width , cue_font_size)
+              p.draw_region_name(name_x , y1 , jumpin , name_width , cue_font_size)
               unless (dont_finish_here[jumpin.finish] == true) then
                 p.line(bracket_x - bracket_stroke_width / 2 , y2 , bracket_x2 , y2).stroke
                 p.add_text_wrap(bracket_x2 + 6 , y2 -4 , name_width, "<i>" + jumpin.finish_time + "</i>" , @finish_time_font_size,:left)         
@@ -498,7 +513,7 @@ class Cuesheet
               p.line(bracket_x , y1 - bracket_start_y_offset , bracket_x , y2).stroke           
               p.add_text_wrap(time_x, y1,time_width,"<b>" + jumpout.start_time + "</b>",@time_font_size,:left)
               y1 -= cue_font_size
-              draw_cue_name(p , name_x , y1 , jumpout , name_width , cue_font_size)
+              p.draw_region_name(name_x , y1 , jumpout , name_width , cue_font_size)
             end        
             withins = strip.regions.find_all do |r|
               r.start >= row_start and r.finish <= row_finish
@@ -531,7 +546,7 @@ class Cuesheet
               end
               p.add_text_wrap(time_x, y1,time_width,"<b>" + within.start_time + "</b>",@time_font_size,:left)
               y1 -= @time_font_size
-              draw_cue_name(p , name_x , y1 , within , name_width , cue_font_size)
+              p.draw_region_name(name_x , y1 , within , name_width , cue_font_size)
               unless ((dont_finish_here[within.finish] == true) or within.start == within.finish ) then
                 p.line(bracket_x - bracket_stroke_width / 2 , y2 , bracket_x2 , y2).stroke
                 p.add_text_wrap(bracket_x2 + 6 , y2 - 4 , name_width, "<i>" + within.finish_time + "</i>" , @finish_time_font_size,:left)
@@ -560,20 +575,6 @@ class Cuesheet
   
     @time_font_size + \
     @cue_font_size * cue_lines + 8
-  end
-
-  def draw_cue_name(p,x,y,region,width,font_size)
-    #$stderr.print "- Drawing cue name \"#{region.name}\"\n"
-    text_ary , y_acc = region.name_lines , y
-    text_ary.each do |line|
-      text_acc , more_text = line , true
-      while (more_text) do
-        #$stderr.print "-- Drawing cue name line \"#{text_acc}\"\n"
-        text_acc = p.add_text_wrap(x, y_acc,width ,text_acc,font_size,:left)
-        y_acc -= font_size
-        more_text = false if text_acc == ''
-      end
-    end
   end
 
 end #class

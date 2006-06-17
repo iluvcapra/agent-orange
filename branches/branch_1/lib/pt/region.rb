@@ -23,7 +23,7 @@ require 'pt/session'
 module PT
   class Region
 
-    attr_reader :track , :region_name
+    attr_reader :track , :raw_name
     attr_reader :start , :finish 
     attr_accessor :line_break
         
@@ -33,23 +33,23 @@ module PT
     
     def initialize(track)
       @track= track
-      @region_name = "(blank)"
+      @raw_name = "(blank)"
       @start = 0
       @finish = 1
       @line_break = "^"
     end
     
     def name=(str)
-      @region_name = str
+      @raw_name = str
     end
     
     def name
-      @region_name
+      @raw_name
     end
     
     def clean_name
       md = tag_match_data
-      md ? md[1] : @region_name
+      md ? md[1] : @raw_name
     end
     
     def tag
@@ -59,15 +59,15 @@ module PT
     
     def tag=(str)
       md = tag_match_data
-      @region_name = if str then
-        md ? md[1] + "-" + str : @region_name + "-" + str
+      @raw_name = if str then
+        md ? md[1] + "-" + str : @raw_name + "-" + str
       else
         md[1]
       end
     end
     
     def tag_match_data
-      /(.*)-([^-]*)$/.match(@region_name)
+      /(.*)-([^-]*)$/.match(@raw_name)
     end
     
     def name_lines
