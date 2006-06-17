@@ -215,15 +215,10 @@ files.each do |file|
     puts   "Number of Tracks     : #{the_session.tracks.size}"
   else
     
-    #test options.watermark for readability
-    the_session.init_for_printing
-    the_session.watermark = options.watermark if (options.watermark) && (File.readable? options.watermark)
-    the_session.cue_font_size = options.cue_font_size if options.cue_font_size
     the_session.blend = options.blend
     the_session.title = options.given_title if options.given_title
     the_session.interpret_tagging! if options.interpret_tags
-    the_session.reframe! unless options.frames
-    the_session.shading = options.shading # the order these are called on the_session is important for various reasons
+ #   the_session.reframe! unless options.frames -- FIXME!!!
     
     if options.given_outfile == nil then
       file_to_open = Dir.getwd + "/" + Pathname.new(file).basename(".txt") + ".pdf"

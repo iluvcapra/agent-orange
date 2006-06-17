@@ -21,6 +21,23 @@ require 'pdf/writer'
 
 class Cuesheet
 
+  # A subclass of PDF/Writer.  
+  # It provides methods services that make our lives easier.
+  class CuesheetPDF < PDF::Writer
+    
+    #Draws an right-facing arrow, with its point at x,y on the current page
+    def draw_arrow(x,y)
+      save_state
+      stroke_color! Color::RGB::Black
+      stroke_style! PDF::Writer::StrokeStyle.new(0.1)
+      move_to(x,y)
+      fill_color! Color::RGB::Black
+      line_to(x - 8 , y + 6).line_to(x-8,y-6).fill_stroke
+      restore_state
+    end
+  end
+
+
   class Styler
     STYLES = [ :default , :title , :region_name , :time , :finish_time , :page_number ]
     STYLE_ATTRIBUTES = [ :face , :size , :bold , :italic ]
@@ -95,7 +112,7 @@ class Cuesheet
   end
 
   def pdf_for_session(paper, strips_per_page)
-    p = PDF::Writer.new(:paper => paper, 
+    p = CuesheetPDF.new(:paper => paper, 
           :orientation => @paper_orientation 
           )
   
@@ -452,7 +469,7 @@ class Cuesheet
               unless (dont_finish_here[jumpin.finish] == true) then
                 p.line(bracket_x - bracket_stroke_width / 2 , y2 , bracket_x2 , y2).stroke
                 p.add_text_wrap(bracket_x2 + 6 , y2 -4 , name_width, "<i>" + jumpin.finish_time + "</i>" , @finish_time_font_size,:left)         
-                draw_arrow(p,bracket_x2 + 5 , y2) 
+                p.draw_arrow(bracket_x2 + 5 , y2) 
               end          
             end
 
@@ -518,7 +535,7 @@ class Cuesheet
               unless ((dont_finish_here[within.finish] == true) or within.start == within.finish ) then
                 p.line(bracket_x - bracket_stroke_width / 2 , y2 , bracket_x2 , y2).stroke
                 p.add_text_wrap(bracket_x2 + 6 , y2 - 4 , name_width, "<i>" + within.finish_time + "</i>" , @finish_time_font_size,:left)
-                draw_arrow(p,bracket_x2 + 5 , y2)           
+                p.draw_arrow(bracket_x2 + 5 , y2)           
               end
             end
           
@@ -529,11 +546,6 @@ class Cuesheet
     end #each row_page
     p
   end #def
-
-
-  def draw_region(region,x,y)
-    
-  end
 
   def cue_height(p,region,strip_width)
     cue_lines = region.name_lines.size
@@ -564,13 +576,4 @@ class Cuesheet
     end
   end
 
-  def draw_arrow(p,x,y)
-    p.save_state
-    p.stroke_color! Color::RGB::Black
-    p.stroke_style! PDF::Writer::StrokeStyle.new(0.1)
-    p.move_to(x,y)
-    p.fill_color! Color::RGB::Black
-    p.line_to(x - 8 , y + 6).line_to(x-8,y-6).fill_stroke
-    p.restore_state
-  end
 end #class
