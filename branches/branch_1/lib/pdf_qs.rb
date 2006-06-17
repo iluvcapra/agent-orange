@@ -20,39 +20,9 @@
 require 'pdf/writer' 
 
 module PT
-  class Session #print-related stuff
-    attr_accessor :cue_font_size
-    attr_accessor :proportional
-    attr_accessor :watermark
-    attr_accessor :shading
-    
-    def init_for_printing
-      @shading = :all # :none | :asterisks | :all
-      @cue_font_size = 10
-      @proportional = true
-      @watermark = nil
-    end
-    
-    def display_tracks
-      @tracks
-    end
-
-    def display_regions
-      display_tracks.inject([]) {|all , track| all + track.regions}
-    end
-
-  end #class
-
   class Region
     def shade?
-      case session.shading
-      when :all
         return true
-      when :asterisks
-        return @region_name[0,1] == "*"
-      when :none
-        return false
-      end
     end
   end 
 
@@ -95,21 +65,37 @@ class Cuesheet
   attr_accessor :strips_per_page
   attr_accessor :min_closed_cue_length
   attr_accessor :paper_orientation
-
-
+  attr_accessor :cue_font_size
+  attr_accessor :proportional
+  attr_accessor :watermark
+  attr_accessor :shading
 
   def initialize(s)
     @session = s
+    @strips_per_page = session.tracks.size
     @styler = Styler.new
     @time_font_size = 13
     @finish_time_font_size = 11
     @paper_orientation = :landscape
     @min_closed_cue_length = 600
+    @shading = :all # :none | :asterisks | :all
+    @cue_font_size = 10
+    @proportional = true
+    @watermark = nil
+    
     if block_given? then
       yield self
     end
   end
 
+  def display_tracks
+    @session.tracks
+  end
+
+  def display_regions
+    display_tracks.inject([]) {|all , track| all + track.regions}
+  end
+  
   def styles
     if block_given? then
       yield @styler
@@ -139,8 +125,6 @@ class Cuesheet
     strip_header_height = strip_header_font_size * 3
     channel_header_font_size = 9
     channel_header_height = 12 #
-
-    cue_font_size = s_obj.cue_font_size
   
     grid_top = p.absolute_top_margin - (p.font_height(header_size))
     grid_bottom = p.absolute_bottom_margin
@@ -153,7 +137,7 @@ class Cuesheet
   
     #DRAW WATERMARK (IF FILE GIVEN)
   
-    if s_obj.watermark then 
+    if @watermark then 
       p.open_object do | wm |
         image_height , image_width = 150 , 400
         #image_height , image_width = (p.page_height * 2 / 3) , (p.page_width * 2 / 3)
@@ -224,7 +208,7 @@ class Cuesheet
     #$stderr.print "Starting strip pagination.\n"
   
     # Break the strips down so into groups that appear on one page
-    strip_pages , all_strip_pages = [] , s_obj.display_tracks
+    strip_pages , all_strip_pages = [] , display_tracks
     pages , rem = *(all_strip_pages.size.divmod strips_per_page)
     pages += 1 if rem > 0
   
@@ -233,7 +217,7 @@ class Cuesheet
     end
     #$stderr.print "Pages wide : #{strip_pages.size}\n"
   
-    all_regions = s_obj.display_regions
+    all_regions = display_regions
   
     # == GENERATE TIME INDEXES ==
     # A time index must exist for every start and finish on the cuesheet
@@ -281,7 +265,7 @@ class Cuesheet
       # first, if this printout will be proportional, we should nudge down
       # this start so that it will begin in a proportional location relative
       # to other regions.
-      if s_obj.proportional && idx > 0 && proportion_finish_idx then
+      if @proportional && idx > 0 && proportion_finish_idx then
         y_displacement_from_previous = (toplines[idx] - toplines[idx - 1])
         previous_start_time = time_indexes[idx - 1]
         previous_finish_time = time_indexes[proportion_finish_idx]
@@ -332,7 +316,7 @@ class Cuesheet
         # proportion finish_index
         if proportion_finish_idx then
           (proportion_finish_idx = [finish_idx , proportion_finish_idx].min)
-        elsif s_obj.proportional then
+        elsif @proportional then
           proportion_finish_idx = finish_idx
         end
       end #regions.each
@@ -585,13 +569,13 @@ class Cuesheet
       str = line
       cue_lines -= 1 unless str == ''
       while (str != '') do
-        str = p.add_text_wrap(100, 100, strip_width - 8,str,session.cue_font_size,:left , 0 , true)
+        str = p.add_text_wrap(100, 100, strip_width - 8,str, @cue_font_size,:left , 0 , true)
         cue_lines += 1
       end
     end
   
     @time_font_size + \
-    session.cue_font_size * cue_lines + 8
+    @cue_font_size * cue_lines + 8
   end
 
   def draw_cue_name(p,x,y,region,width,font_size)

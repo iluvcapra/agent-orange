@@ -1,4 +1,4 @@
-# test_suite.rb
+# pdf_test.rb
 # Author:: Jamie Hardt
 #
 # This file is part of "agent-orange".
@@ -17,11 +17,32 @@
 # along with "agent-orange"; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-
+require 'rubygems'
 require 'test/unit'
+$: << "lib/"
+require 'pt/session'
+require 'pt/track'
+require 'pt/region'
+require 'pdf_qs'
 
-require 'tests/blend_test'
-require 'tests/track_test'
-require 'tests/tagging_tests'
-require 'tests/tagging_test_cases'
-require 'tests/pdf_test'
+# Tests simple track operations
+class TrackTest < Test::Unit::TestCase
+  
+  def setup
+    testfile = "tagging_test_cases/in/1sec_blend_test.txt"
+    
+    @session = PT::Session.new
+    File.open(testfile,"r") do |fp|
+      @session.read_file(fp)
+    end
+  end
+  
+  def test_to_pdf
+    qs = Cuesheet.new(@session)
+    assert_nothing_raised do
+      qs.to_pdf
+    end
+  end
+
+  
+end #class
