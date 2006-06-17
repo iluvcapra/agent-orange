@@ -1,4 +1,4 @@
-# pdf_test.rb
+# session_test.rb
 # Author:: Jamie Hardt
 #
 # This file is part of "agent-orange".
@@ -17,32 +17,34 @@
 # along with "agent-orange"; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-require 'rubygems'
+
 require 'test/unit'
 $: << "lib/"
 require 'pt/session'
 require 'pt/track'
 require 'pt/region'
-require 'pdf_qs'
 
 # Tests simple track operations
-class PDFTest < Test::Unit::TestCase
+class SessionTest < Test::Unit::TestCase
   
   def setup
-    testfile = "tagging_test_cases/in/1sec_blend_test.txt"
-    
-    @session = PT::Session.new
-    File.open(testfile,"r") do |fp|
-      @session.read_file(fp)
-    end
-  end
-  
-  def test_to_pdf
-    qs = Cuesheet.new(@session)
-    assert_nothing_raised do
-      qs.to_pdf
-    end
+
   end
 
+  def test_create
+    s = PT::Session.new
+    assert_equal s.class , PT::Session
+  end
   
+  def test_attributes
+    s = PT::Session.new
+    s.title = "Test Value"
+    s.print_frames = true
+    s.blend = 2.0
+    
+    assert_equal s.blend , 2.0
+    assert_equal s.print_frames , true
+    assert_equal s.title , "Test Value"
+  end
+
 end #class
