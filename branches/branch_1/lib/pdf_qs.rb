@@ -47,8 +47,7 @@ class Cuesheet
         end
       end #if
     end #def
-  end #class
-
+  end #class Styler
 
   attr_accessor :session
   attr_accessor :paper
@@ -57,7 +56,6 @@ class Cuesheet
   attr_accessor :paper_orientation
   attr_accessor :cue_font_size
   attr_accessor :proportional
-  attr_accessor :watermark
   attr_accessor :shading
 
   def initialize(s)
@@ -71,8 +69,7 @@ class Cuesheet
     @shading = :all # :none | :asterisks | :all
     @cue_font_size = 10
     @proportional = true
-    @watermark = nil
-    
+
     if block_given? then
       yield self
     end
@@ -101,8 +98,6 @@ class Cuesheet
     p = PDF::Writer.new(:paper => paper, 
           :orientation => @paper_orientation 
           )
-        
-    #$stderr.print "Starting PDF generation.\n"
   
     # Some overall dimensions
     p.select_font "Helvetica" , "MacRomanEncoding"
@@ -122,25 +117,7 @@ class Cuesheet
     cue_top = grid_top - (channel_header_height + strip_header_height)
   
     bracket_stroke_width = 2
-  
-    #$stderr.print "PDF DIMENSIONAL CHARACTERISTICS\n"
-  
-    #DRAW WATERMARK (IF FILE GIVEN)
-  
-    if @watermark then 
-      p.open_object do | wm |
-        image_height , image_width = 150 , 400
-        #image_height , image_width = (p.page_height * 2 / 3) , (p.page_width * 2 / 3)
-        y = (p.absolute_top_margin) / 2 + (image_height / 2)
-        x = (p.absolute_right_margin / 2) - (image_width / 2)
-        File.open(@watermark,"r") do |fd|
-          p.add_image_from_file(fd,x,y,image_width,image_height)
-        end
-        p.close_object
-        p.add_object( wm , :all_pages )
-      end
-    end#if
-  
+    
     # DRAW TITLE AT TOP OF EACH PAGE
     p.open_object do |header|
       t = @session.title #title text   
