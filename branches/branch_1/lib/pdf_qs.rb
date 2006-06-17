@@ -19,15 +19,6 @@
 
 require 'pdf/writer' 
 
-module PT
-  class Region
-    def shade?
-        return true
-    end
-  end 
-
-end #module
-
 class Cuesheet
 
   class Styler
@@ -56,7 +47,6 @@ class Cuesheet
         end
       end #if
     end #def
-
   end #class
 
 
@@ -104,10 +94,10 @@ class Cuesheet
   end
 
   def to_pdf
-    pdf_for_session(@session,@paper,@strips_per_page)
+    pdf_for_session(@paper,@strips_per_page)
   end
 
-  def pdf_for_session(s_obj , paper, strips_per_page)
+  def pdf_for_session(paper, strips_per_page)
     p = PDF::Writer.new(:paper => paper, 
           :orientation => @paper_orientation 
           )
@@ -143,7 +133,7 @@ class Cuesheet
         #image_height , image_width = (p.page_height * 2 / 3) , (p.page_width * 2 / 3)
         y = (p.absolute_top_margin) / 2 + (image_height / 2)
         x = (p.absolute_right_margin / 2) - (image_width / 2)
-        File.open(s_obj.watermark,"r") do |fd|
+        File.open(@watermark,"r") do |fd|
           p.add_image_from_file(fd,x,y,image_width,image_height)
         end
         p.close_object
@@ -153,7 +143,7 @@ class Cuesheet
   
     # DRAW TITLE AT TOP OF EACH PAGE
     p.open_object do |header|
-      t = s_obj.title #title text   
+      t = @session.title #title text   
       p.save_state
       p.stroke_color! Color::RGB::Black
       p.stroke_style! PDF::Writer::StrokeStyle::DEFAULT
@@ -300,7 +290,7 @@ class Cuesheet
         current_height = toplines[finish_idx] - toplines[idx]
       
         # We calculate the needed height to draw this region
-        needed_height = cue_height(p,s_obj,region,strip_width)
+        needed_height = cue_height(p,region,strip_width)
  
         # if the difference in y-displacement between the start
         # and finish is less than the needed height...
@@ -357,7 +347,7 @@ class Cuesheet
         this_row_topline = cue_top
         this_remaining_space = remaining_space
         top_padding = \
-         (regions_passing_here.collect {|r| cue_height(p,s_obj,r,strip_width) }).max
+         (regions_passing_here.collect {|r| cue_height(p,r,strip_width) }).max
         if top_padding then
           this_row_topline -= top_padding 
           this_remaining_space -= top_padding
@@ -435,7 +425,7 @@ class Cuesheet
             #$stderr.print "Drawing \"#{runthru.name}\" as a runthru.\n"    
             y1 , y2 = cue_top , grid_bottom
           
-            if runthru.shade? then
+            # if runthru.shade? then
               p.save_state
               poly_points = [ [ bracket_x , y1 ], 
                               [ bracket_x , y2 ] , 
@@ -445,7 +435,7 @@ class Cuesheet
               p.fill_color(Color::RGB.from_fraction( 0.95, 0.95, 0.95 ))
               p.polygon(poly_points).fill
               p.restore_state
-            end
+           # end
           
             p.line(bracket_x , y1 , bracket_x , y2).stroke
             text = runthru.name
@@ -466,7 +456,7 @@ class Cuesheet
                 y2 -= (@finish_time_font_size/2 + this_finish_row[1])
               end
   
-              if jumpin.shade? then
+              # if jumpin.shade? then
                 p.save_state
                 poly_points = [ [ bracket_x , y1 ], 
                                 [ bracket_x , y2 ] , 
@@ -476,7 +466,7 @@ class Cuesheet
                 p.fill_color(Color::RGB.from_fraction( 0.95, 0.95, 0.95 ))
                 p.polygon(poly_points).fill
                 p.restore_state
-              end
+              # end
  
               p.line(bracket_x , y1  , bracket_x , y2).stroke           
               #p.line(bracket_x , y2 , bracket_x+5 , y2).stroke #test!!
@@ -498,7 +488,7 @@ class Cuesheet
               this_start_row = row_page.find {|a_pg| a_pg[0] == jumpout.start}
               y1 , y2 = this_start_row[2] - @time_font_size , grid_bottom 
             
-              if jumpout.shade? then
+              # if jumpout.shade? then
                 p.save_state
                 shade_y =  am_finishing_here[jumpout.start] ? y1 + @time_font_size : y1 - bracket_start_y_offset
                 poly_points = [ [ bracket_x , shade_y ], 
@@ -509,7 +499,7 @@ class Cuesheet
                 p.fill_color(Color::RGB.from_fraction( 0.95, 0.95, 0.95 ))
                 p.polygon(poly_points).fill
                 p.restore_state
-              end
+             #  end
             
               p.line(bracket_x , y1 - bracket_start_y_offset , bracket_x , y2).stroke           
               p.add_text_wrap(time_x, y1,time_width,"<b>" + jumpout.start_time + "</b>",@time_font_size,:left)
@@ -530,7 +520,7 @@ class Cuesheet
               y2 -= @finish_time_font_size/2 unless (dont_finish_here[within.finish] == true)
               unless (within.start == within.finish) then         
               
-                if within.shade? then
+                # if within.shade? then
                   p.save_state
                   shade_y =  am_finishing_here[within.start] ? y1 + @time_font_size : y1 - bracket_start_y_offset
                   poly_points = [ [ bracket_x , shade_y ], 
@@ -541,7 +531,7 @@ class Cuesheet
                   p.fill_color(Color::RGB.from_fraction( 0.95, 0.95, 0.95 ))
                   p.polygon(poly_points).fill
                   p.restore_state
-                end
+                # end
               
                   p.line(bracket_x , y1 - bracket_start_y_offset , bracket_x , y2).stroke
               end
@@ -563,7 +553,12 @@ class Cuesheet
     p
   end #def
 
-  def cue_height(p,session,region,strip_width)
+
+  def draw_region(region,x,y)
+    
+  end
+
+  def cue_height(p,region,strip_width)
     cue_lines = region.name_lines.size
     region.name_lines.each do |line|
       str = line
