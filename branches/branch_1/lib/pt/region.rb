@@ -22,60 +22,88 @@ require 'pt/session'
 
 module PT
   class Region
-
-    attr_reader :track , :raw_name
-    attr_reader :start , :finish 
-    attr_accessor :line_break
-        
-    def <=>(other)
-      @start <=> other.start
-    end
     
+    # The owning track of this region
+    attr_reader :track
+    
+    # The raw name of this region.  The text of the region's name, without any processing for
+    # line breaks, tagging, etc.
+    attr_reader :raw_name
+    
+    # Integer values of the start and finish time of the region.  These are the
+    # number of seconds for the start and finish, multiplied by Region::divs_per_second.
+    attr_reader :start
+    attr_reader :finish
+    
+    # The character that should signal a line break to a cuesheeting.
+    attr_accessor :line_break
+    
+    # creates a new region, given a track to belong to.
+    #
+    # Regions are created with some explicit defaults.  Mainly, the default raw_name of a
+    # region is <tt>(blank)</tt> and the default line break is a caret "^".
+    # 
+    # The region will be yielded to a block if one is given.
     def initialize(track)
       @track= track
       @raw_name = "(blank)"
       @start = 0
       @finish = 1
       @line_break = "^"
+      if block_given? then
+        yield self
+      end
     end
     
+    # Comparison.  Regions that start before the +other+ are less than, etc.
+    def <=>(other)
+      @start <=> other.start
+    end
+    
+    # At this time, this merely assigns +str+ to <tt>@raw_name</tt>.
     def name=(str)
       @raw_name = str
     end
     
+    # At this time, this merely reads <tt>@raw_name</tt>.    
     def name
       @raw_name
     end
     
+    # Returns the +raw_name+ of the region, minus and dash tagging.
     def clean_name
       md = tag_match_data
       md ? md[1] : @raw_name
     end
     
+    # Returns the tag of this region, without its leading dash.
     def tag
       md = tag_match_data
       md ? md[2] : nil
     end
     
+    # Sets the tag for this region, by either adding it to the end,
+    # or adding it to the end of the clean name. Do *not* put a dash
+    # at the beginning of +str+.  If you pass +nil+ or +false+ for 
+    # +str+, the raw_name will be set to the clean name, effectively 
+    # deleting any existing tag.
     def tag=(str)
-      md = tag_match_data
       @raw_name = if str then
-        md ? md[1] + "-" + str : @raw_name + "-" + str
+        clean_name + "-" + str
       else
-        md[1]
+        clean_name
       end
     end
     
-    def tag_match_data
-      /(.*)-([^-]*)$/.match(@raw_name)
-    end
-    
+    # Returns an array, essentially the region name split by the
+    # +line_break+ string.
     def name_lines
       ret_ary = @line_break ? name.split(@line_break) : [ name ]
       ret_ary.shift if ret_ary.first == ''
       ret_ary
     end
     
+    # This be deprecated.
     def reframe!
       if @start != @finish then 
         modulus = session.time_format == :footage ? divs_per_foot : divs_per_second
@@ -94,6 +122,10 @@ module PT
       @track.impose! self
     end
     
+    # Passing a string containing a timecode expression will set the start time of the region.
+    # The region class attempts to identify the format of the string you pass; if it contains colons or
+    # semicolons, it is recognized as timecode in the fps of the session which possesses this region.
+    # If the string contains a plus sign, it is interpreted as a footage in 24fps.
     def start_time=(tc)
       self.start = str_to_tc(tc)
     end
@@ -102,43 +134,56 @@ module PT
       self.finish = str_to_tc(tc)
     end
 
+    # Returns the start of this region as a timecode string, in the
+    # format of the owning session.
     def start_time
       tc_to_str(@start)
     end
-
+    
+    # Returns the finish of this region as a timecode string, in the
+    # format of the owning session.
     def finish_time
       tc_to_str(@finish)    
     end
     
+    # Returns an Integer duration, finish - start.
     def duration
       @finish - @start
     end
     
+    # Returns the durartion of this region as a timecode string, in the
+    # format of the owning session.
     def duration_time
       tc_to_str(duration)
     end
     
+    # Deprecated.
     def feet_only
       ! @track.session.print_frames
     end
 
+    # A convenice for <tt>track.session</tt>
     def session
       @track.session
     end
-	
-	class << self
-	  def divs_per_second
-      600
+    
+    class << self
+  	  def divs_per_second
+        600
+      end
+
+  	  def divs_per_foot
+        divs_per_second * 2 / 3
+      end
     end
-	
-	  def divs_per_foot
-      divs_per_second * 2 / 3
+  	
+    
+  protected
+    def tag_match_data # :nodoc:
+      /(.*)-([^-]*)$/.match(@raw_name)
     end
-  end
-	
-   private
-   
-   
+    
+  private
     def str_to_tc(str)
       divs_per_foot , divs_per_second = self.class.divs_per_foot , self.class.divs_per_second
       if md = /(\d+)\+(\d+)/.match(str) then
