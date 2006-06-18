@@ -63,6 +63,7 @@ module PT
 
     def update(region)
       impose! region
+      @regions.sort!
     end
 
     def impose!(imposing_region)
@@ -86,7 +87,6 @@ module PT
         region.start > imposing_region.start
       end
       trim_head.start = imposing_region.finish if trim_head
-      @regions.sort!
     end
 
     def blend!(duration = nil)
