@@ -80,4 +80,65 @@ class TrackTest < Test::Unit::TestCase
     assert_equal(track.regions[0].finish, 12 * PT::Region.divs_per_foot)
   end
   
+  def test_overlap_tail  
+    track = PT::Track.new(@session)
+    
+    track.create_region do |r|
+      r.name = "New Region"
+      r.start_time = "9+0"
+      r.finish_time = "40+0"
+    end
+    
+    track.create_region do |r|
+      r.name = "Overlapping Region"
+      r.start_time = "30+0"
+      r.finish_time = "50+0"
+    end
+    
+    assert_equal(track.regions.size , 2)
+    assert_equal(track.regions[0].finish_time , "30+00")
+    assert_equal(track.regions[1].start_time , "30+00")    
+  end
+ 
+  def test_overlap_head
+    track = PT::Track.new(@session)
+    
+    track.create_region do |r|
+      r.name = "New Region"
+      r.start_time = "30+0"
+      r.finish_time = "40+0"
+    end
+    
+    track.create_region do |r|
+      r.name = "Overlapping Region"
+      r.start_time = "10+0"
+      r.finish_time = "35+0"
+    end
+    
+    assert_equal(track.regions.size , 2)
+    assert_equal(track.regions[0].finish_time , "35+00")
+    assert_equal(track.regions[1].start_time , "35+00")   
+  end
+  
+  def test_overlap_omit
+    track = PT::Track.new(@session)
+    
+    track.create_region do |r|
+      r.name = "New Region"
+      r.start_time = "30+0"
+      r.finish_time = "35+0"
+    end
+    
+    track.create_region do |r|
+      r.name = "Overlapping Region"
+      r.start_time = "10+0"
+      r.finish_time = "50+0"
+    end
+    
+    assert_equal(track.regions.size , 1)
+    assert_equal(track.regions[0].finish_time , "50+00")
+    assert_equal(track.regions[0].start_time , "10+00")   
+  end
+     
+  
 end #class

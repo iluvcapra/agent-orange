@@ -20,8 +20,12 @@
 require 'pt/track'
 require 'pt/session'
 
+require 'observer'
+
 module PT
   class Region
+    
+    include Observable
     
     # The owning track of this region
     attr_reader :track
@@ -45,7 +49,7 @@ module PT
     # 
     # The region will be yielded to a block if one is given.
     def initialize(track)
-      @track= track
+      add_observer(@track) if @track= track
       @raw_name = "(blank)"
       @start = 0
       @finish = 1
@@ -114,12 +118,14 @@ module PT
     
     def start=(i)
       @start = i
-      @track.impose! self
+      times_changed
     end
     
     def finish=(i)
-      @finish = i
-      @track.impose! self
+      if i >= @start then
+        @finish = i
+        times_changed
+      end
     end
     
     # Passing a string containing a timecode expression will set the start time of the region.
@@ -181,6 +187,10 @@ module PT
   protected
     def tag_match_data # :nodoc:
       /(.*)-([^-]*)$/.match(@raw_name)
+    end
+    
+    def times_changed
+      changed; notify_observers self
     end
     
   private

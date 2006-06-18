@@ -35,23 +35,34 @@ module PT
       @name = "(blank)"
       @channel = 0
     end
-
-    def add_region(name = '(blank)' , start = 0, finish = 0)
-      r = Region.new(self)
-      r.name, r.start_time, r.finish_time = name , start , finish
+    
+    def create_region(&block)
+      r= Region.new(self)
+      block.call(r)
       @regions << r
+      @regions.sort!
       r
+    end
+
+
+    def add_region(name = '(blank)' , start = '', finish = '')
+      create_region do |r|
+        r.name, r.start_time, r.finish_time = name , start , finish
+      end
     end
     
     def add_primitive_region(name,start,finish)
-      r = Region.new(self)
-      r.name, r.start, r.finish = name , start , finish
-      @regions << r
-      r
+      create_region do |r|
+        r.name, r.start, r.finish = name , start , finish
+      end
     end
 
     def reframe!
       @regions.each {|r| r.reframe! }
+    end
+
+    def update(region)
+      impose! region
     end
 
     def impose!(imposing_region)
@@ -75,6 +86,7 @@ module PT
         region.start > imposing_region.start
       end
       trim_head.start = imposing_region.finish if trim_head
+      @regions.sort!
     end
 
     def blend!(duration = nil)
