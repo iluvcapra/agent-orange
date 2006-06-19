@@ -97,38 +97,42 @@ class TagInterpreter
     return self
   end
   
+  def blend_with_tags(track)
+      open_tags = ["[" , "<" , "{"]
+
+      hold_open_tags = ["[[","]]","{{" , "}}" , ">>" , "<<"]
+
+      stick_open = false
+      @blender.test_before_blend do |first,second|
+  #      $stderr.print "-- Checking #{first.name} against "
+  #      $stderr.print "#{second.name}\n"
+        may_blend = true
+        if first.tag == "!" then
+          may_blend , stick_open = false , false
+        end
+        if second.tag == "!!" then
+          stick_open = false
+          second.tag = nil
+          first.finish = second.start
+        end
+        if hold_open_tags.include?(first.tag) || stick_open then
+          stick_open = true
+          first.finish = second.start
+        end
+        may_blend
+      end
+
+      blended_track = @blender.blend_track(track)
+
+      blended_track.regions.delete_if do |r|
+        r.tag == "!"
+      end
+      blended_track
+  end
+  
   def interpret_track(track) # :returns: new_track
     
-    open_tags = ["[" , "<" , "{"]
-    
-    hold_open_tags = ["[[","]]","{{" , "}}" , ">>" , "<<"]
-    
-    stick_open = false
-    
-    @blender.test_before_blend do |first,second|
-#      $stderr.print "-- Checking #{first.name} against "
-#      $stderr.print "#{second.name}\n"
-      may_blend = true
-      if first.tag == "!" then
-        may_blend , stick_open = false , false
-      end
-      if second.tag == "!!" then
-        stick_open = false
-        second.tag = nil
-        first.finish = second.start
-      end
-      if hold_open_tags.include?(first.tag) || stick_open then
-        stick_open = true
-        first.finish = second.start
-      end
-      may_blend
-    end
-    
-    blended_track = @blender.blend_track(track)
-    
-    blended_track.regions.delete_if do |r|
-      r.tag == "!"
-    end
+    blended_track = blend_with_tags(track)
     
     sequences = []
     last_in = -1
