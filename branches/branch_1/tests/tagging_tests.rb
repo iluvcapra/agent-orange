@@ -192,7 +192,7 @@ class TaggingTest < Test::Unit::TestCase
   # A region tagged with a "-}}" will form an audio sequence with all regions following
   # it without regard for the distance between them, until a "-!!" or "-!" region is
   # encountered.
-  def test_insert_cue
+  def test_forced_continued_cue
     track = @session.add_track("Forced cue with -}}")
     
     track.add_region('test 1-}}',  "100+0" , "105+0")
