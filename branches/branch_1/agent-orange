@@ -32,6 +32,8 @@ begin
   require 'rubygems'
   require 'pdf_qs'
   require 'pt/session'
+  require 'blender'
+  require 'tag_interpreter'
 
   require 'pathname'
   require 'ostruct'
@@ -218,7 +220,7 @@ files.each do |file|
     the_session.blend = options.blend
     the_session.title = options.given_title if options.given_title
     the_session.interpret_tagging! if options.interpret_tags
- #   the_session.reframe! unless options.frames -- FIXME!!!
+    the_session.reframe! unless options.frames
     
     if options.given_outfile == nil then
       file_to_open = Dir.getwd + "/" + Pathname.new(file).basename(".txt") + ".pdf"

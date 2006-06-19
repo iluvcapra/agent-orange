@@ -143,6 +143,10 @@ class TaggingTest < Test::Unit::TestCase
   end
   
   # Test of simple cue insertion with "-]"
+  #
+  # Using the "-]" in the middle of an audio sequence, when a host region precedes
+  # it, will cause the first host region to end and a second to commence in the middle
+  # of the sequence.
   def test_insert_cue
     track = @session.add_track("Insert cue with -]")
     
@@ -161,6 +165,10 @@ class TaggingTest < Test::Unit::TestCase
   end
   
   # Test blend stop with "-!"
+  #
+  # A region tagged with "-!" will cause a region sequence to end at the leading edge of
+  # the region.  The region tagged with the "-!" is omitted, and blending is not premitted
+  # to occur across the gap.
   def test_blend_stop
     track = @session.add_track("Blend stop with -!")
 
@@ -180,6 +188,10 @@ class TaggingTest < Test::Unit::TestCase
   end
   
   # Test of forced continued cue "-}}"
+  #
+  # A region tagged with a "-}}" will form an audio sequence with all regions following
+  # it without regard for the distance between them, until a "-!!" or "-!" region is
+  # encountered.
   def test_insert_cue
     track = @session.add_track("Forced cue with -}}")
     

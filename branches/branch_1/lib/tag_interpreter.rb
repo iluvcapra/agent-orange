@@ -1,6 +1,6 @@
 # tag_interpreter.rb
 # Author:: Jamie Hardt
-#
+# 
 # This file is part of "agent-orange".
 # 
 # "agent-orange" is free software; you can redistribute it and/or modify
@@ -47,7 +47,10 @@ class TagInterpreter
     hold_open_tags = ["[[","]]","{{" , "}}" , ">>" , "<<"]
     
     stick_open = false
+    
     @blender.test_before_blend do |first,second|
+#      $stderr.print "-- Checking #{first.name} against "
+#      $stderr.print "#{second.name}\n"
       may_blend = true
       if first.tag == "!" then
         may_blend , stick_open = false , false

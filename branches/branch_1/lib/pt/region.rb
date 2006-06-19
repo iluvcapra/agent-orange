@@ -110,7 +110,7 @@ module PT
     # This be deprecated.
     def reframe!
       if @start != @finish then 
-        modulus = session.time_format == :footage ? divs_per_foot : divs_per_second
+        modulus = session.time_format == :footage ? Region.divs_per_foot : Region.divs_per_second
         self.start = @start - @start % modulus
         self.finish = @finish - (@finish % modulus) + modulus unless @finish % modulus == 0
       end #if
