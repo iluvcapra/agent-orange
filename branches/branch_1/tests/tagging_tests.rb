@@ -205,5 +205,31 @@ class TaggingTest < Test::Unit::TestCase
     assert_equal(track_result.regions[0].start ,  100 * PT::Region.divs_per_foot)
     assert_equal(track_result.regions[0].finish , 180 * PT::Region.divs_per_foot)
   end
+
+   # Test of forced continued cue "-}}" with inserted cues
+   #
+   def test_forced_continued_cue
+     track = @session.add_track("-}} with inserted cues")
+
+     track.add_region('test 1-}}',  "100+0" , "105+0")
+     track.add_region('test 2-]',   "120+0" , "180+0")
+     track.add_region('test 3',     "300+0" , "320+0")
+     track.add_region('test 4-]',   "360+0" , "400+0")
+     track.add_region('test 5-!!',  "480+0" , "490+0")
+
+     track_result = @tag_interpreter.interpret_track(track)
+
+     assert_equal(track_result.regions.size , 3)
+     assert_equal(track_result.regions[0].clean_name , "test 1")
+     assert_equal(track_result.regions[0].start ,  100 * PT::Region.divs_per_foot)
+     assert_equal(track_result.regions[0].finish , 120 * PT::Region.divs_per_foot)
+     assert_equal(track_result.regions[1].clean_name , "test 2")
+     assert_equal(track_result.regions[1].start ,  120 * PT::Region.divs_per_foot)
+     assert_equal(track_result.regions[1].finish , 360 * PT::Region.divs_per_foot)
+     assert_equal(track_result.regions[2].clean_name , "test 4")
+     assert_equal(track_result.regions[2].start ,  360 * PT::Region.divs_per_foot)
+     assert_equal(track_result.regions[2].finish , 490 * PT::Region.divs_per_foot)
+   end
+
   
 end #class
