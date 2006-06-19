@@ -99,25 +99,16 @@ class TagInterpreter
           curly_start = (stick_open ? region.start : seq_start)
 
           case tag
-            when "]" , "["
+            when "]" , "[" , "]]" , "[["
               new_region = return_track.add_primitive_region(clean_name , region.start , region.finish)
               
-            when "]]" , "[["
-              new_region = return_track.add_primitive_region(clean_name , region.start , region.finish)
-              
-            when "}" , "{"
+            when "}" , "{" ,  "}}" , "}}"
               new_region = return_track.add_primitive_region(clean_name , curly_start , region.finish)
-               
-            when "}}" , "}}"
-              new_region = return_track.add_primitive_region(clean_name , curly_start , region.finish)
-            when ">" , "<"
+  
+            when ">" , "<" , ">>" , "<<"
               return_track.add_primitive_region("Fill" , seq_start , region.start) unless new_region
               new_region = return_track.add_primitive_region(clean_name , region.start , region.finish)
-              
-            when ">>" , "<<"
-              return_track.add_primitive_region("Fill" , seq_start , region.start) unless new_region
-              new_region = return_track.add_primitive_region(clean_name , region.start , region.finish)
-                              
+                                           
             when "&"
               if new_region then
                 new_region.name = (new_region.clean_name + " " + clean_name)

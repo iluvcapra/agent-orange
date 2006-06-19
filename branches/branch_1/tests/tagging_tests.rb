@@ -90,7 +90,7 @@ class TaggingTest < Test::Unit::TestCase
   def test_bracket_closed
     track = @session.add_track("Simple -]")
     
-    track.add_region('test 1', "100+0", "105+0")
+    track.add_region('test 1',   "100+0", "105+0")
     track.add_region('test 2-]', "105+0", "120+0")
       
     track_result = @tag_interpreter.interpret_track(track)
@@ -108,7 +108,7 @@ class TaggingTest < Test::Unit::TestCase
   def test_angle_bracket_closed
     track = @session.add_track("Simple ->")
     
-    track.add_region('test 1', "30+0", "35+0")
+    track.add_region('test 1',   "30+0", "35+0")
     track.add_region('test 2->', "35+0", "40+0")
       
     track_result = @tag_interpreter.interpret_track(track)
