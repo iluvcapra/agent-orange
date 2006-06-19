@@ -17,7 +17,10 @@
 # along with "agent-orange"; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-require 'pdf/writer' 
+require 'pdf/writer'
+require 'pt/session'
+require 'pt/track'
+require 'pt/region'
 
 class Cuesheet
   
@@ -71,7 +74,6 @@ class Cuesheet
     
   end #class
 
-
   class Styler
     STYLES = [ :default , :title , :strip_header , :channel_header, 
                :region_name , :time , :finish_time , :page_number ]
@@ -112,12 +114,12 @@ class Cuesheet
 
   def initialize(s)
     @session = s
-    @strips_per_page = session.tracks.size
+    @strips_per_page = @session.tracks.size
     @styler = Styler.new
     
     styles do |style|
       style.default :size => 12
-      style.default :font => "Helvetica"
+      style.default :face => "Helvetica"
 
       style.title :size => 14
       style.strip_header :size => 12
