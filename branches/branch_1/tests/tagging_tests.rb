@@ -23,6 +23,7 @@ require 'pt/session'
 require 'pt/track'
 require 'pt/region'
 
+require 'tag_interpreter'
 
 # This TestCase tests some simple tagging operations.  All of these tagging operations
 # are *LAW* and any if your patches break any of these tests, you patch will not be
@@ -38,7 +39,11 @@ class TaggingTest < Test::Unit::TestCase
   def setup # :nodoc:
     @session = PT::Session.new
     @session.title = "TaggingTest"
-    @session.blend = 2.0
+    
+    @tag_interpreter = TagInterpreter.new do |ti|
+      ti.blender.blend_duration = 2.0
+    end
+    
   end
   
   # Test for untagged regions.
@@ -52,12 +57,12 @@ class TaggingTest < Test::Unit::TestCase
     track.add_region("test 2" , "95+0", "99+0")
     track.add_region("test 3" , "99+0", "110+0")
     
-    track.interpret_tagging!
+    track_result = @tag_interpreter.interpret_track(track)
     
-    assert_equal(track.regions.size , 1)
-    assert_equal(track.regions[0].clean_name , "test 1")
-    assert_equal(track.regions[0].start  , 90 * PT::Region.divs_per_foot)
-    assert_equal(track.regions[0].finish , 110 * PT::Region.divs_per_foot)
+    assert_equal(track_result.regions.size , 1)
+    assert_equal(track_result.regions[0].clean_name , "test 1")
+    assert_equal(track_result.regions[0].start  , 90 * PT::Region.divs_per_foot)
+    assert_equal(track_result.regions[0].finish , 110 * PT::Region.divs_per_foot)
   end
 
   # Test for the closed-brace-tag *-}*.
@@ -70,12 +75,12 @@ class TaggingTest < Test::Unit::TestCase
     track.add_region('test 1'  ,"9+0"  ,"12+0")
     track.add_region('test 2-}',"12+0" , "18+0")
     
-    track.interpret_tagging!
-    
-    assert_equal(track.regions.size, 1)
-    assert_equal(track.regions[0].clean_name, "test 2")
-    assert_equal(track.regions[0].start,    9 * PT::Region.divs_per_foot)
-    assert_equal(track.regions[0].finish , 18 * PT::Region.divs_per_foot)
+    track_result = @tag_interpreter.interpret_track(track)
+        
+    assert_equal(track_result.regions.size, 1)
+    assert_equal(track_result.regions[0].clean_name, "test 2")
+    assert_equal(track_result.regions[0].start,    9 * PT::Region.divs_per_foot)
+    assert_equal(track_result.regions[0].finish , 18 * PT::Region.divs_per_foot)
   end
   
   # Test for the closed-bracket-tag "-]".
@@ -88,12 +93,12 @@ class TaggingTest < Test::Unit::TestCase
     track.add_region('test 1', "100+0", "105+0")
     track.add_region('test 2-]', "105+0", "120+0")
       
-    track.interpret_tagging!
+    track_result = @tag_interpreter.interpret_track(track)
  
-    assert_equal(track.regions.size , 1)
-    assert_equal(track.regions[0].clean_name,   "test 2")
-    assert_equal(track.regions[0].start,   105 * PT::Region.divs_per_foot)
-    assert_equal(track.regions[0].finish,  120 * PT::Region.divs_per_foot)
+    assert_equal(track_result.regions.size , 1)
+    assert_equal(track_result.regions[0].clean_name,   "test 2")
+    assert_equal(track_result.regions[0].start,   105 * PT::Region.divs_per_foot)
+    assert_equal(track_result.regions[0].finish,  120 * PT::Region.divs_per_foot)
   end
  
   # Test for the closed-angle-bracket-tag "->".
@@ -106,15 +111,15 @@ class TaggingTest < Test::Unit::TestCase
     track.add_region('test 1', "30+0", "35+0")
     track.add_region('test 2->', "35+0", "40+0")
       
-    track.interpret_tagging!
+    track_result = @tag_interpreter.interpret_track(track)
  
-    assert_equal(track.regions.size , 2)
-    assert_equal(track.regions[0].clean_name,   "Fill")
-    assert_equal(track.regions[0].start,   30 * PT::Region.divs_per_foot)
-    assert_equal(track.regions[0].finish,  35 * PT::Region.divs_per_foot)
-    assert_equal(track.regions[1].clean_name ,  "test 2")    
-    assert_equal(track.regions[1].start,   35 * PT::Region.divs_per_foot)
-    assert_equal(track.regions[1].finish,  40 * PT::Region.divs_per_foot)
+    assert_equal(track_result.regions.size , 2)
+    assert_equal(track_result.regions[0].clean_name,   "Fill")
+    assert_equal(track_result.regions[0].start,   30 * PT::Region.divs_per_foot)
+    assert_equal(track_result.regions[0].finish,  35 * PT::Region.divs_per_foot)
+    assert_equal(track_result.regions[1].clean_name ,  "test 2")    
+    assert_equal(track_result.regions[1].start,   35 * PT::Region.divs_per_foot)
+    assert_equal(track_result.regions[1].finish,  40 * PT::Region.divs_per_foot)
   end
   
   # Test the ampersand tag "-&"
@@ -129,12 +134,12 @@ class TaggingTest < Test::Unit::TestCase
     track.add_region('test 1-]',   "45+0" , "51+0")
     track.add_region('test 2-&', "51+0" , "58+0")
     
-    track.interpret_tagging!
+    track_result = @tag_interpreter.interpret_track(track)
     
-    assert_equal(track.regions.size , 1)
-    assert_equal(track.regions[0].clean_name,   "test 1 test 2")
-    assert_equal(track.regions[0].start,   45 * PT::Region.divs_per_foot)
-    assert_equal(track.regions[0].finish,  58 * PT::Region.divs_per_foot) 
+    assert_equal(track_result.regions.size , 1)
+    assert_equal(track_result.regions[0].clean_name,   "test 1 test 2")
+    assert_equal(track_result.regions[0].start,   45 * PT::Region.divs_per_foot)
+    assert_equal(track_result.regions[0].finish,  58 * PT::Region.divs_per_foot) 
   end
   
   # Test of simple cue insertion with "-]"
@@ -144,15 +149,49 @@ class TaggingTest < Test::Unit::TestCase
     track.add_region('test 1-]',  "100+0" , "105+0")
     track.add_region('test 2-]',  "105+0" , "110+0")
     
-    track.interpret_tagging!
+    track_result = @tag_interpreter.interpret_track(track)
     
-    assert_equal(track.regions.size , 2)
-    assert_equal(track.regions[0].clean_name , "test 1")
-    assert_equal(track.regions[0].start ,  100 * PT::Region.divs_per_foot)
-    assert_equal(track.regions[0].finish , 105 * PT::Region.divs_per_foot)
-    assert_equal(track.regions[1].clean_name , "test 2")
-    assert_equal(track.regions[1].start ,  105 * PT::Region.divs_per_foot)
-    assert_equal(track.regions[1].finish , 110 * PT::Region.divs_per_foot)
+    assert_equal(track_result.regions.size , 2)
+    assert_equal(track_result.regions[0].clean_name , "test 1")
+    assert_equal(track_result.regions[0].start ,  100 * PT::Region.divs_per_foot)
+    assert_equal(track_result.regions[0].finish , 105 * PT::Region.divs_per_foot)
+    assert_equal(track_result.regions[1].clean_name , "test 2")
+    assert_equal(track_result.regions[1].start ,  105 * PT::Region.divs_per_foot)
+    assert_equal(track_result.regions[1].finish , 110 * PT::Region.divs_per_foot)
+  end
+  
+  # Test blend stop with "-!"
+  def test_blend_stop
+    track = @session.add_track("Blend stop with -!")
+
+    track.add_region('test 1-}',  "100+0" , "105+0")
+    track.add_region('test 2-!',  "105+5" , "106+0")    
+    track.add_region('test 2-]',  "106+0" , "110+0")
+    
+    track_result = @tag_interpreter.interpret_track(track)
+
+    assert_equal(track_result.regions.size , 2)
+    assert_equal(track_result.regions[0].clean_name , "test 1")
+    assert_equal(track_result.regions[0].start ,  100 * PT::Region.divs_per_foot)
+    assert_equal(track_result.regions[0].finish , 105 * PT::Region.divs_per_foot)
+    assert_equal(track_result.regions[1].clean_name , "test 2")
+    assert_equal(track_result.regions[1].start ,  106 * PT::Region.divs_per_foot)
+    assert_equal(track_result.regions[1].finish , 110 * PT::Region.divs_per_foot)    
+  end
+  
+  # Test of forced continued cue "-}}"
+  def test_insert_cue
+    track = @session.add_track("Forced cue with -}}")
+    
+    track.add_region('test 1-}}',  "100+0" , "105+0")
+    track.add_region('test 2-!!',  "130+0" , "180+0")
+    
+    track_result = @tag_interpreter.interpret_track(track)
+    
+    assert_equal(track_result.regions.size , 1)
+    assert_equal(track_result.regions[0].clean_name , "test 1")
+    assert_equal(track_result.regions[0].start ,  100 * PT::Region.divs_per_foot)
+    assert_equal(track_result.regions[0].finish , 180 * PT::Region.divs_per_foot)
   end
   
 end #class

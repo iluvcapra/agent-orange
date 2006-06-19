@@ -21,8 +21,6 @@ require 'pt/region'
 
 module PT
   class Track
-    
-    class RegionSequence < Array; end
 
     attr_reader :session
     attr_reader :regions
@@ -66,8 +64,7 @@ module PT
       @regions.sort!
     end
 
-    def impose!(imposing_region)
-      
+    def impose!(imposing_region)      
       overwritten = @regions.delete_if do |region|
         region.start >= imposing_region.start && \
         region.finish <= imposing_region.finish && \
@@ -89,128 +86,8 @@ module PT
       trim_head.start = imposing_region.finish if trim_head
     end
 
-    def blend!(duration = nil)
-      dur = duration || @session.blend * Region.divs_per_second
-      
-       (@regions.size - 1).times do |i|
-         first , second = @regions[i] , @regions[i.succ]
-         first.finish = second.start if (second.start - first.finish) <= dur
-       end
-    end #def
-
     def delete_all_regions!
       @regions = []
     end
-
-    def interpret_tagging!(duration = nil)
-      legal_tags = [ "]" , "[" , "[[" , "]]" ,
-                     "}" , "{" , "{{" , "}}" ,
-                     ">" , "<" , "<<" , ">>" ,
-                     "&" , "!" , "!!" ]
-      
-      open_tags = ["[" , "<" , "{"]
-      
-      blend! duration
-      
-      sequences = []
-      last_in = -1
-      @regions.each do |region|
-        sequences << RegionSequence.new if region.start > last_in
-        sequences.last << region
-        last_in = region.finish
-      end
-      
-      delete_all_regions!
-      
-      stick_open = false 
-      new_region = nil
-      
-      sequences.each do |seq|
-        unless stick_open then
-          seq_start = seq.first.start
-          new_region = nil 
-        end
-        
-        tags_count = seq.inject(0) do |memo,region|
-          (legal_tags.include? region.tag ) ? memo + 1 :  memo
-        end
-        
-        seq.each do |region|
-          clean_name , tag = region.clean_name , region.tag
-
-          if legal_tags.include? tag then
-            curly_start = (stick_open ? region.start : seq_start)
-
-            case tag
-              when "]" , "["
-                new_region = add_primitive_region(clean_name , region.start , region.finish)
-                
-              when "]]" , "[["
-                stick_open = true
-                new_region = add_primitive_region(clean_name , region.start , region.finish)
-                
-              when "}" , "{"
-                new_region = add_primitive_region(clean_name , curly_start ,region.finish)
-                 
-              when "}}" , "}}"
-                stick_open = true
-                new_region = add_primitive_region(clean_name , curly_start ,region.finish)                
-              when ">" , "<"
-                add_primitive_region("Fill" , seq_start , region.start) unless new_region
-                new_region = add_primitive_region(clean_name , region.start , region.finish)
-                
-              when ">>" , "<<"
-                stick_open = true
-                add_primitive_region("Fill" , seq_start , region.start) unless new_region
-                new_region = add_primitive_region(clean_name , region.start , region.finish)
-                                
-              when "&"
-                if new_region then
-                  new_region.name = (new_region.clean_name + " " + clean_name)
-                  new_region.finish = region.finish
-                else
-                  new_region = add_primitive_region(clean_name , curly_start ,region.finish)                 
-                end
-              when "!"
-                if stick_open then
-                  stick_open = false
-                  new_region.finish = region.start
-                end
-                
-              when "!!"
-                if stick_open then
-                  stick_open = false
-                  new_region.finish = region.finish
-                end
-            end
-            seq_start = region.finish
-          else
-            if tags_count > 0 then
-              if new_region then
-                new_region.finish = region.finish
-                seq_start = region.finish
-              else
-                
-              end
-            else
-              if new_region then
-                new_region.finish = region.finish
-              else
-                new_region = add_primitive_region(clean_name,region.start,region.finish)
-              end
-            end
-          end
-        end #seq.each |region|
-      end # sequences.each
-      
-    end
-
-    def scan_region_name(region)
-        md = /(.*)-([^-]*)$/.match(region.name)
-        return md[1] , md[2] if md
-        return region.name , nil
-    end
-    
-    
   end
 end

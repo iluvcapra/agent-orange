@@ -22,7 +22,7 @@ $: << "lib/"
 require 'pt/session'
 require 'pt/track'
 require 'pt/region'
-
+require 'blender'
 
 # The BlendTest class performs various tests which exercise the Track::Blender
 # and make sure that the results of its action are appropriate.
@@ -31,6 +31,9 @@ require 'pt/region'
 # and finishes, and then calling a blend on it and seeing what comes out.
 class BlendTest < Test::Unit::TestCase
   
+  def setup
+    @blender = Blender.new
+  end
   
   # A test to make sure that regions that fall within the blend duration
   # are indeed blended.
@@ -40,13 +43,14 @@ class BlendTest < Test::Unit::TestCase
     track.add_primitive_region('test 1',0,600)
     track.add_primitive_region('test 2',900,1100)
     
-    track.blend!(600)
+    @blender.blend_duration = 600
+    test_track = @blender.blend_track(track)
     
-    assert(track.regions.size == 2)
-    assert(track.regions[0].start == 0)
-    assert(track.regions[0].finish == 900)
-    assert(track.regions[1].start == 900)
-    assert(track.regions[1].finish == 1100)
+    assert(test_track.regions.size == 2)
+    assert(test_track.regions[0].start == 0)
+    assert(test_track.regions[0].finish == 900)
+    assert(test_track.regions[1].start == 900)
+    assert(test_track.regions[1].finish == 1100)
   end
   
   # A test to make sure that regions outside of the blend duration
@@ -57,11 +61,12 @@ class BlendTest < Test::Unit::TestCase
     track.add_primitive_region('test 1',0,600)
     track.add_primitive_region('test 2',900,1100)
     
-    track.blend!(100)
+    @blender.blend_duration = 100
+    test_track = @blender.blend_track(track)
     
-    assert(track.regions.size == 2)
-    assert(track.regions[0].finish == 600)
-    assert(track.regions[1].start == 900)
+    assert(test_track.regions.size == 2)
+    assert(test_track.regions[0].finish == 600)
+    assert(test_track.regions[1].start == 900)
   end
 
   

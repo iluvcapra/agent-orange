@@ -59,8 +59,10 @@ module PT
     end
     
     def interpret_tagging!
-      @interprets_tagging = true
-      @tracks.each {|t| t.interpret_tagging! }
+      tag_reader = TagInterpreter.new do |ti|
+        ti.blender.blend_duration = @blend * Region.divs_per_second
+      end
+      @tracks.collect! {|t| tag_reader.interpret_track(t) }
     end
 
     def add_track(name)
