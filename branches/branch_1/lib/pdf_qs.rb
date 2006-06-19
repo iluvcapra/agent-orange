@@ -20,10 +20,12 @@
 require 'pdf/writer' 
 
 class Cuesheet
-
+  
   # A subclass of PDF/Writer.  
   # It provides methods that make our lives easier.
   class CuesheetPDF < PDF::Writer
+    
+    attr_accessor :styler
     
     #Draws an right-facing arrow, with its point at x,y on the current page
     def draw_arrow(x,y)
@@ -43,18 +45,36 @@ class Cuesheet
       text_ary.each do |line|
         text_acc , more_text = line , true
         while (more_text) do
-          #$stderr.print "-- Drawing cue name line \"#{text_acc}\"\n"
           text_acc = add_text_wrap(x, y_acc, width ,text_acc,font_size,:left)
           y_acc -= font_size
           more_text = false if text_acc == ''
         end #while
       end #each
     end #def
+    
+    # A method for calculating the total vertical height a region would require if it
+    # were drawn
+    def cue_height(region,strip_width, time_font_size,cue_font_size)
+      cue_lines = region.name_lines.size
+      region.name_lines.each do |line|
+        str = line
+        cue_lines -= 1 unless str == ''
+        while (str != '') do
+          str = add_text_wrap(100, 500, strip_width - 8,str, @cue_font_size,:left , 0 , true)
+          cue_lines += 1
+        end
+      end
+
+      time_font_size + \
+      cue_font_size * cue_lines + 8
+    end
+    
   end #class
 
 
   class Styler
-    STYLES = [ :default , :title , :region_name , :time , :finish_time , :page_number ]
+    STYLES = [ :default , :title , :strip_header , :channel_header, 
+               :region_name , :time , :finish_time , :page_number ]
     STYLE_ATTRIBUTES = [ :face , :size , :bold , :italic ]
 
     def initialize
@@ -94,12 +114,27 @@ class Cuesheet
     @session = s
     @strips_per_page = session.tracks.size
     @styler = Styler.new
-    @time_font_size = 13
-    @finish_time_font_size = 11
+    
+    styles do |style|
+      style.default :size => 12
+      style.default :font => "Helvetica"
+
+      style.title :size => 14
+      style.strip_header :size => 12
+      style.channel_header :size => 9
+      style.region_name :size => 10
+      style.time :size => 13
+      style.time :bold => true
+      style.finish_time :size => 11
+      style.finish_time :italic => true
+    end
+    
+    @time_font_size = @styler.time :size
+    @finish_time_font_size = @styler.finish_time :size
     @paper_orientation = :landscape
     @min_closed_cue_length = 600
     @shading = :all # :none | :asterisks | :all
-    @cue_font_size = 10
+    @cue_font_size = @styler.region_name :size
     @proportional = true
 
     if block_given? then
@@ -299,7 +334,7 @@ class Cuesheet
         current_height = toplines[finish_idx] - toplines[idx]
       
         # We calculate the needed height to draw this region
-        needed_height = cue_height(p,region,strip_width)
+        needed_height = p.cue_height(region,strip_width, @time_font_size, @cue_font_size)
  
         # if the difference in y-displacement between the start
         # and finish is less than the needed height...
@@ -356,7 +391,7 @@ class Cuesheet
         this_row_topline = cue_top
         this_remaining_space = remaining_space
         top_padding = \
-         (regions_passing_here.collect {|r| cue_height(p,r,strip_width) }).max
+         (regions_passing_here.collect {|r| p.cue_height(r,strip_width, @time_font_size, @cue_font_size) }).max
         if top_padding then
           this_row_topline -= top_padding 
           this_remaining_space -= top_padding
@@ -561,20 +596,4 @@ class Cuesheet
     end #each row_page
     p
   end #def
-
-  def cue_height(p,region,strip_width)
-    cue_lines = region.name_lines.size
-    region.name_lines.each do |line|
-      str = line
-      cue_lines -= 1 unless str == ''
-      while (str != '') do
-        str = p.add_text_wrap(100, 100, strip_width - 8,str, @cue_font_size,:left , 0 , true)
-        cue_lines += 1
-      end
-    end
-  
-    @time_font_size + \
-    @cue_font_size * cue_lines + 8
-  end
-
 end #class
