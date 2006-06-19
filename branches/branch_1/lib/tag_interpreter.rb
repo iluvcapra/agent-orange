@@ -26,7 +26,68 @@ require 'pt/region'
 
 class TagInterpreter
   
-  class RegionSequence < Array; end
+  class RegionSequence < Array
+    
+    def tagged_regions_into(track)
+      legal_tags = [ "]" , "[" , "[[" , "]]" ,
+                     "}" , "{" , "{{" , "}}" ,
+                     ">" , "<" , "<<" , ">>" ,
+                     "&" , "!" , "!!" ]
+      
+      seq_start = first.start
+      new_region = nil
+      
+      tags_count = inject(0) do |memo,region|
+        (legal_tags.include? region.tag ) ? memo + 1 :  memo
+      end
+      
+      each do |region|
+        clean_name , tag = region.clean_name , region.tag
+
+        if legal_tags.include? tag then
+          curly_start = seq_start
+
+          case tag
+            when "]" , "[" , "]]" , "[["
+              new_region = track.add_primitive_region(clean_name , region.start , region.finish)
+              
+            when "}" , "{" ,  "}}" , "}}"
+              new_region = track.add_primitive_region(clean_name , curly_start , region.finish)
+  
+            when ">" , "<" , ">>" , "<<"
+              track.add_primitive_region("Fill" , seq_start , region.start) unless new_region
+              new_region = track.add_primitive_region(clean_name , region.start , region.finish)
+                                           
+            when "&"
+              if new_region then
+                new_region.name = (new_region.clean_name + " " + clean_name)
+                new_region.finish = region.finish
+              else
+                new_region = return_track.add_primitive_region(clean_name , curly_start ,region.finish)
+              end
+          end
+          seq_start = region.finish
+        else
+          if tags_count > 0 then
+            if new_region then
+              new_region.finish = region.finish
+              seq_start = region.finish
+            else
+              
+            end
+          else
+            if new_region then
+              new_region.finish = region.finish
+            else
+              new_region = track.add_primitive_region(clean_name,region.start,region.finish)
+            end
+          end
+        end
+      end #each |region|
+    end #def
+    
+    
+  end
   
   attr_reader :blender
   
@@ -37,10 +98,6 @@ class TagInterpreter
   end
   
   def interpret_track(track) # :returns: new_track
-    legal_tags = [ "]" , "[" , "[[" , "]]" ,
-                   "}" , "{" , "{{" , "}}" ,
-                   ">" , "<" , "<<" , ">>" ,
-                   "&" , "!" , "!!" ]
     
     open_tags = ["[" , "<" , "{"]
     
@@ -85,56 +142,7 @@ class TagInterpreter
     return_track.delete_all_regions!
        
     sequences.each do |seq|
-      seq_start = seq.first.start
-      new_region = nil
-      
-      tags_count = seq.inject(0) do |memo,region|
-        (legal_tags.include? region.tag ) ? memo + 1 :  memo
-      end
-      
-      seq.each do |region|
-        clean_name , tag = region.clean_name , region.tag
-
-        if legal_tags.include? tag then
-          curly_start = (stick_open ? region.start : seq_start)
-
-          case tag
-            when "]" , "[" , "]]" , "[["
-              new_region = return_track.add_primitive_region(clean_name , region.start , region.finish)
-              
-            when "}" , "{" ,  "}}" , "}}"
-              new_region = return_track.add_primitive_region(clean_name , curly_start , region.finish)
-  
-            when ">" , "<" , ">>" , "<<"
-              return_track.add_primitive_region("Fill" , seq_start , region.start) unless new_region
-              new_region = return_track.add_primitive_region(clean_name , region.start , region.finish)
-                                           
-            when "&"
-              if new_region then
-                new_region.name = (new_region.clean_name + " " + clean_name)
-                new_region.finish = region.finish
-              else
-                new_region = return_track.add_primitive_region(clean_name , curly_start ,region.finish)
-              end
-          end
-          seq_start = region.finish
-        else
-          if tags_count > 0 then
-            if new_region then
-              new_region.finish = region.finish
-              seq_start = region.finish
-            else
-              
-            end
-          else
-            if new_region then
-              new_region.finish = region.finish
-            else
-              new_region = return_track.add_primitive_region(clean_name,region.start,region.finish)
-            end
-          end
-        end
-      end #seq.each |region|
+        seq.tagged_regions_into(return_track)
     end # sequences.each
     
     return return_track
