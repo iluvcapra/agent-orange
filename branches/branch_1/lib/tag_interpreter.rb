@@ -98,8 +98,6 @@ class TagInterpreter
   end
   
   def blend_with_tags(track)
-      open_tags = ["[" , "<" , "{"]
-
       hold_open_tags = ["[[","]]","{{" , "}}" , ">>" , "<<"]
 
       stick_open = false
@@ -131,6 +129,7 @@ class TagInterpreter
   end
   
   def interpret_track(track) # :returns: new_track
+    open_tags = ["[" , "<" , "{"]
     
     blended_track = blend_with_tags(track)
     
