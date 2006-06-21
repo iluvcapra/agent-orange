@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
 # == ao-qc - The Agent-Orange Cue-Cleaner
 # Author:: Jamie Hardt

@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
 # == agent-orange - The Agent Orange Cuesheet Generator
 # Author:: Jamie Hardt
