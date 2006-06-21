@@ -4,5 +4,8 @@ task :default => :test
 
 task :test do
 	ruby "tests/test_suite.rb"
+end
 
+task :doc do
+	system "rdoc" , "lib" , "agent-orange" , "ao-qc"
 end

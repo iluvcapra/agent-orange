@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-
 # == agent-orange - The Agent Orange Cuesheet Generator
 # Author:: Jamie Hardt
 
@@ -157,18 +156,11 @@ opts = OptionParser.new do |opts|
     exit
   end
   
-#  opts.on("-w IMG_FILE" , "--watermark=IMG_FILE" , 
-#   "Use the IMG_FILE as a centered watermark for the cuesheet.",
-#   "PNG and JPEG files may be used.") do |imgfile|
-#   options.watermark = imgfile     
-#  end
-  
   opts.separator ""
   opts.separator "By default, cuesheet outputs PDFs to the current working"
   opts.separator "directory, with file names matching the session names in put."
 end
 
-##$stderr.print "Starting cuesheet\n"
 begin
   rest = opts.parse!($*)
 rescue
@@ -188,9 +180,6 @@ options.strip_count = if options.given_strip_count then
                         end
                       end
 
-##$stderr.print "Paper type: #{options.paper}\n"
-##$stderr.print "Strips per page: #{options.strip_count}\n"
-##$stderr.print "File : #{file}\n"
 files.each do |file|
   the_session = Session.new
 
@@ -245,5 +234,5 @@ files.each do |file|
     end
   end
 end
-  #$stderr.print "Finished running\n"
-  exit 0
+
+exit 0
