@@ -19,7 +19,7 @@
 # along with "agent-orange"; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-lib_path = Dir.pwd + "/lib/"
+lib_path = Dir.pwd + "/../lib/"
 $: << lib_path
 
 APP_NAME = "ao-qc"
@@ -29,7 +29,6 @@ APP_VERSION = 0.1
 
 
 begin
-  require 'rubygems'
   require 'pt/session'
 
   require 'pathname'

@@ -65,10 +65,10 @@ module PT
     end
 
     def impose!(imposing_region)      
-      overwritten = @regions.delete_if do |region|
+      @regions.delete_if do |region|
         region.start >= imposing_region.start && \
         region.finish <= imposing_region.finish && \
-        region.object_id != imposing_region.object_id 
+        region.object_id != imposing_region.object_id
       end
       
       trim_tail = @regions.find do |region|

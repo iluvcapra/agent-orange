@@ -18,6 +18,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 require 'pt/track'
+require 'tag_interpreter'
 
 module PT
   class Session
@@ -59,10 +60,15 @@ module PT
     end
     
     def interpret_tagging!
-      tag_reader = TagInterpreter.new do |ti|
-        ti.blender.blend_duration = @blend * Region.divs_per_second
+      begin
+        tag_reader = TagInterpreter.new do |ti|
+          ti.blender.blend_duration = @blend * Region.divs_per_second
+        end
+        new_tracks = @tracks.collect {|t| tag_reader.interpret_track(t) }
+        @tracks = new_tracks
+      rescue => e
+        raise e , e.to_s + "\nTag interpreting failed for session : #{title}\n" + e.backtrace.join("\n")
       end
-      @tracks.collect! {|t| tag_reader.interpret_track(t) }
     end
 
     def add_track(name)

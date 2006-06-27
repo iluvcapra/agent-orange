@@ -59,9 +59,16 @@ module PT
       end
     end
     
-    # Comparison.  Regions that start before the +other+ are less than, etc.
+    # Comparison.  Regions that start before the +other+ are less than, etc. Two regions that
+    # start at the same time are sorted by name, and then finish.
     def <=>(other)
-      @start <=> other.start
+      if @start != other.start then
+        @start <=> other.start
+      elsif name != other.name then
+        name <=> other.name
+      else
+        @finish <=> other.finish
+      end
     end
     
     # At this time, this merely assigns +str+ to <tt>@raw_name</tt>.

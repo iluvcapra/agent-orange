@@ -121,6 +121,24 @@ class TaggingTest < Test::Unit::TestCase
     assert_equal(track_result.regions[1].start,   35 * PT::Region.divs_per_foot)
     assert_equal(track_result.regions[1].finish,  40 * PT::Region.divs_per_foot)
   end
+
+  # Test the open bracket tag "-["
+  #
+  # A region tagged with an open-bracket will start at the time of the region,
+  # but will also *end* at the time of the *start* of the region, causing the
+  # resulting region to have zero duration
+  def test_bracket_open
+    track = @session.add_track("Simple -[")
+    
+    track.add_region('test 1-[',   "45+0" , "51+0")
+    
+    track_result = @tag_interpreter.interpret_track(track)
+    
+    assert_equal(track_result.regions.size , 1)
+    assert_equal(track_result.regions[0].clean_name,   "test 1")
+    assert_equal(track_result.regions[0].start,   45 * PT::Region.divs_per_foot)
+    assert_equal(track_result.regions[0].finish,  45 * PT::Region.divs_per_foot) 
+  end
   
   # Test the ampersand tag "-&"
   # 

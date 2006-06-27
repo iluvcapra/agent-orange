@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>ao-qc</string>
+	<string>lib/pt/region.rb</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -18,76 +18,46 @@
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
-	<integer>299</integer>
+	<integer>298</integer>
 	<key>metaData</key>
 	<dict>
-		<key>agent-orange</key>
+		<key>bin/agent-orange</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>19</integer>
+				<integer>47</integer>
 				<key>line</key>
-				<integer>0</integer>
+				<integer>34</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>12</integer>
 		</dict>
-		<key>ao-qc</key>
+		<key>lib/pt/region.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>32</integer>
 				<key>line</key>
-				<integer>1</integer>
+				<integer>69</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>20</integer>
-		</dict>
-		<key>tests/blend_test.rb</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>21</integer>
-				<key>line</key>
-				<integer>68</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>tests/tagging_test_cases.rb</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>35</integer>
-				<key>line</key>
-				<integer>42</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>50</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>agent-orange</string>
-		<string>tests/tagging_test_cases.rb</string>
-		<string>ao-qc</string>
-		<string>tests/blend_test.rb</string>
+		<string>lib/pt/region.rb</string>
+		<string>bin/agent-orange</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{10, 31}, {922, 801}}</string>
+	<string>{{21, 31}, {922, 801}}</string>
 </dict>
 </plist>

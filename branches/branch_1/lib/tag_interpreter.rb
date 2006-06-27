@@ -48,23 +48,34 @@ class TagInterpreter
           curly_start = seq_start
 
           case tag
-            when "]" , "[" , "]]" , "[["
+            when "]" , "]]" , "[["
               new_region = track.add_primitive_region(clean_name , region.start , region.finish)
               
-            when "}" , "{" ,  "}}" , "}}"
+            when "["
+              new_region = track.add_primitive_region(clean_name , region.start , region.start)
+              
+            when "}" ,  "}}" , "}}"
               new_region = track.add_primitive_region(clean_name , curly_start , region.finish)
   
-            when ">" , "<" , ">>" , "<<"
+            when "{"
+              new_region = track.add_primitive_region(clean_name , curly_start , curly_start)
+  
+            when ">", ">>" , "<<"
               track.add_primitive_region("Fill" , seq_start , region.start) unless new_region
               new_region = track.add_primitive_region(clean_name , region.start , region.finish)
-                                           
+            
+            when "<" 
+              track.add_primitive_region("Fill" , seq_start , region.start) unless new_region
+              new_region = track.add_primitive_region(clean_name , region.start , region.start)              
+                                 
             when "&"
               if new_region then
                 new_region.name = (new_region.clean_name + " " + clean_name)
                 new_region.finish = region.finish
               else
-                new_region = return_track.add_primitive_region(clean_name , curly_start ,region.finish)
+                new_region = track.add_primitive_region(clean_name , curly_start ,region.finish)
               end
+              
           end
           seq_start = region.finish
         else
@@ -102,8 +113,6 @@ class TagInterpreter
 
       stick_open = false
       @blender.test_before_blend do |first,second|
-  #      $stderr.print "-- Checking #{first.name} against "
-  #      $stderr.print "#{second.name}\n"
         may_blend = true
         if first.tag == "!" then
           may_blend , stick_open = false , false

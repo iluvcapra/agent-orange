@@ -38,14 +38,17 @@ class Blender
   def blend_track(in_track)
     dur = @blend_duration
     track = in_track.dup
-    (track.regions.size - 1).times do |i|
-       first , second = track.regions[i] , track.regions[i.succ]
-       may_blend = true
-       may_blend = @test_before_blend.call(first,second) if @test_before_blend
-       if (second.start - first.finish) <= dur && may_blend then
-         first.finish = second.start
-       end
-     end
+#    $stderr.print "Blending #{in_track.name}\n"
+#    $stderr.print "|#   | Name                              | Start  | Finish | Total #\n"
+    (track.regions.size).times do |i| 
+      first , second = track.regions[i] , track.regions[i.succ]
+      if first && second then
+#        $stderr.print "|%-4s|%-35s|%8s|%8s|%4s\n" % [i.to_s,first.name[0..34], first.start_time,first.finish_time,track.regions.size.to_s] 
+        may_blend = true
+        may_blend = @test_before_blend.call(first,second) if @test_before_blend
+        first.finish = second.start if (second.start - first.finish) <= dur && may_blend
+      end #while
+    end #times
      return track
   end #def
   
