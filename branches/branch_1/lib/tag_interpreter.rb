@@ -28,6 +28,19 @@ class TagInterpreter
   
   class RegionSequence < Array
     
+    class << self
+      def array_from_track(track)
+        sequences = []
+        last_in = -1
+        track.regions.each do |region|
+          sequences << RegionSequence.new if region.start > last_in
+          sequences.last << region
+          last_in = region.finish
+        end
+        sequences
+      end
+    end #class << self
+    
     def tagged_regions_into(track)
       legal_tags = [ "]" , "[" , "[[" , "]]" ,
                      "}" , "{" , "{{" , "}}" ,
@@ -101,13 +114,37 @@ class TagInterpreter
   end
   
   attr_reader :blender
+  attr_accessor :min_closed_cue_duration
   
   def initialize(&block)
     @blender = Blender.new
+    @min_closed_cue_duration = 0
     block.call(self) if block
     return self
   end
-  
+    
+  def interpret_track(track) # :returns: new_track
+    open_tags = ["[" , "<" , "{"]
+    
+    track.regions.each do |region|
+      region.finish = region.start if region.duration < @min_closed_cue_duration
+    end
+    
+    blended_track = blend_with_tags(track)
+    
+    sequences = RegionSequence.array_from_track(track)
+    
+    return_track = track.dup
+    return_track.delete_all_regions!
+       
+    sequences.each do |seq|
+        seq.tagged_regions_into(return_track)
+    end # sequences.each
+    
+    return return_track
+  end #def
+
+private
   def blend_with_tags(track)
       hold_open_tags = ["[[","]]","{{" , "}}" , ">>" , "<<"]
 
@@ -135,30 +172,5 @@ class TagInterpreter
         r.tag == "!"
       end
       blended_track
-  end
-  
-  def interpret_track(track) # :returns: new_track
-    open_tags = ["[" , "<" , "{"]
-    
-    blended_track = blend_with_tags(track)
-    
-    sequences = []
-    last_in = -1
-    blended_track.regions.each do |region|
-      sequences << RegionSequence.new if region.start > last_in
-      sequences.last << region
-      last_in = region.finish
-    end
-    
-    return_track = track.dup
-    return_track.delete_all_regions!
-       
-    sequences.each do |seq|
-        seq.tagged_regions_into(return_track)
-    end # sequences.each
-    
-    return return_track
   end #def
-  
-  
 end #class

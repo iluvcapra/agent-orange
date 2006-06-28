@@ -19,32 +19,32 @@
 # along with "agent-orange"; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-lib_path = Dir.pwd + "/../lib/"
+lib_path = File.dirname(__FILE__) + File::SEPARATOR + ".." + File::SEPARATOR + "lib"
 $: << lib_path
 
 APP_NAME = "ao-qc"
 APP_AUTHOR = "Jamie Hardt"
-APP_LONG_VERSION = "Version 0.1 2006-06-09"
+APP_LONG_VERSION = "Version 0.1 2006-06-27"
 APP_VERSION = 0.1
 
 
 begin
   require 'pt/session'
-
+  require 'pt/region'
   require 'pathname'
   require 'ostruct'
   require 'optparse'
 
   include PT
 rescue
-  $stderr.print "An error occurred while loading qs libraries, \
+  $stderr.print "An error occurred while loading agent-orange libraries, \
     you may have an old version of the ruby interpreter.\n"
   exit 17001
 end
 
 cli_options = OpenStruct.new(:blend_duration => 1.0,
-                             :min_closed_cue_length => 1.0,
-                             :interpret_tagging => true )
+                             :interpret_tagging => true ,
+                             :outfile => "-")
 
 opts = OptionParser.new do |opts|
   
@@ -57,15 +57,14 @@ opts = OptionParser.new do |opts|
                                                        "within this duration.") do |v|
     cli_options.blend_duration = v
   end
-                                                         
-  opts.on("-m SECONDS","--min-closed-cue-length=SECONDS", Float,"Minimum closed cue length.") do |v|
-    cli_options.min_closed_cue_length = v
-  end
 
   opts.on("-i","--ignore-tagging", "Ignore tagging.") do
     cli_options.interpret_tagging = false
   end
 
+  opt.on("-o" ,"--outfile" , "Output to file (default is STDOUT)") do |v|
+    cli_options.outfile = v
+  end
 
   opts.on_tail("-h","--help","Show this message.") do
     puts opts
@@ -88,14 +87,22 @@ rest.each do |path|
   begin
     File.open(path,"r") do |file|
       a_session.read_file(file)
-      
-      a_session.interpret_tagging! if cli_options.interpret_tagging
-      
-      puts a_session.to_text_export
-
     end #File.open
   rescue SystemCallError
       $stderr.print "An error ocurred opening the file : " + $! + "\n"
       exit 4
   end
+  
+  a_session.blend = cli_options.blend_duration * Region.divs_per_second
+  a_session.interpret_tagging! if cli_options.interpret_tagging
+  
+  if cli_options.outfile == "-" then
+    puts a_session.to_text_export
+  else
+    File.open(cli_options.outfile,"w") do |wf|
+      wf.write a_session.to_text_export
+    end
+  end
 end
+
+exit 0

@@ -18,13 +18,13 @@
 # along with "agent-orange"; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-lib_path = Dir.pwd + "/../lib/"
+lib_path = File.dirname(__FILE__) + File::SEPARATOR + ".." + File::SEPARATOR + "lib"
 $: << lib_path
 
 APP_NAME = "agent-orange"
 APP_AUTHOR = "Jamie Hardt"
-APP_LONG_VERSION = "Version 0.99.4 2006-05-31"
-APP_VERSION = 0.994
+APP_LONG_VERSION = "Version 1.0 2006-06-27"
+APP_VERSION = 1.0
 
 
 begin
@@ -35,8 +35,10 @@ begin
     $stderr.print "RubyGems not found, skipping."
   end
   
+  require 'string_helper.rb'
   require 'pdf_qs'
   require 'pt/session'
+  require 'pt/region'
   require 'blender'
   require 'tag_interpreter'
 
@@ -63,7 +65,7 @@ options = OpenStruct.new( :paper => 'LETTER',
                           :given_strip_count => nil,
                           :given_outfile => nil,
                           :interpret_tags => true,
-                          :verbose_logging => false,
+                          :verbose => false,
                           :print_frames => false,
                           :line_endings => nil ,
                           :frames => false ,
@@ -143,6 +145,10 @@ opts = OptionParser.new do |opts|
     end
   end
 
+  opts.on("--verbose","Output status while running.") do
+    options.verbose = true
+  end
+
   opts.on("-x","--info","Print information about the session and then exit.") do
         options.info = true
   end
@@ -187,6 +193,7 @@ options.strip_count = if options.given_strip_count then
                       end
 
 files.each do |file|
+  $stderr.print "Reading file : #{file}...\n" if options.verbose
   the_session = Session.new
 
   if file == nil then
@@ -197,6 +204,7 @@ files.each do |file|
 
   begin
     File.open(file,"rb") do |f|
+      $stderr.print "Parsing input file...\n" if options.verbose
       the_session.read_file(f,options.line_endings)
     end
   rescue SystemCallError
@@ -212,13 +220,14 @@ files.each do |file|
     puts   "Number of Tracks     : #{the_session.tracks.size}"
   else
     
-    the_session.blend = options.blend
+    the_session.blend = options.blend * Region.divs_per_second
     the_session.title = options.given_title if options.given_title
+    $stderr.print "Interpreting Tags...\n" if options.verbose
     the_session.interpret_tagging! if options.interpret_tags
     the_session.reframe! unless options.frames
     
     if options.given_outfile == nil then
-      file_to_open = Dir.getwd + "/" + Pathname.new(file).basename(".txt") + ".pdf"
+      file_to_open = Dir.getwd / Pathname.new(file).basename(".txt") + ".pdf"
     else
       file_to_open = options.given_outfile
     end
@@ -230,6 +239,7 @@ files.each do |file|
           q.paper = PAPER_SIZES[options.paper]
           q.strips_per_page = options.strip_count
         end
+        $stderr.print "Writing PDF \"#{File.basename(file_to_open)}\"...\n" if options.verbose
         pdf = cuesheet.to_pdf
         outfile.write pdf.render
       end
@@ -239,6 +249,7 @@ files.each do |file|
       exit 1
     end
   end
+  $stderr.print "Finished with #{File.basename(file_to_open)}.\n" if options.verbose
 end
 
 exit 0

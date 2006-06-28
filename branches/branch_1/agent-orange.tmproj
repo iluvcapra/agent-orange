@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>lib/pt/region.rb</string>
+	<string>lib/pdf_qs.rb</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -18,46 +18,61 @@
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
-	<integer>298</integer>
+	<integer>288</integer>
 	<key>metaData</key>
 	<dict>
-		<key>bin/agent-orange</key>
+		<key>bin/agent-orange.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>47</integer>
+				<integer>20</integer>
 				<key>line</key>
-				<integer>34</integer>
+				<integer>40</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>12</integer>
+			<integer>19</integer>
 		</dict>
-		<key>lib/pt/region.rb</key>
+		<key>bin/ao-qc.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>32</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>69</integer>
+				<integer>108</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>50</integer>
+			<integer>66</integer>
+		</dict>
+		<key>lib/pdf_qs.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>24</integer>
+				<key>line</key>
+				<integer>139</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>118</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>lib/pt/region.rb</string>
-		<string>bin/agent-orange</string>
+		<string>bin/ao-qc.rb</string>
+		<string>bin/agent-orange.rb</string>
+		<string>lib/pdf_qs.rb</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{21, 31}, {922, 801}}</string>
+	<string>{{22, 31}, {922, 801}}</string>
 </dict>
 </plist>

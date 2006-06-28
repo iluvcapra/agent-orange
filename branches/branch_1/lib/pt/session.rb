@@ -39,7 +39,7 @@ module PT
       @print_frames = true
       @time_format = :footage
       @audio_file_count = 0
-      @blend = 1.0
+      @blend = 1.0 * Region.divs_per_second
     end
     
     def audio_regions
@@ -62,7 +62,7 @@ module PT
     def interpret_tagging!
       begin
         tag_reader = TagInterpreter.new do |ti|
-          ti.blender.blend_duration = @blend * Region.divs_per_second
+          ti.blender.blend_duration = @blend
         end
         new_tracks = @tracks.collect {|t| tag_reader.interpret_track(t) }
         @tracks = new_tracks

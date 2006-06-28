@@ -375,7 +375,7 @@ class Cuesheet
   
     remaining_space = cue_top - grid_bottom
     this_row_topline = cue_top
-    extra_pad_at_bottom = 30
+    extra_pad_at_bottom = 30 # I dunno why we need this
     remaining_space -= extra_pad_at_bottom
   
     #$stderr.print "Starting to apply lines into pages.\n"

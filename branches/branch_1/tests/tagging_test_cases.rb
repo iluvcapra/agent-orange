@@ -22,6 +22,7 @@ $: << "lib/"
 require 'pt/session'
 require 'pt/track'
 require 'pt/region'
+require 'string_helper.rb'
 
 
 # == Tagging Test Cases
@@ -36,29 +37,48 @@ require 'pt/region'
 # a particular way.  You put this file in the +tagging_test_cases+/+in+ folder.  Then, make
 # a copy of this file and edit it with a text editor until the output looks exactly like the
 # output ot Session#interpret_tagging! should.  Put this file in +tagging_test_cases+/+out+.
+
 class TaggingTestCases < Test::Unit::TestCase
 
   def setup
-    @infile_dir =  Dir.pwd + "/tagging_test_cases/in/"
-    @outfile_dir = Dir.pwd + "/tagging_test_cases/out/"
+    @infile_dir =  Dir.pwd / "tagging_test_cases" / "in"
+    @outfile_dir = Dir.pwd / "tagging_test_cases" / "out"
+    @test_outfile_dir = Dir.pwd / "tagging_test_cases" / "test"
+    Dir.mkdir @test_outfile_dir
+    
+    @test_files = []
+    Dir.new(@infile_dir).each do | file |
+      @test_in_files << file if File.file?(file)
+    end
+  end
+  
+  def teardown
+    @test_files.each { |old| File.unlink(@test_outfile_dir / old) }
+    Dir.rmdir @test_outfile_dir
   end
   
   def test_tagging_cases
-    Dir.new(@infile_dir).each do |file|
-      next unless (File.file?(@infile_dir + file))
+    @test_files.each do |file|    
+      infile_path , outfile_path , testfile_path = \
+        @infile_dir / file , @outfile_dir / file, @test_outfile_dir / file
       
-      File.open(@infile_dir + file,"r") do |infile|
+     File.open(infile_path,"r") do |infile|
 
-        session = PT::Session.new
-        session.read_file(infile)
-        session.interpret_tagging!
-        
-        File.open(@outfile_dir + file,"r") do |outfile|
-          assert_equal(outfile.read,
-            session.to_text_export, 
-            "#{file} (#{session.title}) failed testing.")
-        end 
-      end
+       session = PT::Session.new
+       session.read_file(infile)
+       session.interpret_tagging!
+       
+       File.open(testfile_path , "w+") do |testfile|
+         testfile.write session.to_text_export
+       end
+       
+       diff = `diff -u #{testfile_path} #{outfile_path}`
+
+       unless diff == nil then
+         flunk "Tagging test case for #{infile_path} failed :\n" + diff
+       end
+     end
+              
     end
     
   end

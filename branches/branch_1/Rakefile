@@ -7,5 +7,5 @@ task :test do
 end
 
 task :doc do
-	system "rdoc" , "lib" , "agent-orange" , "ao-qc"
+	system "rdoc" , "lib" , "bin"
 end

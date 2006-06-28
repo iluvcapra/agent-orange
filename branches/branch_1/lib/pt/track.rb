@@ -42,7 +42,6 @@ module PT
       r
     end
 
-
     def add_region(name = '(blank)' , start = '', finish = '')
       create_region do |r|
         r.name, r.start_time, r.finish_time = name , start , finish
