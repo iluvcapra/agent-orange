@@ -62,7 +62,7 @@ opts = OptionParser.new do |opts|
     cli_options.interpret_tagging = false
   end
 
-  opt.on("-o" ,"--outfile" , "Output to file (default is STDOUT)") do |v|
+  opts.on("-o OUTFILE" ,"--outfile=OUTFILE" , "Output to file (default is STDOUT)") do |v|
     cli_options.outfile = v
   end
 
