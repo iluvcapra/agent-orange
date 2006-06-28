@@ -11,3 +11,6 @@ branch_1 :
    Once the testing infrastructure is laid out, this branch will be merged 
    into the trunk and the test cases and test mechanisms will be useable
    for all who wish to commit back into a-o.
+
+   (branch_1 was made the new trunk at rev 63 on June 27, 2006; it is no
+   longer present in the branches dir.)
