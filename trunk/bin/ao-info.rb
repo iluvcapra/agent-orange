@@ -59,5 +59,8 @@ ARGV.each do |path|
     exit 4
   rescue SessionNotRecognizedError
     $stderr.print "Error: This file does not appear to be a properly-formatted text export : #{path}\n"
+    exit 1
   end
 end
+
+exit 0
