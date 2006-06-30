@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>bin/ao-info.rb</string>
+	<string>lib/pt/region.rb</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -79,6 +79,20 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
+		<key>lib/pt/region.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>36</integer>
+				<key>line</key>
+				<integer>221</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>200</integer>
+		</dict>
 		<key>lib/pt/session.rb</key>
 		<dict>
 			<key>caret</key>
@@ -93,7 +107,7 @@
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>72</integer>
+			<integer>92</integer>
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
@@ -145,8 +159,8 @@
 		<string>bin/ao-qc.rb</string>
 		<string>bin/agent-orange.rb</string>
 		<string>bin/ao-info.rb</string>
-		<string>test_text_exports/dialogue_test.txt</string>
 		<string>lib/pt/session.rb</string>
+		<string>lib/pt/region.rb</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
