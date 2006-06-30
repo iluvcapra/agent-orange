@@ -219,7 +219,7 @@ module PT
       return val
     end
 
-    def tc_to_str(divs)
+    def tc_to_str(divs, format = nil)
       divs_per_foot , divs_per_second = self.class.divs_per_foot , self.class.divs_per_second
       case session.time_format
       when :footage
@@ -235,7 +235,7 @@ module PT
         rem = divs % divs_per_second
         ss  = (divs - rem) / divs_per_second ; divs -= divs_per_second * ss
         ff  = divs / ( divs_per_second / session.fps )
-        feet_only ? "%02i:%02i" % [mm , ss] : "%02i:%02i:%02i" % [mm , ss , ff]
+        feet_only ? "%02i:%02i" % [mm , ss] : "%i:%02i:%02i:%02i" % [hh, mm , ss , ff]
       end
     end
   end
