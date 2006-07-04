@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>lib/pt/region.rb</string>
+	<string>bin/ao-qc.rb</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -35,7 +35,7 @@
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>189</integer>
+			<integer>0</integer>
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
@@ -63,7 +63,7 @@
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>23</integer>
+			<integer>15</integer>
 		</dict>
 		<key>bin/ao-qc.rb</key>
 		<dict>
@@ -91,7 +91,7 @@
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>200</integer>
+			<integer>0</integer>
 		</dict>
 		<key>lib/pt/session.rb</key>
 		<dict>
@@ -165,6 +165,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{21, 92}, {922, 801}}</string>
+	<string>{{21, 31}, {922, 801}}</string>
 </dict>
 </plist>
