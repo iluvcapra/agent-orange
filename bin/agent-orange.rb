@@ -18,8 +18,8 @@
 # along with "agent-orange"; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-lib_path = File.dirname(__FILE__) + File::SEPARATOR + ".." + File::SEPARATOR + "lib"
-$: << lib_path
+$: <<  File.dirname(__FILE__) + File::SEPARATOR + ".." + File::SEPARATOR + "lib"
+$: <<  File.dirname(__FILE__) + File::SEPARATOR + ".." + File::SEPARATOR + "lib/ext"
 
 APP_NAME = "agent-orange"
 APP_AUTHOR = "Jamie Hardt"

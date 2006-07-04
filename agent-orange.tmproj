@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>lib/pt/region.rb</string>
+	<string>tests/session_test.rb</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -28,27 +28,27 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>220</integer>
+				<integer>21</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>189</integer>
+			<integer>0</integer>
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>84</integer>
 				<key>line</key>
-				<integer>215</integer>
+				<integer>21</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>220</integer>
+				<integer>21</integer>
 			</dict>
 		</dict>
 		<key>bin/ao-info.rb</key>
@@ -70,28 +70,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>7</integer>
 				<key>line</key>
-				<integer>29</integer>
+				<integer>21</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
-		</dict>
-		<key>lib/pt/region.rb</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>36</integer>
-				<key>line</key>
-				<integer>221</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>200</integer>
 		</dict>
 		<key>lib/pt/session.rb</key>
 		<dict>
@@ -153,18 +139,31 @@
 				<integer>4</integer>
 			</dict>
 		</dict>
+		<key>tests/session_test.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
 		<string>bin/ao-qc.rb</string>
+		<string>tests/session_test.rb</string>
 		<string>bin/agent-orange.rb</string>
 		<string>bin/ao-info.rb</string>
-		<string>lib/pt/session.rb</string>
-		<string>lib/pt/region.rb</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{21, 92}, {922, 801}}</string>
+	<string>{{21, 31}, {922, 801}}</string>
 </dict>
 </plist>
