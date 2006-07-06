@@ -226,7 +226,7 @@ class TaggingTest < Test::Unit::TestCase
 
    # Test of forced continued cue "-}}" with inserted cues
    #
-   def test_forced_continued_cue
+   def test_forced_continued_cue_insertion
      track = @session.add_track("-}} with inserted cues")
 
      track.add_region('test 1-}}',  "100+0" , "105+0")
