@@ -72,11 +72,12 @@ options = OpenStruct.new( :paper => 'LETTER',
                           :info => false,
                           :blend => 1,
                           :shading => :all,
-                          :watermark => nil)
+                          :watermark => nil,
+                          :exclude_list => [])
 
 opts = OptionParser.new do |opts|
   
-  opts.banner =  "Usage: qs [OPTIONS] file"
+  opts.banner =  "Usage: #{$0} [OPTIONS] file"
   opts.separator "A Ruby script for generating cuesheets from text files."
   opts.separator ""
   
@@ -85,7 +86,13 @@ opts = OptionParser.new do |opts|
           "Paper size (TABLOID, LETTER, and LEGAL are supported , default is LETTER)") do |v|
     options.paper = v if v == 'TABLOID' or v == 'LETTER' or v == 'LEGAL'
   end
-
+  
+  opts.on( "-e TRACK_POS", "--exclude=TRACK_POS", 
+           "Exclude a track at TRACK_POS from",
+           "the cuesheet.  Call multiple times",
+           "to exclude many.") do |v|
+    options.exclude_list << v.to_i         
+  end
   opts.on("-f" , 
           "--frames", 
           "Print times with frames") do |v|
@@ -149,9 +156,9 @@ opts = OptionParser.new do |opts|
     options.verbose = true
   end
 
-  opts.on("-x","--info","Print information about the session and then exit.") do
-        options.info = true
-  end
+#  opts.on("-x","--info","Print information about the session and then exit.") do
+#        options.info = true
+#  end
 
   opts.on("-i" , "--ignore-tags", 
           "Ignore 'tagging'") do |v|
@@ -212,13 +219,13 @@ files.each do |file|
     exit 1
   end
   
-  if options.info then
-    puts   "--------------------------------------------------"
-    puts   "Session Name         : #{the_session.title}"
-    puts   "Base Unit            : #{the_session.time_format == :tc ? 'TC Second' : '35mm Foot' }"
-    puts   "Frames Per Base Unit : #{the_session.fps}"
-    puts   "Number of Tracks     : #{the_session.tracks.size}"
-  else
+#  if options.info then
+#    puts   "--------------------------------------------------"
+#    puts   "Session Name         : #{the_session.title}"
+#    puts   "Base Unit            : #{the_session.time_format == :tc ? 'TC Second' : '35mm Foot' }"
+#    puts   "Frames Per Base Unit : #{the_session.fps}"
+#    puts   "Number of Tracks     : #{the_session.tracks.size}"
+#  else
     
     the_session.blend = options.blend * Region.divs_per_second
     the_session.title = options.given_title if options.given_title
