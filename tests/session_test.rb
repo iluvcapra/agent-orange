@@ -36,6 +36,21 @@ class SessionTest < Test::Unit::TestCase
     assert_equal s.class , PT::Session
   end
   
+  def test_renumber
+    s = PT::Session.new
+    s.add_track "A Track"
+    s.add_track "B Track"
+    s.add_track "C Track"
+    s.tracks.slice(1)
+    s.renumber_tracks_from(1)
+    
+    s.tracks[0].name == "A Track"
+    s.tracks[1].name == "C Track"
+    s.tracks[0].channel == 1
+    s.tracks[1].channel == 2
+    
+  end
+  
   def test_attributes
     s = PT::Session.new
     s.title = "Test Value"

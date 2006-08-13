@@ -48,7 +48,7 @@ class TaggingTestCases < Test::Unit::TestCase
     
     @test_files = []
     Dir.new(@infile_dir).each do | file |
-      @test_in_files << file if File.file?(file)
+      @test_files << file if (File.file?(file) && /\.txt$/.match(file))
     end
   end
   

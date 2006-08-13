@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>tests/tagging_tests.rb</string>
+	<string>tests/session_test.rb</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -26,30 +26,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>line</key>
-				<integer>21</integer>
+				<integer>263</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>84</integer>
-				<key>line</key>
-				<integer>21</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>21</integer>
-			</dict>
+			<integer>224</integer>
 		</dict>
 		<key>bin/ao-info.rb</key>
 		<dict>
@@ -63,7 +47,7 @@
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>23</integer>
+			<integer>24</integer>
 		</dict>
 		<key>bin/ao-qc.rb</key>
 		<dict>
@@ -84,30 +68,28 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>21</integer>
 				<key>line</key>
-				<integer>102</integer>
+				<integer>59</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>92</integer>
-			<key>selectFrom</key>
+			<integer>37</integer>
+		</dict>
+		<key>lib/pt/track.rb</key>
+		<dict>
+			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>84</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
 				<integer>0</integer>
-				<key>line</key>
-				<integer>102</integer>
 			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
 		</dict>
 		<key>test_text_exports/dialogue_test.txt</key>
 		<dict>
@@ -144,41 +126,28 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>23</integer>
 				<key>line</key>
-				<integer>0</integer>
+				<integer>49</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>8</integer>
-		</dict>
-		<key>tests/tagging_tests.rb</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>42</integer>
-				<key>line</key>
-				<integer>228</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>207</integer>
+			<integer>16</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
 		<string>bin/ao-qc.rb</string>
 		<string>tests/session_test.rb</string>
-		<string>tests/tagging_tests.rb</string>
+		<string>lib/pt/session.rb</string>
+		<string>lib/pt/track.rb</string>
 		<string>bin/agent-orange.rb</string>
 		<string>bin/ao-info.rb</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{-1206, 156}, {922, 801}}</string>
+	<string>{{18, 31}, {922, 801}}</string>
 </dict>
 </plist>
