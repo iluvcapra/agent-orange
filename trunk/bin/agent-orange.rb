@@ -71,7 +71,7 @@ options = OpenStruct.new( :paper => 'LETTER',
                           :frames => false ,
                           :info => false,
                           :blend => 1,
-                          :shading => :all,
+                          :shading => true,
                           :watermark => nil,
                           :exclude_list => [])
 
@@ -105,14 +105,14 @@ opts = OptionParser.new do |opts|
     options.given_strip_count = v.to_i
   end
   
-  opts.on( "--shade-asterisks", 
-          "Shade regions whose names start with '*'") do |v|
-    options.shading = :asterisks
-  end
+#  opts.on( "--shade-asterisks", 
+#          "Shade regions whose names start with '*'") do |v|
+#    options.shading = :asterisks
+#  end
   
   opts.on( "--shade-nothing", 
           "Turn of region shading") do |v|
-    options.shading = :none
+    options.shading = false
   end
   
   opts.on( "--cue-font-size=NUM",
@@ -219,14 +219,6 @@ files.each do |file|
     exit 1
   end
   
-#  if options.info then
-#    puts   "--------------------------------------------------"
-#    puts   "Session Name         : #{the_session.title}"
-#    puts   "Base Unit            : #{the_session.time_format == :tc ? 'TC Second' : '35mm Foot' }"
-#    puts   "Frames Per Base Unit : #{the_session.fps}"
-#    puts   "Number of Tracks     : #{the_session.tracks.size}"
-#  else
-    
     options.exclude_list.each do |excl_num|
       the_session.tracks.slice!(excl_num)
     end
@@ -249,6 +241,7 @@ files.each do |file|
         cuesheet = Cuesheet.new(the_session) do |q|
           q.paper = PAPER_SIZES[options.paper]
           q.strips_per_page = options.strip_count
+          q.styles.regions(:shading => options.shading)
         end
         $stderr.print "Writing PDF \"#{File.basename(file_to_open)}\"...\n" if options.verbose
         pdf = cuesheet.to_pdf

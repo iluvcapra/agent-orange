@@ -76,8 +76,8 @@ class Cuesheet
 
   class Styler
     STYLES = [ :default , :title , :strip_header , :channel_header, 
-               :region_name , :time , :finish_time , :page_number ]
-    STYLE_ATTRIBUTES = [ :face , :size , :bold , :italic ]
+               :region_name , :time , :finish_time , :page_number , :regions]
+    STYLE_ATTRIBUTES = [ :face , :size , :bold , :italic , :shading]
 
     def initialize
       @attributes = {}
@@ -129,6 +129,7 @@ class Cuesheet
       style.time :bold => true
       style.finish_time :size => 11
       style.finish_time :italic => true
+      style.regions :shading => true
     end
     
     @time_font_size = @styler.time :size
@@ -471,7 +472,7 @@ class Cuesheet
             #$stderr.print "Drawing \"#{runthru.name}\" as a runthru.\n"    
             y1 , y2 = cue_top , grid_bottom
           
-            # if runthru.shade? then
+            if styles.regions(:shading) then
               p.save_state
               poly_points = [ [ bracket_x , y1 ], 
                               [ bracket_x , y2 ] , 
@@ -481,7 +482,7 @@ class Cuesheet
               p.fill_color(Color::RGB.from_fraction( 0.95, 0.95, 0.95 ))
               p.polygon(poly_points).fill
               p.restore_state
-           # end
+           end
           
             p.line(bracket_x , y1 , bracket_x , y2).stroke
             text = runthru.name
@@ -502,7 +503,7 @@ class Cuesheet
                 y2 -= (@finish_time_font_size/2 + this_finish_row[1])
               end
   
-              # if jumpin.shade? then
+              if styles.regions(:shading) then
                 p.save_state
                 poly_points = [ [ bracket_x , y1 ], 
                                 [ bracket_x , y2 ] , 
@@ -512,7 +513,7 @@ class Cuesheet
                 p.fill_color(Color::RGB.from_fraction( 0.95, 0.95, 0.95 ))
                 p.polygon(poly_points).fill
                 p.restore_state
-              # end
+              end
  
               p.line(bracket_x , y1  , bracket_x , y2).stroke           
               #p.line(bracket_x , y2 , bracket_x+5 , y2).stroke #test!!
@@ -534,7 +535,7 @@ class Cuesheet
               this_start_row = row_page.find {|a_pg| a_pg[0] == jumpout.start}
               y1 , y2 = this_start_row[2] - @time_font_size , grid_bottom 
             
-              # if jumpout.shade? then
+              if styles.regions(:shading) then
                 p.save_state
                 shade_y =  am_finishing_here[jumpout.start] ? y1 + @time_font_size : y1 - bracket_start_y_offset
                 poly_points = [ [ bracket_x , shade_y ], 
@@ -545,7 +546,7 @@ class Cuesheet
                 p.fill_color(Color::RGB.from_fraction( 0.95, 0.95, 0.95 ))
                 p.polygon(poly_points).fill
                 p.restore_state
-             #  end
+              end
             
               p.line(bracket_x , y1 - bracket_start_y_offset , bracket_x , y2).stroke           
               p.add_text_wrap(time_x, y1,time_width,"<b>" + jumpout.start_time + "</b>",@time_font_size,:left)
@@ -566,7 +567,7 @@ class Cuesheet
               y2 -= @finish_time_font_size/2 unless (dont_finish_here[within.finish] == true)
               unless (within.start == within.finish) then         
               
-                # if within.shade? then
+                if styles.regions(:shading) then
                   p.save_state
                   shade_y =  am_finishing_here[within.start] ? y1 + @time_font_size : y1 - bracket_start_y_offset
                   poly_points = [ [ bracket_x , shade_y ], 
@@ -577,7 +578,7 @@ class Cuesheet
                   p.fill_color(Color::RGB.from_fraction( 0.95, 0.95, 0.95 ))
                   p.polygon(poly_points).fill
                   p.restore_state
-                # end
+                end
               
                   p.line(bracket_x , y1 - bracket_start_y_offset , bracket_x , y2).stroke
               end
