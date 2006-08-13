@@ -50,9 +50,17 @@ ARGV.each do |path|
       test , track_count = parse[fp.readline(my_line_ending)]
       raise SessionNotRecognizedError unless test == "# OF AUDIO TRACKS:"
       
+      track_names = []
+      while (not fp.eof?) do
+        cols = parse[fp.readline(my_line_ending)]
+        track_names << cols[1] if cols[0] == "TRACK NAME:"
+      end
+      
       puts   "--------------------------------------------------"
       puts   "Session Name         : " + session_name
       puts   "Number of Tracks     : " + track_count
+      puts   "Track Names          > "
+      track_names.each {|name| puts "                     > " + name}
     end #File.open
   rescue SystemCallError
     $stderr.print "There was an error reading a file : #{$!}\n"
