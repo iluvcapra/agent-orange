@@ -54,6 +54,14 @@ module PT
       end
     end
     
+    def renumber_tracks_from(number)
+      @tracks.each do |track|
+        track.channel = number
+        number = number.succ
+      end
+    end
+      
+    
     def reframe!
       @tracks.each {|t| t.reframe! }
       @print_frames = false

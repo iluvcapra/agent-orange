@@ -88,9 +88,9 @@ opts = OptionParser.new do |opts|
   end
   
   opts.on( "-e TRACK_POS", "--exclude=TRACK_POS", 
-           "Exclude a track at TRACK_POS from",
-           "the cuesheet.  Call multiple times",
-           "to exclude many.") do |v|
+           "Exclude a track at TRACK_POS (leftmost",
+           "track is track 0) from the cuesheet.",
+           "Call multiple times to exclude many.") do |v|
     options.exclude_list << v.to_i         
   end
   opts.on("-f" , 
@@ -227,6 +227,10 @@ files.each do |file|
 #    puts   "Number of Tracks     : #{the_session.tracks.size}"
 #  else
     
+    options.exclude_list.each do |excl_num|
+      the_session.tracks.slice!(excl_num)
+    end
+    
     the_session.blend = options.blend * Region.divs_per_second
     the_session.title = options.given_title if options.given_title
     $stderr.print "Interpreting Tags...\n" if options.verbose
@@ -257,6 +261,6 @@ files.each do |file|
     end
   end
   $stderr.print "Finished with #{File.basename(file_to_open)}.\n" if options.verbose
-end
+#end
 
 exit 0
