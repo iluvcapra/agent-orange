@@ -73,7 +73,8 @@ options = OpenStruct.new( :paper => 'LETTER',
                           :blend => 1,
                           :shading => true,
                           :watermark => nil,
-                          :exclude_list => [])
+                          :exclude_list => [],
+                          :renumber_from => nil)
 
 opts = OptionParser.new do |opts|
   
@@ -93,6 +94,17 @@ opts = OptionParser.new do |opts|
            "Call multiple times to exclude many.") do |v|
     options.exclude_list << v.to_i         
   end
+  
+  opts.on("-r STRING", "--renumber-from=STRING",
+            "Renumber tracks, starting from the",
+            "leftmost track, with STRING.  STRING"
+            "will be incremented intelligently",
+            "for each track.  Renumbering happens",
+            "after all tracks have been excluded"
+            "with -e".) do |v|
+     options.renumber_from = v         
+  end
+  
   opts.on("-f" , 
           "--frames", 
           "Print times with frames") do |v|
@@ -222,6 +234,8 @@ files.each do |file|
     options.exclude_list.each do |excl_num|
       the_session.tracks.slice!(excl_num)
     end
+    
+    the_session.renumber_tracks_from(options.renumber_from) if options.renumber_from
     
     the_session.blend = options.blend * Region.divs_per_second
     the_session.title = options.given_title if options.given_title
