@@ -97,11 +97,11 @@ opts = OptionParser.new do |opts|
   
   opts.on("-r STRING", "--renumber-from=STRING",
             "Renumber tracks, starting from the",
-            "leftmost track, with STRING.  STRING"
+            "leftmost track, with STRING.  STRING",
             "will be incremented intelligently",
             "for each track.  Renumbering happens",
-            "after all tracks have been excluded"
-            "with -e".) do |v|
+            "after all tracks have been excluded",
+            "with -e.") do |v|
      options.renumber_from = v         
   end
   
@@ -232,8 +232,10 @@ files.each do |file|
   end
   
     options.exclude_list.each do |excl_num|
-      the_session.tracks.slice!(excl_num)
+      the_session.tracks[excl_num] = nil
     end
+    
+    the_session.tracks.compact!
     
     the_session.renumber_tracks_from(options.renumber_from) if options.renumber_from
     
