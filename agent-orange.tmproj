@@ -26,28 +26,28 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>27</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>237</integer>
+				<integer>273</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>211</integer>
+			<integer>233</integer>
 		</dict>
 		<key>lib/pt/region.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>4</integer>
 				<key>line</key>
-				<integer>0</integer>
+				<integer>115</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>87</integer>
+			<integer>106</integer>
 		</dict>
 		<key>lib/pt/session.rb</key>
 		<dict>
@@ -86,12 +86,26 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
+				<integer>56</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>35</integer>
+		</dict>
+		<key>lib/tag_interpreter.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
 				<integer>0</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>24</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
@@ -99,6 +113,7 @@
 		<string>lib/pt/session.rb</string>
 		<string>lib/pt/track.rb</string>
 		<string>bin/agent-orange.rb</string>
+		<string>lib/tag_interpreter.rb</string>
 		<string>lib/pt/region.rb</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>

@@ -114,7 +114,6 @@ module PT
       ret_ary
     end
     
-    # This be deprecated.
     def reframe!
       if @start != @finish then 
         modulus = session.time_format == :footage ? Region.divs_per_foot : Region.divs_per_second
