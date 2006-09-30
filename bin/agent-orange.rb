@@ -74,7 +74,8 @@ options = OpenStruct.new( :paper => 'LETTER',
                           :shading => true,
                           :watermark => nil,
                           :exclude_list => [],
-                          :renumber_from => nil)
+                          :renumber_from => nil,
+                          :print_track_numbers => true)
 
 opts = OptionParser.new do |opts|
   
@@ -105,6 +106,12 @@ opts = OptionParser.new do |opts|
      options.renumber_from = v         
   end
   
+  opts.on("-0",
+            "Do not print track numbers, print",
+            "track names only.") do
+    options.print_track_numbers = false
+  end
+  
   opts.on("-f" , 
           "--frames", 
           "Print times with frames") do |v|
@@ -116,11 +123,6 @@ opts = OptionParser.new do |opts|
           "Number of strips per page (default 8 for letter, 16 for tabloid)") do |v|
     options.given_strip_count = v.to_i
   end
-  
-#  opts.on( "--shade-asterisks", 
-#          "Shade regions whose names start with '*'") do |v|
-#    options.shading = :asterisks
-#  end
   
   opts.on( "--shade-nothing", 
           "Turn of region shading") do |v|
@@ -258,6 +260,7 @@ files.each do |file|
           q.paper = PAPER_SIZES[options.paper]
           q.strips_per_page = options.strip_count
           q.styles.regions(:shading => options.shading)
+          q.print_track_numbers = options.print_track_numbers
         end
         $stderr.print "Writing PDF \"#{File.basename(file_to_open)}\"...\n" if options.verbose
         pdf = cuesheet.to_pdf

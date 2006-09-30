@@ -111,6 +111,7 @@ class Cuesheet
   attr_accessor :cue_font_size
   attr_accessor :proportional
   attr_accessor :shading
+  attr_accessor :print_track_numbers
 
   def initialize(s)
     @session = s
@@ -179,7 +180,7 @@ class Cuesheet
     strip_header_font_size = 12
     strip_header_height = strip_header_font_size * 3
     channel_header_font_size = 9
-    channel_header_height = 12 #
+    channel_header_height = ( @print_track_numbers ? 12 : 0 ) 
   
     grid_top = p.absolute_top_margin - (p.font_height(header_size))
     grid_bottom = p.absolute_bottom_margin
@@ -453,10 +454,11 @@ class Cuesheet
           p.add_text_wrap(strip_x,y,strip_width,rest,size,:center ) if rest
         
           #channel_header
-          size = channel_header_font_size
-          y = grid_top - strip_header_height - channel_header_height + 3
-          p.add_text_wrap(strip_x+ 3,y,strip_width - 6,strip.channel,size,:center)
-        
+          if (@print_track_numbers) then
+            size = channel_header_font_size
+            y = grid_top - strip_header_height - channel_header_height + 3
+            p.add_text_wrap(strip_x+ 3,y,strip_width - 6,strip.channel,size,:center)
+          end
           p.stroke_style! PDF::Writer::StrokeStyle.new(bracket_stroke_width)
         
           dont_finish_here = {}
