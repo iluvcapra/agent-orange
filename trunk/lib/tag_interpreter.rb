@@ -24,11 +24,19 @@ require 'pt/track'
 require 'pt/session'
 require 'pt/region'
 
+# A +TagInterpreter+ is designed to attach itself to a track and returns
+# a new track with the tagging in the source track's regions interpreted.
 class TagInterpreter
   
+  # A +RegionSequence+ is a special kind of array used by the +TagInterpreter+. The
+  # +TagInterpreter breaks a track into an array of +RegionSequences+ as a first step.
   class RegionSequence < Array
     
     class << self
+      
+      # Accepts a +Track+ object and breaks it into an array of +RegionSequences+.
+      # Regions are grouped into one +RegionSequence+ if they are touching (a region's
+      # finish is equal to it successor's start, and so on down the line.)
       def array_from_track(track)
         sequences = []
         last_in = -1
@@ -41,6 +49,8 @@ class TagInterpreter
       end
     end #class << self
     
+    # Causes the receiver to read the tagging on his regions and add the
+    # interpreted regions into +track+.
     def tagged_regions_into(track)
       legal_tags = [ "]" , "[" , "[[" , "]]" ,
                      "}" , "{" , "{{" , "}}" ,
