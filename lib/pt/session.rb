@@ -28,7 +28,8 @@ module PT
   # The Session class is an entity which represents a "Session" in a Pro Tools user's
   # understanding of this term.
   #
-  # At its core, a session is an ordered collection of tracks, and 
+  # At its core, a session is an ordered collection of tracks, and certain attributes
+  # which are universal to the tracks, like a session name, a time code format, etc.
   class Session
     
     # The +title+ is the Session Title, usually the file name of the original session, 
@@ -136,59 +137,74 @@ module PT
       @tracks << t
       t
     end
-
+    
+    # Reads a a +File+ or +IO+ object, +io+ and populates the session with the objects described
+    # in the +io+.  The +io+ must contain text in the format of a Pro Tools text export, which is a
+    # tab-delimited ASCII (or MacRoman) text file using either DOS, Unix or Mac OS line breaks,
+    # depending on what version of Pro Tools exported the file.
     def read_file(io,line_ending = nil )
       curr_tr, curr_region, reading = nil , nil , false
-
+      
+      # We make +parse+ a little proc that splits a string into an array of stripped strings.
       parse = proc do |line| 
         line.split(%r/\t/).map{|c| c.strip}
       end
       
+      # If the caller has specified a +line_ending+, use that, otherwise try to
+      # autodetect.  The method for autodetection will fail if the first line of
+      # the text export, the SESSION NAME: record, is longer than 80 characters.
       if line_ending then
         my_line_ending = line_ending
       else
-        my_line_ending = if io.gets("\n").size < 60 then
+        my_line_ending = if io.gets("\n").size < 80 then
             "\n"
-          elsif io.rewind && io.gets("\r\n").size < 60 then
+          elsif io.rewind && io.gets("\r\n").size < 80 then
             "\r\n"
           else
             "\r"
           end
+        # put us back at the head of the file, now that we know how to read it.
         io.rewind
       end
       
-      io.each(my_line_ending) do |line|
-        row = parse[line]
-        case row[0]
+      
+      io.each(my_line_ending) do |line| # for each line in the file
+        row = parse[line]               # split it into cells
+        case row[0]                     # if the first cell in the line is...
           when 'SESSION NAME:'
-            self.title = row[1]
+            self.title = row[1]         # read the title
           when 'TIME CODE FORMAT:'
-            @time_code_format = row[1]    
+            @time_code_format = row[1]  # read the TC format
           when 'SAMPLE RATE:'
-            @sample_rate = row[1].to_f
+            @sample_rate = row[1].to_f      # read sample rate
           when 'BIT DEPTH:'
-            @bit_depth = row[1][0..1].to_i
+            @bit_depth = row[1][0..1].to_i  # read bit depth, etc...
           when '# OF AUDIO FILES:'
             @audio_file_count = row[1].to_i
           when 'TRACK NAME:'
-            curr_tr = add_track(row[1])
+            curr_tr = add_track(row[1])     # create a new track, and put us in a state
+                                            # for adding things to if
           when 'CHANNEL'
-            reading = true if curr_tr && row[1] == 'EVENT' 
-          when '1'
-            if reading then
+            reading = true if curr_tr && row[1] == 'EVENT' # put us in the +reading+ mode for
+                                                           # the current track.
+          
+          when '1'                                         # if the region is on channel 1
+            if reading then                                # and we're reading
               name = row[2].strip
               name = "(blank)" unless name
-              r = curr_tr.add_region(name, row[3], row[4])
+              r = curr_tr.add_region(name, row[3], row[4]) #create a new region on the +curr_tr+
             end
-          when nil
-            curr_str , reading = nil , false
+          when nil                            # if the line was blank
+            curr_str , reading = nil , false  # put us out of track reading mode
         end #case
       end #each
     end #def
     
+    # Generate an export of all the appropriate data from the +Session+ object, in
+    # Pro Tools text export format, as a String, using Unix line endings by default.
     def to_text_export(line_ending = "\n")
       output = ""
-      output << ["SESSION NAME:", @title ].join(9.chr) << line_ending
+      output << ["SESSION NAME:", @title ].join(9.chr) << line_ending # 9.chr is a tab
       output << ["SAMPLE RATE:" , "%.6f" % @sample_rate   ].join(9.chr) << line_ending
       output << ["BIT DEPTH:", "%i-bit" % @bit_depth.to_i ].join(9.chr) << line_ending
       output << ["TIME CODE FORMAT:",@time_code_format    ].join(9.chr) << line_ending

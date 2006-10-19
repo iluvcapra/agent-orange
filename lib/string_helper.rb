@@ -3,6 +3,7 @@
 
 class String
   
+  # Conatenates a File::SEPARATOR to the end of the receiver and then adds the string argument.
   def /(str)
     self + File::SEPARATOR + str
   end
