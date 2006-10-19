@@ -113,7 +113,7 @@ module PT
       ret_ary.shift if ret_ary.first == ''
       ret_ary
     end
-    
+      
     def reframe!
       if @start != @finish then 
         modulus = session.time_format == :footage ? Region.divs_per_foot : Region.divs_per_second
