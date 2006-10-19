@@ -17,18 +17,56 @@
 # along with "agent-orange"; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
+
+
 require 'pt/track'
 require 'tag_interpreter'
 
 module PT
+  
+  
+  # The Session class is an entity which represents a "Session" in a Pro Tools user's
+  # understanding of this term.
+  #
+  # At its core, a session is an ordered collection of tracks, and 
   class Session
     
+    # The +title+ is the Session Title, usually the file name of the original session, 
+    # minus any extension.
     attr_accessor :title
+    
+    # +tracks+ is an Enumerable data structure which yields each track in the order of
+    # it's vertical screen placement.
     attr_reader   :tracks
+    
+    # If +print_frames+ evaluates to +false+, only feet or hh:mm:ss will be printed on
+    # the sessions resulting cuesheet.  Frames will be printed in other cases.
+    #
+    # *Note*: This attribute should be moved to the +Cuesheet+ object at some point.
     attr_accessor :print_frames
+    
+    # +time_code_format+ is a string which can accept the values that would be present
+    # in the "TIME CODE FORMAT:" record in a session export.  It gives the frame count
+    # per second, and thus allows the absolute frame count of events to be calculated
+    # from the time code in a text export (which otherwise would be ambiguous).
+    #
+    # A common value for this is '30 Frame' or '29.97 Frame'.  Clients of this
+    # attribute must accept that it can hold any value that the "TIME CODE FORMAT:"
+    # record can hold.
     attr_accessor :time_code_format
-    attr_reader   :fps
+    
+    # +time_format+ can hold one of two Symbols, +:footage+ or +:tc+.  This is set by
+    # the +Region+ object when new regions are read from a text export, and the region
+    # object consults this property when it must display its time.
+    #
+    # _This is deprecated and should be moved somewhere else_
     attr_accessor :time_format
+    
+    # +blend+ is a Numeric that is the blend duration; if the +start+ of a region, minus
+    # the +finish+ of the region following it on a track is less than +blend+, the regions
+    # will be blended together when +interpret_tagging!+ is called.
+    #
+    # _This is deprecated and should be moved_
     attr_accessor :blend
     
     def initialize
@@ -42,10 +80,14 @@ module PT
       @blend = 1.0 * Region.divs_per_second
     end
     
+    # Returns every region in the session, as an +Array+, in no particular guaranteed
+    # order.
     def audio_regions
       @tracks.inject([]) { |memo,trk| trk.regions + memo }
     end
     
+    # Returns the frames-per-timecode-second of this session, based on the value of
+    # +time_code_format+.  Values that may be returned by this presently are 30, 25, and 24.
     def fps
       case @time_code_format
         when /29|30/  ; 30
@@ -54,6 +96,9 @@ module PT
       end
     end
     
+    # Changes the +channel+ attribute of each track in the session, going from first to last
+    # in the session's +tracks+ array.  The argument +number+ may be a +Integer+ or +String+,
+    # or any object that returns an appropriate value for +succ+ and +to_s+. 
     def renumber_tracks_from(number)
       @tracks.each do |track|
         track.channel = number
@@ -61,12 +106,14 @@ module PT
       end
     end
       
-    
+    # Calls +Track.reframe!+ on each track, and sets +print_frames+ to +false+.
     def reframe!
       @tracks.each {|t| t.reframe! }
       @print_frames = false
     end
     
+    # Creates a new +TagInterpreter+ for each track in the session and applies them
+    # to each track, one by one, using the +blend+ attribute.
     def interpret_tagging!
       begin
         tag_reader = TagInterpreter.new do |ti|
@@ -78,7 +125,10 @@ module PT
         raise e , e.to_s + "\nTag interpreting failed for session : #{title}\n" + e.backtrace.join("\n")
       end
     end
-
+    
+    # Adds a new track to the session, with the name +name+ and with a default +channel+ value,
+    # which is by default the track's index (from 1).  If +name+ is an empty string, the track's
+    # name will be set to a concatenation of the letter "A" and the track's index (from 1).
     def add_track(name)
       t = Track.new(self)
       name != "" ? t.name = name : t.name = "A" + @tracks.size.succ.to_s
