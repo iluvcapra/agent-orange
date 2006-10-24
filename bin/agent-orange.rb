@@ -18,8 +18,8 @@
 # along with "agent-orange"; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-$: <<  File.dirname(__FILE__) + File::SEPARATOR + ".." + File::SEPARATOR + "lib"
-$: <<  File.dirname(__FILE__) + File::SEPARATOR + ".." + File::SEPARATOR + "lib/ext"
+($:).unshift File.dirname(__FILE__) + File::SEPARATOR + ".." + File::SEPARATOR + "lib"
+($:).unshift File.dirname(__FILE__) + File::SEPARATOR + ".." + File::SEPARATOR + "lib/ext"
 
 APP_NAME = "agent-orange"
 APP_AUTHOR = "Jamie Hardt"
@@ -75,7 +75,8 @@ options = OpenStruct.new( :paper => 'LETTER',
                           :watermark => nil,
                           :exclude_list => [],
                           :renumber_from => nil,
-                          :print_track_numbers => true)
+                          :print_track_numbers => true,
+                          :decamelize => false)
 
 opts = OptionParser.new do |opts|
   
@@ -110,6 +111,12 @@ opts = OptionParser.new do |opts|
             "Do not print track numbers, print",
             "track names only.") do
     options.print_track_numbers = false
+  end
+  
+  opts.on("-D",
+            "Enable DeCamelizer.  White space will",
+            "be added to camelized region names.") do
+    options.decamelize = true
   end
   
   opts.on("-f" , 
@@ -243,6 +250,7 @@ files.each do |file|
     
     the_session.blend = options.blend * Region.divs_per_second
     the_session.title = options.given_title if options.given_title
+    the_session.decamelize! if options.decamelize
     $stderr.print "Interpreting Tags...\n" if options.verbose
     the_session.interpret_tagging! if options.interpret_tags
     the_session.reframe! unless options.frames

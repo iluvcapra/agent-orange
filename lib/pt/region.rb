@@ -81,10 +81,21 @@ module PT
       @raw_name
     end
     
+    # DeCamelizes the name
+    def decamelize_name!
+      
+    end
+    
     # Returns the +raw_name+ of the region, minus and dash tagging.
     def clean_name
       md = tag_match_data
       md ? md[1] : @raw_name
+    end
+    
+    # Sets the clean, diaplaying name of the region without affecting the tagging
+    # which may follow.
+    def clean_name=(str)
+      
     end
     
     # Returns the tag of this region, without its leading dash.

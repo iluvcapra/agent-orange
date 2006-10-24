@@ -18,7 +18,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 require 'test/unit'
-$: << "lib/"
+($:).unshift "lib/"
 require 'pt/session'
 require 'pt/track'
 require 'pt/region'
