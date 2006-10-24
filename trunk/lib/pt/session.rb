@@ -20,10 +20,10 @@
 
 
 require 'pt/track'
+require 'pt/region'
 require 'tag_interpreter'
 
 module PT
-  
   
   # The Session class is an entity which represents a "Session" in a Pro Tools user's
   # understanding of this term.
@@ -136,6 +136,11 @@ module PT
       t.channel = @tracks.size.succ.to_s
       @tracks << t
       t
+    end
+    
+    # A convenience method, calls +decamlize_name!+ on each of +audio_regions+.
+    def decamelize!
+      audio_regions.each {|r| r.decamelize_name! }
     end
     
     # Reads a a +File+ or +IO+ object, +io+ and populates the session with the objects described

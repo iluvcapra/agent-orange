@@ -19,7 +19,7 @@
 
 require 'rubygems'
 require 'test/unit'
-$: << "lib/"
+($:).unshift"lib/"
 require 'pt/session'
 require 'pt/track'
 require 'pt/region'

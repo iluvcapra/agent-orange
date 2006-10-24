@@ -19,7 +19,7 @@
 
 
 require 'test/unit'
-$: << "lib/"
+($:).unshift "lib/"
 require 'pt/session'
 require 'pt/track'
 require 'pt/region'
@@ -41,14 +41,21 @@ class SessionTest < Test::Unit::TestCase
     s.add_track "A Track"
     s.add_track "B Track"
     s.add_track "C Track"
-    s.tracks.slice(1)
+    s.tracks.slice!(1)
     s.renumber_tracks_from(1)
     
-    s.tracks[0].name == "A Track"
-    s.tracks[1].name == "C Track"
-    s.tracks[0].channel == 1
-    s.tracks[1].channel == 2
+    assert_equal(s.tracks[0].name, "A Track")
+    assert_equal(s.tracks[1].name, "C Track")
+    assert_equal(s.tracks[0].channel, 1)
+    assert_equal(s.tracks[1].channel, 2)
     
+  end
+  
+  def test_decamelize
+    s = PT::Session.new
+    assert_nothing_raised {
+      s.decamelize!
+    }
   end
   
   def test_attributes

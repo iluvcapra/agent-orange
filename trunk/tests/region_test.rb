@@ -1,4 +1,4 @@
-# test_suite.rb
+# region_test.rb
 # Author:: Jamie Hardt
 #
 # This file is part of "agent-orange".
@@ -17,14 +17,23 @@
 # along with "agent-orange"; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-
 require 'test/unit'
+($:).unshift "lib/"
+require 'pt/region'
 
-require 'tests/blend_test'
-require 'tests/track_test'
-require 'tests/tagging_tests'
-require 'tests/tagging_test_cases'
-require 'tests/pdf_test'
-require 'tests/session_test'
-require 'tests/styler_test'
-require 'tests/region_test'
+# Tests Region objects
+class RegionTest < Test::Unit::TestCase
+  def test_truth
+    assert_equal 1,1
+  end
+#  def test_decamelize
+#    r = PT::Region.new
+#    r.name = "ThisIsACamelizedName"
+#    r.decamelize_name!
+#
+#    assert_equal(r.name, "This Is A Camelized Name")
+#  end
+  
+  # test clean_name and clean_name=
+  
+end #class
