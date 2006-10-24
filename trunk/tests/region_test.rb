@@ -26,14 +26,30 @@ class RegionTest < Test::Unit::TestCase
   def test_truth
     assert_equal 1,1
   end
-#  def test_decamelize
-#    r = PT::Region.new
-#    r.name = "ThisIsACamelizedName"
-#    r.decamelize_name!
-#
-#    assert_equal(r.name, "This Is A Camelized Name")
-#  end
+
+  def test_decamelize
+    r = PT::Region.new(nil)
+    r.name = "ThisIsACamelizedName"
+    r.decamelize_name!
+    assert_equal(r.name, "This Is A Camelized Name")
+
+    r.name = "ThisIs1OtherCamelizedName"
+    r.decamelize_name!
+    assert_equal(r.name, "This Is 1 Other Camelized Name")
+
+  end
   
-  # test clean_name and clean_name=
+  def test_clean_name
+    r = PT::Region.new(nil)
+    r.name = "test-}"
+    
+    assert_equal(r.tag,"}")
+    assert_equal(r.clean_name,"test")
+    
+    r.clean_name = "test 2"
+    assert_equal(r.clean_name,"test 2")
+    assert_equal(r.name,"test 2-}")
+    assert_equal(r.tag,"}")
+  end
   
 end #class

@@ -83,7 +83,8 @@ module PT
     
     # DeCamelizes the name
     def decamelize_name!
-      
+      words = clean_name.scan(/[A-Z0-9][^A-Z0-9]*/)
+      self.clean_name= words.join(" ") if words.size > 0
     end
     
     # Returns the +raw_name+ of the region, minus and dash tagging.
@@ -95,7 +96,9 @@ module PT
     # Sets the clean, diaplaying name of the region without affecting the tagging
     # which may follow.
     def clean_name=(str)
-      
+      curr_tag = tag
+      @raw_name = str
+      @raw_name << "-"<< curr_tag if curr_tag
     end
     
     # Returns the tag of this region, without its leading dash.
