@@ -26,7 +26,6 @@ APP_AUTHOR = "Jamie Hardt"
 APP_LONG_VERSION = "Version 1.0 2006-06-27"
 APP_VERSION = 1.0
 
-
 begin
   
   begin
