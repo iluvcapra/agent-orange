@@ -83,8 +83,9 @@ module PT
     
     # DeCamelizes the name
     def decamelize_name!
-      words = clean_name.scan(/[A-Z0-9][^A-Z0-9]*/)
-      self.clean_name= words.join(" ") if words.size > 0
+      @raw_name.gsub!(/([a-z])([A-Z])/,'\1 \2')
+      @raw_name.gsub!(/A([A-Z][^A-Z]+)/, 'A \1')
+      @raw_name.gsub!(/([A-Za-z])([0-9]+)([A-Za-z])/,'\1 \2 \3')
     end
     
     # Returns the +raw_name+ of the region, minus and dash tagging.

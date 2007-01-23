@@ -33,10 +33,25 @@ class RegionTest < Test::Unit::TestCase
     r.decamelize_name!
     assert_equal(r.name, "This Is A Camelized Name")
 
+    r.name = "ACamelizedNameWithALeadingA"
+    r.decamelize_name!
+    assert_equal(r.name, "A Camelized Name With A Leading A")
+
+    r.name = "ANANGRYALLCAPSNAME"
+    r.decamelize_name!
+    assert_equal(r.name, "ANANGRYALLCAPSNAME")
+
+#    r.name = "MIXEDCAPSAndCamelCase"
+#    r.decamelize_name!
+#    assert_equal(r.name, "MIXEDCAPS And Camel Case")
+
     r.name = "ThisIs1OtherCamelizedName"
     r.decamelize_name!
     assert_equal(r.name, "This Is 1 Other Camelized Name")
 
+    r.name = "this is a Plain Name"
+    r.decamelize_name!
+    assert_equal(r.name, "this is a Plain Name")
   end
   
   def test_clean_name
