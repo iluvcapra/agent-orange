@@ -132,14 +132,6 @@ class Cuesheet
       style.finish_time :italic => true
       style.regions :shading => true
     end
-    
-    @time_font_size = @styler.time :size
-    @finish_time_font_size = @styler.finish_time :size
-    @paper_orientation = :landscape
-    @min_closed_cue_length = 600
-    @shading = :all # :none | :asterisks | :all
-    @cue_font_size = @styler.region_name :size
-    @proportional = true
 
     if block_given? then
       yield self
@@ -164,11 +156,25 @@ class Cuesheet
   def to_pdf
     pdf_for_session(@paper,@strips_per_page)
   end
-
+  
+  def shrink_time_font(pdf,strip_width, current_font)
+    subtract = 0
+    while (pdf.add_text_wrap(100,100,strip_width,"0:00:00:00",current_font - subtract,:left,0,true) != "") do
+      subtract += 0.5
+    end
+    current_font - subtract
+  end
+  
   def pdf_for_session(paper, strips_per_page)
+    @time_font_size = @styler.time :size
+    @finish_time_font_size = @styler.finish_time :size
+    @paper_orientation = :landscape
+    @min_closed_cue_length = 600
+    @shading = :all # :none | :asterisks | :all
+    @cue_font_size = @styler.region_name :size
+    @proportional = true
     p = CuesheetPDF.new(:paper => paper, 
-          :orientation => @paper_orientation 
-          )
+          :orientation => @paper_orientation)
   
     # Some overall dimensions
     p.select_font "Helvetica" , "MacRomanEncoding"
@@ -176,7 +182,9 @@ class Cuesheet
     header_size = 14 #title font size
 
     strip_width = p.margin_width / strips_per_page
-
+    
+    @time_font_size = shrink_time_font(p,strip_width,@time_font_size)
+    
     strip_header_font_size = 12
     strip_header_height = strip_header_font_size * 3
     channel_header_font_size = 9
