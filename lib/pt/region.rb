@@ -170,7 +170,7 @@ module PT
     # Returns the finish of this region as a timecode string, in the
     # format of the owning session.
     def finish_time
-      tc_to_str(@finish)    
+      tc_to_str(@finish,:msf)    
     end
     
     # Returns an Integer duration, finish - start.
@@ -240,7 +240,7 @@ module PT
         rem = divs % divs_per_foot
         feet = (divs - rem) / divs_per_foot
         fr = rem / (divs_per_second / 24)
-        feet_only ? feet.to_s + "'" : "%i+%02i" % [ feet , fr ]
+        retStr = feet_only ? feet.to_s + "'" : "%i+%02i" % [ feet , fr ]
       when :tc
         rem = divs % (dph = divs_per_second * 60 * 60)
         hh  = (divs - rem) / dph ; divs -= dph * hh
@@ -249,8 +249,14 @@ module PT
         rem = divs % divs_per_second
         ss  = (divs - rem) / divs_per_second ; divs -= divs_per_second * ss
         ff  = divs / ( divs_per_second / session.fps )
-        feet_only ? "%02i:%02i" % [mm , ss] : "%i:%02i:%02i:%02i" % [hh, mm , ss , ff]
+        retStr = unless format == :msf
+          feet_only ? "%02i:%02i" % [mm , ss] : "%i:%02i:%02i:%02i" % [hh, mm , ss , ff]
+        else
+          "%02i:%02i:%02i" % [mm,ss,ff]
+        end
       end
+    
+    retStr
     end
   end
 end #module

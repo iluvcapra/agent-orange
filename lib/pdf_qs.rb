@@ -530,7 +530,7 @@ class Cuesheet
               unless (dont_finish_here[jumpin.finish] == true) then
                 p.line(bracket_x - bracket_stroke_width / 2 , y2 , bracket_x2 , y2).stroke
                 this_finish_str = "<i>" + jumpin.finish_time + "</i>"
-                p.add_text_shrink(bracket_x2 + 6 , y2 -4 , name_width, this_finish_str , @finish_time_font_size,:left)         
+                p.add_text_shrink(bracket_x2 + 6 , y2 -4 , name_width - (bracket_x2 - bracket_x) - 6, this_finish_str , @finish_time_font_size,:left)         
                 p.draw_arrow(bracket_x2 + 5 , y2) 
               end          
             end
@@ -596,7 +596,7 @@ class Cuesheet
               p.draw_region_name(name_x , y1 , within , name_width , cue_font_size)
               unless ((dont_finish_here[within.finish] == true) or within.start == within.finish ) then
                 p.line(bracket_x - bracket_stroke_width / 2 , y2 , bracket_x2 , y2).stroke
-                p.add_text_shrink(bracket_x2 + 6 , y2 - 4 , name_width, "<i>" + within.finish_time + "</i>" , @finish_time_font_size,:left)
+                p.add_text_shrink(bracket_x2 + 6 , y2 - 4 , name_width - (bracket_x2 - bracket_x) - 6, "<i>" + within.finish_time + "</i>" , @finish_time_font_size,:left)
                 p.draw_arrow(bracket_x2 + 5 , y2)           
               end
             end
