@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		7D0B99750A8FB97400992B3B /* qsTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D0B99740A8FB97400992B3B /* qsTrack.m */; };
-		7D4109C50B66A4BD00E5B8AD /* agent-orange-1_4_0 in Resources */ = {isa = PBXBuildFile; fileRef = 7D4109880B66A4BD00E5B8AD /* agent-orange-1_4_0 */; };
 		7D424DB609EA1C6F003067AC /* qsRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D424DB409EA1C6F003067AC /* qsRunner.m */; };
 		7D424DB909EA1C96003067AC /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7D424DB709EA1C96003067AC /* MainMenu.nib */; };
 		7D424DBC09EA1C9B003067AC /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 7D424DBA09EA1C9B003067AC /* Credits.rtf */; };
 		7D424F4809EA1D0E003067AC /* NSApplicationIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7D424F4709EA1D0E003067AC /* NSApplicationIcon.icns */; };
+		7DAA9ED20CA6529600901069 /* ruby in Resources */ = {isa = PBXBuildFile; fileRef = 7DAA9E960CA6529600901069 /* ruby */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -28,12 +28,12 @@
 		32CA4F630368D1EE00C91783 /* Agent Orange_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Agent Orange_Prefix.pch"; sourceTree = "<group>"; };
 		7D0B99730A8FB97400992B3B /* qsTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = qsTrack.h; sourceTree = "<group>"; };
 		7D0B99740A8FB97400992B3B /* qsTrack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = qsTrack.m; sourceTree = "<group>"; };
-		7D4109880B66A4BD00E5B8AD /* agent-orange-1_4_0 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "agent-orange-1_4_0"; sourceTree = "<group>"; };
 		7D424DB409EA1C6F003067AC /* qsRunner.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = qsRunner.m; sourceTree = "<group>"; };
 		7D424DB509EA1C6F003067AC /* qsRunner.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = qsRunner.h; sourceTree = "<group>"; };
 		7D424DB809EA1C96003067AC /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		7D424DBB09EA1C9B003067AC /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
 		7D424F4709EA1D0E003067AC /* NSApplicationIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = NSApplicationIcon.icns; sourceTree = "<group>"; };
+		7DAA9E960CA6529600901069 /* ruby */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ruby; path = ../ruby; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Agent Orange.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Agent Orange.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -111,7 +111,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				7D4109880B66A4BD00E5B8AD /* agent-orange-1_4_0 */,
+				7DAA9E960CA6529600901069 /* ruby */,
 				7D424F4709EA1D0E003067AC /* NSApplicationIcon.icns */,
 				7D424DBA09EA1C9B003067AC /* Credits.rtf */,
 				7D424DB709EA1C96003067AC /* MainMenu.nib */,
@@ -175,7 +175,7 @@
 				7D424DB909EA1C96003067AC /* MainMenu.nib in Resources */,
 				7D424DBC09EA1C9B003067AC /* Credits.rtf in Resources */,
 				7D424F4809EA1D0E003067AC /* NSApplicationIcon.icns in Resources */,
-				7D4109C50B66A4BD00E5B8AD /* agent-orange-1_4_0 in Resources */,
+				7DAA9ED20CA6529600901069 /* ruby in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

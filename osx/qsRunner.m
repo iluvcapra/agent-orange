@@ -347,7 +347,7 @@ kind of file, and try again."];
 
 -(NSString *)toolPath
 {
-	NSString *toolResourcePath = [NSString stringWithFormat:@"%@/agent-orange-1_4_0/bin/%@", [[NSBundle mainBundle] resourcePath] , tool];
+	NSString *toolResourcePath = [NSString stringWithFormat:@"%@/ruby/bin/%@", [[NSBundle mainBundle] resourcePath] , tool];
 	NSLog(@"Tried to launch %@",toolResourcePath);
 	return toolResourcePath;
 }
