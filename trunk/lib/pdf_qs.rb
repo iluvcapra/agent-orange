@@ -41,6 +41,14 @@ class Cuesheet
       restore_state
     end
     
+    def add_text_shrink(x,y,width,text = "",starting_size = 12, justification = :left, angle = 0)
+      subtract = 0
+      while (add_text_wrap(x,y,width,text,starting_size - subtract,justification,angle,true) != "") do
+        subtract += 0.5
+      end     
+      add_text_wrap(x,y,width,text,starting_size - subtract , justification,angle)
+    end
+    
     # Draws a block of text, breaking the text into lines based on the region's
     # name_lines member.
     def draw_region_name(x,y,region,width,font_size)
@@ -157,14 +165,6 @@ class Cuesheet
     pdf_for_session(@paper,@strips_per_page)
   end
   
-  def shrink_time_font(pdf,strip_width, current_font)
-    subtract = 0
-    while (pdf.add_text_wrap(100,100,strip_width,"0:00:00:00",current_font - subtract,:left,0,true) != "") do
-      subtract += 0.5
-    end
-    current_font - subtract
-  end
-  
   def pdf_for_session(paper, strips_per_page)
     @time_font_size = @styler.time :size
     @finish_time_font_size = @styler.finish_time :size
@@ -182,8 +182,6 @@ class Cuesheet
     header_size = 14 #title font size
 
     strip_width = p.margin_width / strips_per_page
-    
-    @time_font_size = shrink_time_font(p,strip_width,@time_font_size)
     
     strip_header_font_size = 12
     strip_header_height = strip_header_font_size * 3
@@ -531,7 +529,8 @@ class Cuesheet
               p.draw_region_name(name_x , y1 , jumpin , name_width , cue_font_size)
               unless (dont_finish_here[jumpin.finish] == true) then
                 p.line(bracket_x - bracket_stroke_width / 2 , y2 , bracket_x2 , y2).stroke
-                p.add_text_wrap(bracket_x2 + 6 , y2 -4 , name_width, "<i>" + jumpin.finish_time + "</i>" , @finish_time_font_size,:left)         
+                this_finish_str = "<i>" + jumpin.finish_time + "</i>"
+                p.add_text_shrink(bracket_x2 + 6 , y2 -4 , name_width, this_finish_str , @finish_time_font_size,:left)         
                 p.draw_arrow(bracket_x2 + 5 , y2) 
               end          
             end
@@ -559,7 +558,7 @@ class Cuesheet
               end
             
               p.line(bracket_x , y1 - bracket_start_y_offset , bracket_x , y2).stroke           
-              p.add_text_wrap(time_x, y1,time_width,"<b>" + jumpout.start_time + "</b>",@time_font_size,:left)
+              p.add_text_shrink(time_x, y1,time_width,"<b>" + jumpout.start_time + "</b>",@time_font_size,:left)
               y1 -= cue_font_size
               p.draw_region_name(name_x , y1 , jumpout , name_width , cue_font_size)
             end        
@@ -592,12 +591,12 @@ class Cuesheet
               
                   p.line(bracket_x , y1 - bracket_start_y_offset , bracket_x , y2).stroke
               end
-              p.add_text_wrap(time_x, y1,time_width,"<b>" + within.start_time + "</b>",@time_font_size,:left)
+              p.add_text_shrink(time_x, y1,time_width,"<b>" + within.start_time + "</b>",@time_font_size,:left)
               y1 -= @time_font_size
               p.draw_region_name(name_x , y1 , within , name_width , cue_font_size)
               unless ((dont_finish_here[within.finish] == true) or within.start == within.finish ) then
                 p.line(bracket_x - bracket_stroke_width / 2 , y2 , bracket_x2 , y2).stroke
-                p.add_text_wrap(bracket_x2 + 6 , y2 - 4 , name_width, "<i>" + within.finish_time + "</i>" , @finish_time_font_size,:left)
+                p.add_text_shrink(bracket_x2 + 6 , y2 - 4 , name_width, "<i>" + within.finish_time + "</i>" , @finish_time_font_size,:left)
                 p.draw_arrow(bracket_x2 + 5 , y2)           
               end
             end
