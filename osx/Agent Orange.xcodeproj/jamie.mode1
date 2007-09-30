@@ -260,13 +260,18 @@
 								<string>29B97315FDCFA39411CA2CEA</string>
 								<string>29B97317FDCFA39411CA2CEA</string>
 								<string>7DAA9E960CA6529600901069</string>
+								<string>7DAA9E9A0CA6529600901069</string>
+								<string>7DAA9E9B0CA6529600901069</string>
 								<string>1C37FBAC04509CD000000102</string>
 								<string>7DAA9E8E0CA6528100901069</string>
+								<string>1C37FAAC04509CD000000102</string>
 								<string>1C37FABC05509CD000000102</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
+									<integer>14</integer>
+									<integer>13</integer>
 									<integer>10</integer>
 									<integer>9</integer>
 									<integer>0</integer>
@@ -292,7 +297,7 @@
 							<real>216</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>0 58 1162 719 0 0 1280 778 </string>
+						<string>0 59 1162 719 0 0 1280 778 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -308,7 +313,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>qsRunner.m</string>
+								<string>agent-orange.rb</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -316,21 +321,22 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>qsRunner.m</string>
+										<string>agent-orange.rb</string>
 										<key>_historyCapacity</key>
 										<integer>20</integer>
 										<key>bookmark</key>
-										<string>7DAA9EDB0CA653ED00901069</string>
+										<string>7DAA9F610CA658A200901069</string>
 										<key>history</key>
 										<array>
 											<string>7D85C4380A92D01700D0EF71</string>
 											<string>7D85C43C0A92D01700D0EF71</string>
 											<string>7D707BDC0ACDEF6400473A5F</string>
 											<string>7D1A29FF0B2F70820041DC84</string>
-											<string>7D4109CC0B66A50300E5B8AD</string>
 											<string>7D4109CD0B66A50300E5B8AD</string>
 											<string>7D7713B00C7C0C0500F13F9A</string>
-											<string>7D9EEA160CA64B0900D04E39</string>
+											<string>7DAA9F5C0CA658A200901069</string>
+											<string>7DAA9F5D0CA658A200901069</string>
+											<string>7DAA9F5E0CA658A200901069</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -342,6 +348,9 @@
 											<string>7D0B99AA0A8FBC4600992B3B</string>
 											<string>7D85C44C0A92D01700D0EF71</string>
 											<string>7D4109D00B66A50300E5B8AD</string>
+											<string>7DAA9F580CA6550400901069</string>
+											<string>7DAA9F5F0CA658A200901069</string>
+											<string>7DAA9F600CA658A200901069</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -355,7 +364,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {924, 483}}</string>
 								<key>RubberWindowFrame</key>
-								<string>0 58 1162 719 0 0 1280 778 </string>
+								<string>0 59 1162 719 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -375,7 +384,7 @@
 								<key>Frame</key>
 								<string>{{0, 488}, {924, 190}}</string>
 								<key>RubberWindowFrame</key>
-								<string>0 58 1162 719 0 0 1280 778 </string>
+								<string>0 59 1162 719 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -540,7 +549,7 @@
 		<string>/Users/jamie/Programs/agent-orange/trunk/osx/Agent Orange.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>0 58 1162 719 0 0 1280 778 </string>
+	<string>0 59 1162 719 0 0 1280 778 </string>
 	<key>WindowTools</key>
 	<array>
 		<dict>
