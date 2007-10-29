@@ -1,0 +1,24 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {"" = id; }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                createPDF = id; 
+                createText = id; 
+                launchForumWebpage = id; 
+                launchHelpWebpage = id; 
+                selectInFile = id; 
+            }; 
+            CLASS = qsRunner; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {cuesheetWindow = NSWindow; }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}
