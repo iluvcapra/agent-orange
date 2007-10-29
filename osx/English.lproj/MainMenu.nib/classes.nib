@@ -1,24 +1,50 @@
-{
-    IBClasses = (
-        {
-            ACTIONS = {"" = id; }; 
-            CLASS = FirstResponder; 
-            LANGUAGE = ObjC; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {
-            ACTIONS = {
-                createPDF = id; 
-                createText = id; 
-                launchForumWebpage = id; 
-                launchHelpWebpage = id; 
-                selectInFile = id; 
-            }; 
-            CLASS = qsRunner; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {cuesheetWindow = NSWindow; }; 
-            SUPERCLASS = NSObject; 
-        }
-    ); 
-    IBVersion = 1; 
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IBClasses</key>
+	<array>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>createPDF</key>
+				<string>id</string>
+				<key>createText</key>
+				<string>id</string>
+				<key>launchForumWebpage</key>
+				<string>id</string>
+				<key>launchHelpWebpage</key>
+				<string>id</string>
+				<key>selectInFile</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>qsRunner</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>cuesheetWindow</key>
+				<string>NSWindow</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key></key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>FirstResponder</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+	</array>
+	<key>IBVersion</key>
+	<string>1</string>
+</dict>
+</plist>
