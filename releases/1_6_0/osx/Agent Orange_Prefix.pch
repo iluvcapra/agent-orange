@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'Agent Orange' target in the 'Agent Orange' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
