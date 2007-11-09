@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7D0B99750A8FB97400992B3B /* qsTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D0B99740A8FB97400992B3B /* qsTrack.m */; };
+		7D2DA6B90CD580D300C77CF5 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7D2DA6B70CD580D300C77CF5 /* MainMenu.nib */; };
 		7D424DB609EA1C6F003067AC /* qsRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D424DB409EA1C6F003067AC /* qsRunner.m */; };
 		7D424DBC09EA1C9B003067AC /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 7D424DBA09EA1C9B003067AC /* Credits.rtf */; };
 		7D424F4809EA1D0E003067AC /* NSApplicationIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7D424F4709EA1D0E003067AC /* NSApplicationIcon.icns */; };
@@ -27,6 +28,7 @@
 		32CA4F630368D1EE00C91783 /* Agent Orange_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Agent Orange_Prefix.pch"; sourceTree = "<group>"; };
 		7D0B99730A8FB97400992B3B /* qsTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = qsTrack.h; sourceTree = "<group>"; };
 		7D0B99740A8FB97400992B3B /* qsTrack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = qsTrack.m; sourceTree = "<group>"; };
+		7D2DA6B80CD580D300C77CF5 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		7D424DB409EA1C6F003067AC /* qsRunner.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = qsRunner.m; sourceTree = "<group>"; };
 		7D424DB509EA1C6F003067AC /* qsRunner.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = qsRunner.h; sourceTree = "<group>"; };
 		7D424DBB09EA1C9B003067AC /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7D2DA6B70CD580D300C77CF5 /* MainMenu.nib */,
 				7DAA9E960CA6529600901069 /* ruby */,
 				7D424F4709EA1D0E003067AC /* NSApplicationIcon.icns */,
 				7D424DBA09EA1C9B003067AC /* Credits.rtf */,
@@ -174,6 +177,7 @@
 				7D424DBC09EA1C9B003067AC /* Credits.rtf in Resources */,
 				7D424F4809EA1D0E003067AC /* NSApplicationIcon.icns in Resources */,
 				7DAA9ED20CA6529600901069 /* ruby in Resources */,
+				7D2DA6B90CD580D300C77CF5 /* MainMenu.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,6 +203,14 @@
 				089C165DFE840E0CC02AAC07 /* English */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		7D2DA6B70CD580D300C77CF5 /* MainMenu.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7D2DA6B80CD580D300C77CF5 /* English */,
+			);
+			name = MainMenu.nib;
 			sourceTree = "<group>";
 		};
 		7D424DBA09EA1C9B003067AC /* Credits.rtf */ = {
