@@ -53,8 +53,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				7D424DB409EA1C6F003067AC /* qsRunner.m */,
 				7D424DB509EA1C6F003067AC /* qsRunner.h */,
+				7D424DB409EA1C6F003067AC /* qsRunner.m */,
 				7D0B99730A8FB97400992B3B /* qsTrack.h */,
 				7D0B99740A8FB97400992B3B /* qsTrack.m */,
 			);
