@@ -296,6 +296,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				SDKROOT = "";
+				SYMROOT = build;
 			};
 			name = Development;
 		};
@@ -303,6 +304,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				SDKROOT = "";
+				SYMROOT = build;
 			};
 			name = Deployment;
 		};
@@ -310,6 +312,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				SDKROOT = "";
+				SYMROOT = build;
 			};
 			name = Default;
 		};
