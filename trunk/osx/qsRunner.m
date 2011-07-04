@@ -23,13 +23,22 @@
 	
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 	
-	[qsRunner setKeys:[NSArray arrayWithObject:@"inFile"] 
-		triggerChangeNotificationsForDependentKey:@"inFileSelected"];
+//	[qsRunner setKeys:[NSArray arrayWithObject:@"inFile"] 
+//		triggerChangeNotificationsForDependentKey:@"inFileSelected"];
+}
+
++ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key  {
+    NSMutableSet *retVal = [[[super keyPathsForValuesAffectingValueForKey:key] mutableCopy] autorelease];
+    if ([key isEqualToString:@"inFileSelected"]) {
+        [retVal addObject:@"inFile"];
+    }
+    
+    return [NSSet setWithSet:retVal];
 }
 
 -(id)init
 {
-	if (self = [super init])
+	if ( (self = [super init]) )
 	{
 	[[NSNotificationCenter defaultCenter] addObserver: self 
 											 selector: @selector(checkToolStatus:) 
@@ -402,7 +411,7 @@ kind of file, and try again."];
 -(IBAction)launchHelpWebpage:(id)sender
 {
 	[[NSWorkspace sharedWorkspace] 
-	openURL:[NSURL URLWithString:@"http://www.soundepartment.com/agent_orange/"]];
+	openURL:[NSURL URLWithString:@"http://code.google.com/p/agent-orange/"]];
 }
 
 -(IBAction)launchForumWebpage:(id)sender
