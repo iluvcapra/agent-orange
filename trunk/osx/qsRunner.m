@@ -245,7 +245,7 @@ kind of file, and try again."];
 		[self setValue:@"Interpreting text file..." forKey:@"statusMessage"];
 	
 	if ([self toolArguments]) {
-		qsTask = [[NSTask new] retain];
+		qsTask = [NSTask new];
 		//NSPipe *errorPipe = [NSPipe pipe];
 
 		[qsTask setLaunchPath:		[self toolPath]];
