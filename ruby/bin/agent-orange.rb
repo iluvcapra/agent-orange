@@ -24,7 +24,7 @@
 APP_NAME = "agent-orange"
 APP_AUTHOR = "Jamie Hardt"
 APP_LONG_VERSION = "Version 1.6.0"
-APP_VERSION = 1.6.0
+APP_VERSION = "1.6.0"
 
 begin
   
