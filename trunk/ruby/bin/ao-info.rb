@@ -6,7 +6,7 @@
 # == ao-info - The Agent Orange Text Reader
 # Author:: Jamie Hardt
 #
-# This tool is built to very quickly read information from a text export, and little more.
+# This tool is built to very quickly read information from a text export in order to populate a GUI front-end.
 
 # This file is part of "agent-orange".
 # 
