@@ -46,7 +46,11 @@ ARGV.each do |path|
       test , session_name = parse[fp.readline(my_line_ending)]
       raise SessionNotRecognizedError unless test == "SESSION NAME:"
       
-      3.times { fp.readline(my_line_ending) } 
+      3.times { fp.readline(my_line_ending) }
+      test , track_count = parse[fp.readline(my_line_ending)]
+      
+      fp.readline(my_line_ending) if test == "SESSION START TIMECODE:"
+      
       test , track_count = parse[fp.readline(my_line_ending)]
       raise SessionNotRecognizedError unless test == "# OF AUDIO TRACKS:"
       

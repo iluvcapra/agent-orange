@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">10J869</string>
-		<string key="IBDocument.InterfaceBuilderVersion">1305</string>
-		<string key="IBDocument.AppKitVersion">1038.35</string>
-		<string key="IBDocument.HIToolboxVersion">461.00</string>
+		<string key="IBDocument.SystemVersion">11E53</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
+		<string key="IBDocument.AppKitVersion">1138.47</string>
+		<string key="IBDocument.HIToolboxVersion">569.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">1305</string>
+			<string key="NS.object.0">2182</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>NSStepper</string>
@@ -41,7 +41,10 @@
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 		</array>
-		<dictionary class="NSMutableDictionary" key="IBDocument.Metadata"/>
+		<object class="NSMutableDictionary" key="IBDocument.Metadata">
+			<string key="NS.key.0">PluginDependencyRecalculationVersion</string>
+			<integer value="1" key="NS.object.0"/>
+		</object>
 		<array class="NSMutableArray" key="IBDocument.RootObjects" id="152346896">
 			<object class="NSCustomObject" id="446833704">
 				<string key="NSClassName">NSApplication</string>
@@ -62,6 +65,7 @@
 				<object class="NSMutableString" key="NSViewClass">
 					<characters key="NS.bytes">View</characters>
 				</object>
+				<nil key="NSUserInterfaceItemIdentifier"/>
 				<string key="NSWindowContentMinSize">{757, 425}</string>
 				<object class="NSView" key="NSWindowView" id="505550675">
 					<reference key="NSNextResponder"/>
@@ -73,7 +77,7 @@
 							<array class="NSMutableArray" key="NSSubviews">
 								<object class="NSView" id="294360646">
 									<reference key="NSNextResponder" ref="305085951"/>
-									<int key="NSvFlags">256</int>
+									<int key="NSvFlags">274</int>
 									<array class="NSMutableArray" key="NSSubviews">
 										<object class="NSButton" id="614088234">
 											<reference key="NSNextResponder" ref="294360646"/>
@@ -387,7 +391,6 @@
 							<string key="NSFrame">{{617, 12}, {126, 32}}</string>
 							<reference key="NSSuperview" ref="505550675"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="509570846">
 								<int key="NSCellFlags">67239424</int>
@@ -925,6 +928,7 @@ SW5jLiwgMjAwNQAAAAA</bytes>
 											<int key="NSDraggingSourceMaskForNonLocal">0</int>
 											<bool key="NSAllowsTypeSelect">NO</bool>
 											<int key="NSTableViewDraggingDestinationStyle">0</int>
+											<int key="NSTableViewGroupRowStyle">1</int>
 										</object>
 									</array>
 									<string key="NSFrame">{{1, 1}, {252, 331}}</string>
@@ -962,8 +966,8 @@ SW5jLiwgMjAwNQAAAAA</bytes>
 							<string key="NSFrame">{{468, 122}, {269, 348}}</string>
 							<reference key="NSSuperview" ref="505550675"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
-							<int key="NSsFlags">50</int>
+							<reference key="NSNextKeyView" ref="150670396"/>
+							<int key="NSsFlags">133170</int>
 							<reference key="NSVScroller" ref="969080660"/>
 							<reference key="NSHScroller" ref="419687629"/>
 							<reference key="NSContentView" ref="150670396"/>
@@ -1128,14 +1132,15 @@ SW5jLiwgMjAwNQAAAAA</bytes>
 							</object>
 						</object>
 					</array>
-					<string key="NSFrame">{{7, 11}, {757, 490}}</string>
+					<string key="NSFrameSize">{757, 490}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="305085951"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1280, 1002}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
 				<string key="NSMinSize">{757, 447}</string>
-				<string key="NSMaxSize">{1e+13, 1e+13}</string>
+				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
+				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
 			<object class="NSMenu" id="538676025">
 				<string key="NSTitle">MainMenu</string>
@@ -1608,25 +1613,24 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 				<bool key="NSFilterRestrictsInsertion">YES</bool>
 				<bool key="NSClearsFilterPredicateOnInsertion">YES</bool>
 			</object>
+			<object class="NSView" id="156925866">
+				<nil key="NSNextResponder"/>
+				<int key="NSvFlags">256</int>
+				<string key="NSFrameSize">{125, 1}</string>
+			</object>
+			<object class="NSView" id="7542379">
+				<nil key="NSNextResponder"/>
+				<int key="NSvFlags">256</int>
+				<string key="NSFrameSize">{125, 1}</string>
+			</object>
+			<object class="NSView" id="464759958">
+				<nil key="NSNextResponder"/>
+				<int key="NSvFlags">256</int>
+				<string key="NSFrameSize">{125, 1}</string>
+			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<array class="NSMutableArray" key="connectionRecords">
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">performMiniaturize:</string>
-						<reference key="source" ref="1062096110"/>
-						<reference key="destination" ref="294987475"/>
-					</object>
-					<int key="connectionID">37</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">arrangeInFront:</string>
-						<reference key="source" ref="1062096110"/>
-						<reference key="destination" ref="13121670"/>
-					</object>
-					<int key="connectionID">39</int>
-				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">terminate:</string>
@@ -1666,6 +1670,22 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 						<reference key="destination" ref="886091914"/>
 					</object>
 					<int key="connectionID">153</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">performMiniaturize:</string>
+						<reference key="source" ref="1062096110"/>
+						<reference key="destination" ref="294987475"/>
+					</object>
+					<int key="connectionID">37</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">arrangeInFront:</string>
+						<reference key="source" ref="1062096110"/>
+						<reference key="destination" ref="13121670"/>
+					</object>
+					<int key="connectionID">39</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
@@ -1724,76 +1744,20 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 					<int key="connectionID">198</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">content</string>
-						<reference key="source" ref="221001095"/>
-						<reference key="destination" ref="1017876597"/>
+					<object class="IBActionConnection" key="connection">
+						<string key="label">performClose:</string>
+						<reference key="source" ref="1062096110"/>
+						<reference key="destination" ref="743023466"/>
 					</object>
-					<int key="connectionID">248</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">content</string>
-						<reference key="source" ref="923725149"/>
-						<reference key="destination" ref="1017876597"/>
-					</object>
-					<int key="connectionID">252</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">contentValues: arrangedObjects</string>
-						<reference key="source" ref="1065190075"/>
-						<reference key="destination" ref="923725149"/>
-						<object class="NSNibBindingConnector" key="connector" id="787446220">
-							<reference key="NSSource" ref="1065190075"/>
-							<reference key="NSDestination" ref="923725149"/>
-							<string key="NSLabel">contentValues: arrangedObjects</string>
-							<string key="NSBinding">contentValues</string>
-							<string key="NSKeyPath">arrangedObjects</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">254</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">contentArray: paperSizes</string>
-						<reference key="source" ref="923725149"/>
-						<reference key="destination" ref="1017876597"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="923725149"/>
-							<reference key="NSDestination" ref="1017876597"/>
-							<string key="NSLabel">contentArray: paperSizes</string>
-							<string key="NSBinding">contentArray</string>
-							<string key="NSKeyPath">paperSizes</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">255</int>
+					<int key="connectionID">358</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">selectInFile:</string>
-						<reference key="source" ref="1017876597"/>
-						<reference key="destination" ref="614088234"/>
+						<string key="label">performClick:</string>
+						<reference key="source" ref="614088234"/>
+						<reference key="destination" ref="533491512"/>
 					</object>
-					<int key="connectionID">260</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">cuesheetWindow</string>
-						<reference key="source" ref="1017876597"/>
-						<reference key="destination" ref="461251007"/>
-					</object>
-					<int key="connectionID">261</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">createPDF:</string>
-						<reference key="source" ref="1017876597"/>
-						<reference key="destination" ref="866617262"/>
-					</object>
-					<int key="connectionID">262</int>
+					<int key="connectionID">339</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -1830,22 +1794,6 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">enabled: selection.inFileSelected</string>
-						<reference key="source" ref="83611513"/>
-						<reference key="destination" ref="221001095"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="83611513"/>
-							<reference key="NSDestination" ref="221001095"/>
-							<string key="NSLabel">enabled: selection.inFileSelected</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">selection.inFileSelected</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">266</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: selection.inFileSelected</string>
 						<reference key="source" ref="913850004"/>
 						<reference key="destination" ref="221001095"/>
 						<object class="NSNibBindingConnector" key="connector">
@@ -1861,19 +1809,19 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: selection.inFileSelected</string>
-						<reference key="source" ref="866617262"/>
-						<reference key="destination" ref="221001095"/>
-						<object class="NSNibBindingConnector" key="connector" id="999924035">
-							<reference key="NSSource" ref="866617262"/>
-							<reference key="NSDestination" ref="221001095"/>
-							<string key="NSLabel">enabled: selection.inFileSelected</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">selection.inFileSelected</string>
+						<string key="label">contentValues: arrangedObjects</string>
+						<reference key="source" ref="1065190075"/>
+						<reference key="destination" ref="923725149"/>
+						<object class="NSNibBindingConnector" key="connector" id="787446220">
+							<reference key="NSSource" ref="1065190075"/>
+							<reference key="NSDestination" ref="923725149"/>
+							<string key="NSLabel">contentValues: arrangedObjects</string>
+							<string key="NSBinding">contentValues</string>
+							<string key="NSKeyPath">arrangedObjects</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">268</int>
+					<int key="connectionID">254</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -1910,6 +1858,178 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: selection.inFileSelected</string>
+						<reference key="source" ref="83611513"/>
+						<reference key="destination" ref="221001095"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="83611513"/>
+							<reference key="NSDestination" ref="221001095"/>
+							<string key="NSLabel">enabled: selection.inFileSelected</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">selection.inFileSelected</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">266</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: selection.title</string>
+						<reference key="source" ref="83611513"/>
+						<reference key="destination" ref="221001095"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="83611513"/>
+							<reference key="NSDestination" ref="221001095"/>
+							<string key="NSLabel">value: selection.title</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">selection.title</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSContinuouslyUpdatesValue</string>
+								<boolean value="YES" key="NS.object.0"/>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">345</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: selection.inFileSelected</string>
+						<reference key="source" ref="866617262"/>
+						<reference key="destination" ref="221001095"/>
+						<object class="NSNibBindingConnector" key="connector" id="999924035">
+							<reference key="NSSource" ref="866617262"/>
+							<reference key="NSDestination" ref="221001095"/>
+							<string key="NSLabel">enabled: selection.inFileSelected</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">selection.inFileSelected</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">268</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled2: selection.qsRunning</string>
+						<reference key="source" ref="866617262"/>
+						<reference key="destination" ref="221001095"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="866617262"/>
+							<reference key="NSDestination" ref="221001095"/>
+							<string key="NSLabel">enabled2: selection.qsRunning</string>
+							<string key="NSBinding">enabled2</string>
+							<string key="NSKeyPath">selection.qsRunning</string>
+							<dictionary key="NSOptions">
+								<integer value="-1" key="NSMultipleValuesPlaceholder"/>
+								<integer value="-1" key="NSNoSelectionPlaceholder"/>
+								<integer value="-1" key="NSNotApplicablePlaceholder"/>
+								<integer value="-1" key="NSNullPlaceholder"/>
+								<string key="NSValueTransformerName">NSNegateBoolean</string>
+							</dictionary>
+							<reference key="NSPreviousConnector" ref="999924035"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">282</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">performClick:</string>
+						<reference key="source" ref="866617262"/>
+						<reference key="destination" ref="779126512"/>
+					</object>
+					<int key="connectionID">340</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">content</string>
+						<reference key="source" ref="221001095"/>
+						<reference key="destination" ref="1017876597"/>
+					</object>
+					<int key="connectionID">248</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectInFile:</string>
+						<reference key="source" ref="1017876597"/>
+						<reference key="destination" ref="614088234"/>
+					</object>
+					<int key="connectionID">260</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">cuesheetWindow</string>
+						<reference key="source" ref="1017876597"/>
+						<reference key="destination" ref="461251007"/>
+					</object>
+					<int key="connectionID">261</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">createPDF:</string>
+						<reference key="source" ref="1017876597"/>
+						<reference key="destination" ref="866617262"/>
+					</object>
+					<int key="connectionID">262</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">launchHelpWebpage:</string>
+						<reference key="source" ref="1017876597"/>
+						<reference key="destination" ref="652770432"/>
+					</object>
+					<int key="connectionID">362</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">launchHelpWebpage:</string>
+						<reference key="source" ref="1017876597"/>
+						<reference key="destination" ref="560201615"/>
+					</object>
+					<int key="connectionID">378</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">createText:</string>
+						<reference key="source" ref="1017876597"/>
+						<reference key="destination" ref="292540147"/>
+					</object>
+					<int key="connectionID">414</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">launchForumWebpage:</string>
+						<reference key="source" ref="1017876597"/>
+						<reference key="destination" ref="466338220"/>
+					</object>
+					<int key="connectionID">510</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">content</string>
+						<reference key="source" ref="923725149"/>
+						<reference key="destination" ref="1017876597"/>
+					</object>
+					<int key="connectionID">252</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">contentArray: paperSizes</string>
+						<reference key="source" ref="923725149"/>
+						<reference key="destination" ref="1017876597"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="923725149"/>
+							<reference key="NSDestination" ref="1017876597"/>
+							<string key="NSLabel">contentArray: paperSizes</string>
+							<string key="NSBinding">contentArray</string>
+							<string key="NSKeyPath">paperSizes</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">255</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
 						<string key="label">animate: selection.qsRunning</string>
 						<reference key="source" ref="686557696"/>
 						<reference key="destination" ref="221001095"/>
@@ -1940,30 +2060,6 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 						</object>
 					</object>
 					<int key="connectionID">280</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled2: selection.qsRunning</string>
-						<reference key="source" ref="866617262"/>
-						<reference key="destination" ref="221001095"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="866617262"/>
-							<reference key="NSDestination" ref="221001095"/>
-							<string key="NSLabel">enabled2: selection.qsRunning</string>
-							<string key="NSBinding">enabled2</string>
-							<string key="NSKeyPath">selection.qsRunning</string>
-							<dictionary key="NSOptions">
-								<integer value="-1" key="NSMultipleValuesPlaceholder"/>
-								<integer value="-1" key="NSNoSelectionPlaceholder"/>
-								<integer value="-1" key="NSNotApplicablePlaceholder"/>
-								<integer value="-1" key="NSNullPlaceholder"/>
-								<string key="NSValueTransformerName">NSNegateBoolean</string>
-							</dictionary>
-							<reference key="NSPreviousConnector" ref="999924035"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">282</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -2014,40 +2110,20 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 					<int key="connectionID">301</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">performClick:</string>
-						<reference key="source" ref="614088234"/>
-						<reference key="destination" ref="533491512"/>
-					</object>
-					<int key="connectionID">339</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">performClick:</string>
-						<reference key="source" ref="866617262"/>
-						<reference key="destination" ref="779126512"/>
-					</object>
-					<int key="connectionID">340</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.title</string>
-						<reference key="source" ref="83611513"/>
+						<string key="label">enabled: selection.inFileSelected</string>
+						<reference key="source" ref="779126512"/>
 						<reference key="destination" ref="221001095"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="83611513"/>
+							<reference key="NSSource" ref="779126512"/>
 							<reference key="NSDestination" ref="221001095"/>
-							<string key="NSLabel">value: selection.title</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.title</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSContinuouslyUpdatesValue</string>
-								<boolean value="YES" key="NS.object.0"/>
-							</object>
+							<string key="NSLabel">enabled: selection.inFileSelected</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">selection.inFileSelected</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">345</int>
+					<int key="connectionID">388</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -2106,22 +2182,6 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 					<int key="connectionID">357</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">performClose:</string>
-						<reference key="source" ref="1062096110"/>
-						<reference key="destination" ref="743023466"/>
-					</object>
-					<int key="connectionID">358</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">launchHelpWebpage:</string>
-						<reference key="source" ref="1017876597"/>
-						<reference key="destination" ref="652770432"/>
-					</object>
-					<int key="connectionID">362</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">enabled: selection.interpretTags</string>
 						<reference key="source" ref="463487662"/>
@@ -2156,14 +2216,6 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 						</object>
 					</object>
 					<int key="connectionID">374</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">launchHelpWebpage:</string>
-						<reference key="source" ref="1017876597"/>
-						<reference key="destination" ref="560201615"/>
-					</object>
-					<int key="connectionID">378</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -2212,22 +2264,6 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 						</object>
 					</object>
 					<int key="connectionID">386</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: selection.inFileSelected</string>
-						<reference key="source" ref="779126512"/>
-						<reference key="destination" ref="221001095"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="779126512"/>
-							<reference key="NSDestination" ref="221001095"/>
-							<string key="NSLabel">enabled: selection.inFileSelected</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">selection.inFileSelected</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">388</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -2294,12 +2330,20 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 					<int key="connectionID">411</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">createText:</string>
-						<reference key="source" ref="1017876597"/>
-						<reference key="destination" ref="292540147"/>
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: selection.inFileSelected</string>
+						<reference key="source" ref="98027359"/>
+						<reference key="destination" ref="221001095"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="98027359"/>
+							<reference key="NSDestination" ref="221001095"/>
+							<string key="NSLabel">enabled: selection.inFileSelected</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">selection.inFileSelected</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
 					</object>
-					<int key="connectionID">414</int>
+					<int key="connectionID">508</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -2316,6 +2360,46 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 						</object>
 					</object>
 					<int key="connectionID">418</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled2: selection.qsRunning</string>
+						<reference key="source" ref="292540147"/>
+						<reference key="destination" ref="221001095"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="292540147"/>
+							<reference key="NSDestination" ref="221001095"/>
+							<string key="NSLabel">enabled2: selection.qsRunning</string>
+							<string key="NSBinding">enabled2</string>
+							<string key="NSKeyPath">selection.qsRunning</string>
+							<dictionary key="NSOptions">
+								<integer value="-1" key="NSMultipleValuesPlaceholder"/>
+								<integer value="-1" key="NSNoSelectionPlaceholder"/>
+								<integer value="-1" key="NSNotApplicablePlaceholder"/>
+								<integer value="-1" key="NSNullPlaceholder"/>
+								<string key="NSValueTransformerName">NSNegateBoolean</string>
+							</dictionary>
+							<reference key="NSPreviousConnector" ref="292296855"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">497</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: arrangedObjects.showTrack</string>
+						<reference key="source" ref="139228224"/>
+						<reference key="destination" ref="171353742"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="139228224"/>
+							<reference key="NSDestination" ref="171353742"/>
+							<string key="NSLabel">value: arrangedObjects.showTrack</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">arrangedObjects.showTrack</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">478</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -2336,38 +2420,6 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 						</object>
 					</object>
 					<int key="connectionID">474</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">contentArray: selection.tracks</string>
-						<reference key="source" ref="171353742"/>
-						<reference key="destination" ref="221001095"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="171353742"/>
-							<reference key="NSDestination" ref="221001095"/>
-							<string key="NSLabel">contentArray: selection.tracks</string>
-							<string key="NSBinding">contentArray</string>
-							<string key="NSKeyPath">selection.tracks</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">477</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: arrangedObjects.showTrack</string>
-						<reference key="source" ref="139228224"/>
-						<reference key="destination" ref="171353742"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="139228224"/>
-							<reference key="NSDestination" ref="171353742"/>
-							<string key="NSLabel">value: arrangedObjects.showTrack</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">arrangedObjects.showTrack</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">478</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -2407,6 +2459,22 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
+						<string key="label">contentArray: selection.tracks</string>
+						<reference key="source" ref="171353742"/>
+						<reference key="destination" ref="221001095"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="171353742"/>
+							<reference key="NSDestination" ref="221001095"/>
+							<string key="NSLabel">contentArray: selection.tracks</string>
+							<string key="NSBinding">contentArray</string>
+							<string key="NSKeyPath">selection.tracks</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">477</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: selection.printChannelNumbers</string>
 						<reference key="source" ref="843313446"/>
 						<reference key="destination" ref="221001095"/>
@@ -2439,30 +2507,6 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled2: selection.qsRunning</string>
-						<reference key="source" ref="292540147"/>
-						<reference key="destination" ref="221001095"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="292540147"/>
-							<reference key="NSDestination" ref="221001095"/>
-							<string key="NSLabel">enabled2: selection.qsRunning</string>
-							<string key="NSBinding">enabled2</string>
-							<string key="NSKeyPath">selection.qsRunning</string>
-							<dictionary key="NSOptions">
-								<integer value="-1" key="NSMultipleValuesPlaceholder"/>
-								<integer value="-1" key="NSNoSelectionPlaceholder"/>
-								<integer value="-1" key="NSNotApplicablePlaceholder"/>
-								<integer value="-1" key="NSNullPlaceholder"/>
-								<string key="NSValueTransformerName">NSNegateBoolean</string>
-							</dictionary>
-							<reference key="NSPreviousConnector" ref="292296855"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">497</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: selection.deCamelizeRegionNames</string>
 						<reference key="source" ref="178104408"/>
 						<reference key="destination" ref="221001095"/>
@@ -2492,30 +2536,6 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 						</object>
 					</object>
 					<int key="connectionID">504</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: selection.inFileSelected</string>
-						<reference key="source" ref="98027359"/>
-						<reference key="destination" ref="221001095"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="98027359"/>
-							<reference key="NSDestination" ref="221001095"/>
-							<string key="NSLabel">enabled: selection.inFileSelected</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">selection.inFileSelected</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">508</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">launchForumWebpage:</string>
-						<reference key="source" ref="1017876597"/>
-						<reference key="destination" ref="466338220"/>
-					</object>
-					<int key="connectionID">510</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -2718,19 +2738,8 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 					<object class="IBObjectRecord">
 						<int key="objectID">370</int>
 						<reference key="object" ref="240250912"/>
-						<array class="NSMutableArray" key="children">
-							<object class="NSView" id="156925866">
-								<nil key="NSNextResponder"/>
-								<int key="NSvFlags">256</int>
-								<string key="NSFrame">{{2, 2}, {125, 1}}</string>
-							</object>
-						</array>
+						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="505550675"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">371</int>
-						<reference key="object" ref="156925866"/>
-						<reference key="parent" ref="240250912"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">380</int>
@@ -2851,36 +2860,14 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 					<object class="IBObjectRecord">
 						<int key="objectID">494</int>
 						<reference key="object" ref="866657199"/>
-						<array class="NSMutableArray" key="children">
-							<object class="NSView" id="7542379">
-								<nil key="NSNextResponder"/>
-								<int key="NSvFlags">256</int>
-								<string key="NSFrame">{{2, 2}, {125, 1}}</string>
-							</object>
-						</array>
+						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="505550675"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">495</int>
-						<reference key="object" ref="7542379"/>
-						<reference key="parent" ref="866657199"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">499</int>
 						<reference key="object" ref="866243563"/>
-						<array class="NSMutableArray" key="children">
-							<object class="NSView" id="464759958">
-								<nil key="NSNextResponder"/>
-								<int key="NSvFlags">256</int>
-								<string key="NSFrame">{{2, 2}, {125, 1}}</string>
-							</object>
-						</array>
+						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="505550675"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">500</int>
-						<reference key="object" ref="464759958"/>
-						<reference key="parent" ref="866243563"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">501</int>
@@ -3414,55 +3401,48 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 						<reference key="object" ref="902890451"/>
 						<reference key="parent" ref="902796308"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">371</int>
+						<reference key="object" ref="156925866"/>
+						<reference key="parent" ref="0"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">495</int>
+						<reference key="object" ref="7542379"/>
+						<reference key="parent" ref="0"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">500</int>
+						<reference key="object" ref="464759958"/>
+						<reference key="parent" ref="0"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
 				<string key="-1.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="-3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="-3.ImportedFromIB2"/>
 				<string key="130.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="130.ImportedFromIB2"/>
 				<string key="131.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="131.ImportedFromIB2"/>
 				<string key="134.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="134.ImportedFromIB2"/>
 				<string key="136.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="136.ImportedFromIB2"/>
 				<string key="144.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="144.ImportedFromIB2"/>
 				<string key="145.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="145.ImportedFromIB2"/>
 				<string key="149.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="149.ImportedFromIB2"/>
 				<string key="150.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="150.ImportedFromIB2"/>
 				<string key="156.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="156.ImportedFromIB2"/>
 				<string key="157.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="157.ImportedFromIB2"/>
 				<string key="158.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="158.ImportedFromIB2"/>
 				<string key="160.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="160.ImportedFromIB2"/>
 				<string key="163.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="163.ImportedFromIB2"/>
 				<string key="169.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="169.ImportedFromIB2"/>
 				<string key="171.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="171.ImportedFromIB2"/>
 				<string key="172.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="172.ImportedFromIB2"/>
 				<string key="173.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="173.ImportedFromIB2"/>
 				<string key="19.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="19.ImportedFromIB2"/>
 				<string key="196.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="196.ImportedFromIB2"/>
 				<string key="197.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="197.ImportedFromIB2"/>
 				<string key="2.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="2.ImportedFromIB2"/>
 				<object class="NSMutableDictionary" key="209.IBAttributePlaceholdersKey">
 					<string key="NS.key.0">ToolTip</string>
 					<object class="IBToolTipAttribute" key="NS.object.0">
@@ -3472,14 +3452,10 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 					</object>
 				</object>
 				<string key="209.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="209.ImportedFromIB2"/>
 				<string key="21.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="21.ImportedFromIB2"/>
 				<boolean value="YES" key="21.NSWindowTemplate.visibleAtLaunch"/>
 				<string key="211.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="211.ImportedFromIB2"/>
 				<string key="212.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="212.ImportedFromIB2"/>
 				<object class="NSMutableDictionary" key="214.IBAttributePlaceholdersKey">
 					<string key="NS.key.0">ToolTip</string>
 					<object class="IBToolTipAttribute" key="NS.object.0">
@@ -3489,11 +3465,8 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 					</object>
 				</object>
 				<string key="214.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="214.ImportedFromIB2"/>
 				<string key="215.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="215.ImportedFromIB2"/>
 				<string key="216.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="216.ImportedFromIB2"/>
 				<object class="NSMutableDictionary" key="217.IBAttributePlaceholdersKey">
 					<string key="NS.key.0">ToolTip</string>
 					<object class="IBToolTipAttribute" key="NS.object.0">
@@ -3503,15 +3476,10 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 					</object>
 				</object>
 				<string key="217.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="217.ImportedFromIB2"/>
 				<string key="218.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="218.ImportedFromIB2"/>
 				<string key="219.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="219.ImportedFromIB2"/>
 				<string key="220.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="220.ImportedFromIB2"/>
 				<string key="221.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="221.ImportedFromIB2"/>
 				<object class="NSMutableDictionary" key="222.IBAttributePlaceholdersKey">
 					<string key="NS.key.0">ToolTip</string>
 					<object class="IBToolTipAttribute" key="NS.object.0">
@@ -3521,9 +3489,7 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 					</object>
 				</object>
 				<string key="222.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="222.ImportedFromIB2"/>
 				<string key="223.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="223.ImportedFromIB2"/>
 				<object class="NSMutableDictionary" key="224.IBAttributePlaceholdersKey">
 					<string key="NS.key.0">ToolTip</string>
 					<object class="IBToolTipAttribute" key="NS.object.0">
@@ -3533,19 +3499,12 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 					</object>
 				</object>
 				<string key="224.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="224.ImportedFromIB2"/>
 				<string key="23.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="23.ImportedFromIB2"/>
 				<string key="24.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="24.ImportedFromIB2"/>
 				<string key="246.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="246.ImportedFromIB2"/>
 				<string key="247.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="247.ImportedFromIB2"/>
 				<string key="251.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="251.ImportedFromIB2"/>
 				<string key="278.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="278.ImportedFromIB2"/>
 				<object class="NSMutableDictionary" key="288.IBAttributePlaceholdersKey">
 					<string key="NS.key.0">ToolTip</string>
 					<object class="IBToolTipAttribute" key="NS.object.0">
@@ -3555,23 +3514,14 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 					</object>
 				</object>
 				<string key="288.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="288.ImportedFromIB2"/>
 				<string key="29.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="29.ImportedFromIB2"/>
 				<string key="300.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="300.ImportedFromIB2"/>
 				<string key="302.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="302.ImportedFromIB2"/>
 				<string key="321.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="321.ImportedFromIB2"/>
 				<string key="322.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="322.ImportedFromIB2"/>
 				<string key="324.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="324.ImportedFromIB2"/>
 				<string key="328.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="328.ImportedFromIB2"/>
 				<string key="335.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="335.ImportedFromIB2"/>
 				<object class="NSMutableDictionary" key="346.IBAttributePlaceholdersKey">
 					<string key="NS.key.0">ToolTip</string>
 					<object class="IBToolTipAttribute" key="NS.object.0">
@@ -3581,7 +3531,6 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 					</object>
 				</object>
 				<string key="346.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="346.ImportedFromIB2"/>
 				<object class="NSMutableDictionary" key="350.IBAttributePlaceholdersKey">
 					<string key="NS.key.0">ToolTip</string>
 					<object class="IBToolTipAttribute" key="NS.object.0">
@@ -3591,19 +3540,12 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 					</object>
 				</object>
 				<string key="350.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="350.ImportedFromIB2"/>
 				<string key="352.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="352.ImportedFromIB2"/>
 				<string key="354.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="354.ImportedFromIB2"/>
 				<string key="355.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="355.ImportedFromIB2"/>
 				<string key="359.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="359.ImportedFromIB2"/>
 				<string key="360.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="360.ImportedFromIB2"/>
 				<string key="361.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="361.ImportedFromIB2"/>
 				<object class="NSMutableDictionary" key="363.IBAttributePlaceholdersKey">
 					<string key="NS.key.0">ToolTip</string>
 					<object class="IBToolTipAttribute" key="NS.object.0">
@@ -3613,15 +3555,10 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 					</object>
 				</object>
 				<string key="363.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="363.ImportedFromIB2"/>
 				<string key="364.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="364.ImportedFromIB2"/>
 				<string key="370.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="370.ImportedFromIB2"/>
 				<string key="371.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="371.ImportedFromIB2"/>
 				<string key="377.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="377.ImportedFromIB2"/>
 				<object class="NSMutableDictionary" key="380.IBAttributePlaceholdersKey">
 					<string key="NS.key.0">ToolTip</string>
 					<object class="IBToolTipAttribute" key="NS.object.0">
@@ -3631,15 +3568,10 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 					</object>
 				</object>
 				<string key="380.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="380.ImportedFromIB2"/>
 				<string key="391.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="391.ImportedFromIB2"/>
 				<string key="393.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="393.ImportedFromIB2"/>
 				<string key="400.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="400.ImportedFromIB2"/>
 				<string key="410.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="410.ImportedFromIB2"/>
 				<object class="NSMutableDictionary" key="412.IBAttributePlaceholdersKey">
 					<string key="NS.key.0">ToolTip</string>
 					<object class="IBToolTipAttribute" key="NS.object.0">
@@ -3649,17 +3581,11 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 					</object>
 				</object>
 				<string key="412.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="412.ImportedFromIB2"/>
 				<string key="421.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="421.ImportedFromIB2"/>
 				<string key="422.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="422.ImportedFromIB2"/>
 				<string key="423.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="423.ImportedFromIB2"/>
 				<string key="424.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="424.ImportedFromIB2"/>
 				<string key="425.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="425.ImportedFromIB2"/>
 				<object class="NSMutableDictionary" key="448.IBAttributePlaceholdersKey">
 					<string key="NS.key.0">ToolTip</string>
 					<object class="IBToolTipAttribute" key="NS.object.0">
@@ -3669,11 +3595,8 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 					</object>
 				</object>
 				<string key="448.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="448.ImportedFromIB2"/>
 				<string key="449.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="449.ImportedFromIB2"/>
 				<string key="451.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="451.ImportedFromIB2"/>
 				<object class="NSMutableDictionary" key="452.IBAttributePlaceholdersKey">
 					<string key="NS.key.0">ToolTip</string>
 					<object class="IBToolTipAttribute" key="NS.object.0">
@@ -3683,9 +3606,7 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 					</object>
 				</object>
 				<string key="452.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="452.ImportedFromIB2"/>
 				<string key="472.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="472.ImportedFromIB2"/>
 				<object class="NSMutableDictionary" key="490.IBAttributePlaceholdersKey">
 					<string key="NS.key.0">ToolTip</string>
 					<object class="IBToolTipAttribute" key="NS.object.0">
@@ -3695,17 +3616,11 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 					</object>
 				</object>
 				<string key="490.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="490.ImportedFromIB2"/>
 				<string key="494.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="494.ImportedFromIB2"/>
 				<string key="495.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="495.ImportedFromIB2"/>
 				<string key="499.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="499.ImportedFromIB2"/>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="5.ImportedFromIB2"/>
 				<string key="500.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="500.ImportedFromIB2"/>
 				<object class="NSMutableDictionary" key="501.IBAttributePlaceholdersKey">
 					<string key="NS.key.0">ToolTip</string>
 					<object class="IBToolTipAttribute" key="NS.object.0">
@@ -3715,22 +3630,45 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 					</object>
 				</object>
 				<string key="501.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="501.ImportedFromIB2"/>
 				<string key="509.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="509.ImportedFromIB2"/>
 				<string key="542.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="542.ImportedFromIB2"/>
 				<string key="56.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="56.ImportedFromIB2"/>
+				<string key="564.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="565.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="566.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="567.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="568.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="569.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="57.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="57.ImportedFromIB2"/>
+				<string key="570.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="571.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="572.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="573.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="574.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="575.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="576.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="577.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="578.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="579.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="58.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="58.ImportedFromIB2"/>
+				<string key="580.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="581.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="582.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="583.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="584.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="585.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="586.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="587.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="588.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="589.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="590.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="591.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="591.IBShouldRemoveOnLegacySave"/>
+				<string key="592.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="592.IBShouldRemoveOnLegacySave"/>
+				<string key="594.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="594.IBShouldRemoveOnLegacySave"/>
 				<string key="92.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="92.ImportedFromIB2"/>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
@@ -3799,8 +3737,8 @@ ZWN0ICJUcmFjayBFRExzIiBmb3IgZXhwb3J0Lg</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NSMenuCheckmark">{9, 8}</string>
-			<string key="NSMenuMixedState">{7, 2}</string>
+			<string key="NSMenuCheckmark">{11, 11}</string>
+			<string key="NSMenuMixedState">{10, 3}</string>
 			<string key="NSSwitch">{15, 15}</string>
 		</dictionary>
 	</data>
