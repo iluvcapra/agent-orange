@@ -42,15 +42,15 @@ module PT
       r
     end
 
-    def add_region(name = '(blank)' , start = '', finish = '')
+    def add_region(name = '(blank)' , start = '', finish = '', status = 'Unmuted')
       create_region do |r|
-        r.name, r.start_time, r.finish_time = name , start , finish
+        r.name, r.start_time, r.finish_time , r.status = name , start , finish, status
       end
     end
     
-    def add_primitive_region(name,start,finish)
+    def add_primitive_region(name,start,finish, status='Unmuted')
       create_region do |r|
-        r.name, r.start, r.finish = name , start , finish
+        r.name, r.start, r.finish, r.status = name , start , finish , r.status
       end
     end
 

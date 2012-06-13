@@ -72,31 +72,31 @@ class TagInterpreter
 
           case tag
             when "]" , "]]" , "[["
-              new_region = track.add_primitive_region(clean_name , region.start , region.finish)
+              new_region = track.add_primitive_region(clean_name , region.start , region.finish, region.status)
               
             when "["
-              new_region = track.add_primitive_region(clean_name , region.start , region.start)
+              new_region = track.add_primitive_region(clean_name , region.start , region.start, region.status)
               
             when "}" ,  "}}" , "}}"
-              new_region = track.add_primitive_region(clean_name , curly_start , region.finish)
+              new_region = track.add_primitive_region(clean_name , curly_start , region.finish, region.status)
   
             when "{"
-              new_region = track.add_primitive_region(clean_name , curly_start , curly_start)
+              new_region = track.add_primitive_region(clean_name , curly_start , curly_start, region.status)
   
             when ">", ">>" , "<<"
-              track.add_primitive_region("Fill" , seq_start , region.start) unless new_region
-              new_region = track.add_primitive_region(clean_name , region.start , region.finish)
+              track.add_primitive_region("Fill" , seq_start , region.start, region.status) unless new_region
+              new_region = track.add_primitive_region(clean_name , region.start , region.finish, region.status)
             
             when "<" 
-              track.add_primitive_region("Fill" , seq_start , region.start) unless new_region
-              new_region = track.add_primitive_region(clean_name , region.start , region.start)              
+              track.add_primitive_region("Fill" , seq_start , region.start, region.status) unless new_region
+              new_region = track.add_primitive_region(clean_name , region.start , region.start, region.status)              
                                  
             when "&"
               if new_region then
                 new_region.name = (new_region.clean_name + " " + clean_name)
                 new_region.finish = region.finish
               else
-                new_region = track.add_primitive_region(clean_name , curly_start ,region.finish)
+                new_region = track.add_primitive_region(clean_name , curly_start ,region.finish, region.status)
               end
               
           end
@@ -113,7 +113,7 @@ class TagInterpreter
             if new_region then
               new_region.finish = region.finish
             else
-              new_region = track.add_primitive_region(clean_name,region.start,region.finish)
+              new_region = track.add_primitive_region(clean_name,region.start,region.finish, region.status)
             end
           end
         end

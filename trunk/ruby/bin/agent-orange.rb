@@ -75,7 +75,8 @@ options = OpenStruct.new( :paper => 'LETTER',
                           :exclude_list => [],
                           :renumber_from => nil,
                           :print_track_numbers => true,
-                          :decamelize => false)
+                          :decamelize => false,
+                          :hide_muted => false)
 
 opts = OptionParser.new do |opts|
   
@@ -117,7 +118,13 @@ opts = OptionParser.new do |opts|
             "be added to camelized region names.") do
     options.decamelize = true
   end
-  
+
+    opts.on("-m",
+            "Hide muted regions.  Text exports from Pro Tools ",
+            "10.2 or greater indicate wether clips are muted or not.") do
+        options.hide_muted = true
+    end
+    
   opts.on("-f" , 
           "--frames", 
           "Print times with frames") do |v|
@@ -254,6 +261,7 @@ files.each do |file|
     the_session.interpret_tagging! if options.interpret_tags
     the_session.reframe! unless options.frames
     
+    
     if options.given_outfile == nil then
       file_to_open = Dir.getwd / Pathname.new(file).basename(".txt") + ".pdf"
     else
@@ -268,6 +276,7 @@ files.each do |file|
           q.strips_per_page = options.strip_count
           q.styles.regions(:shading => options.shading)
           q.print_track_numbers = options.print_track_numbers
+          q.hide_muted_regions = options.hide_muted_regions
         end
         $stderr.print "Writing PDF \"#{File.basename(file_to_open)}\"...\n" if options.verbose
         pdf = cuesheet.to_pdf

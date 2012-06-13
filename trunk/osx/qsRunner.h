@@ -27,6 +27,7 @@
 	BOOL openWhenFinished;
 	BOOL printChannelNumbers;
 	BOOL deCamelizeRegionNames;
+    BOOL printMutedRegions;
 	
 	BOOL inFileSelected;
 	BOOL qsRunning;
