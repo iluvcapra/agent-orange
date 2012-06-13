@@ -20,6 +20,7 @@
 	[defaults setObject:NSINT(0)	forKey:@"AO_ShadeOptionIndex"];
 	[defaults setObject:NSDBL(1)	forKey:@"AO_BlendDuration"];
 	[defaults setObject:@"1"		forKey:@"AO_FirstChannelNumber"];
+    [defaults setObject:NSFALSE     forKey:@"AO_PrintMutedRegions"];
 	
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 	
@@ -76,6 +77,8 @@
 			 forKey:@"AO_PrintChannelNumbers"];
 	[defs setObject:[self valueForKey:@"deCamelizeRegionNames"]
 			 forKey:@"AO_DeCamelizeRegionNames"];
+    [defs setObject:[self valueForKey:@"printMutedRegions"]
+			 forKey:@"AO_PrintMutedRegions"];
 }
 
 -(void)dealloc
@@ -99,6 +102,7 @@
 	[self setValue:[defs objectForKey:@"AO_FirstChannelNumber"] forKey:@"firstChannelNumber"];
 	[self setValue:[defs objectForKey:@"AO_PrintChannelNumbers"] forKey:@"printChannelNumbers"];
 	[self setValue:[defs objectForKey:@"AO_DeCamelizeRegionNames"] forKey:@"deCamelizeRegionNames"];
+    [self setValue:[defs objectForKey:@"AO_PrintMutedRegions"] forKey:@"printMutedRegions"];
 	
 	[self setValue:NSFALSE forKey:@"qsRunning"];
 	[self setValue:@"agent-orange.rb" forKey:@"tool"];
@@ -386,6 +390,8 @@ kind of file, and try again."];
 			if (deCamelizeRegionNames) [retAry addObject:@"-D"];
 			
 			if (!printChannelNumbers) [retAry addObject:@"-0"];
+            
+            if (!printMutedRegions) [retAry addObject:@"-m"];
 			
 			int i;
 			qsTrack *track;

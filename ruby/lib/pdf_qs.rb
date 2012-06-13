@@ -120,6 +120,7 @@ class Cuesheet
   attr_accessor :proportional
   attr_accessor :shading
   attr_accessor :print_track_numbers
+  attr_accessor :hide_muted_regions
 
   def initialize(s)
     @session = s
@@ -151,7 +152,12 @@ class Cuesheet
   end
 
   def display_regions
-    display_tracks.inject([]) {|all , track| all + track.regions}
+    retval = display_tracks.inject([]) {|all , track| all + track.regions}
+    if (@hide_muted_regions) then
+       retval.reject! {|region| region.status == 'Unmuted'} 
+    end
+    
+    retval
   end
   
   def styles

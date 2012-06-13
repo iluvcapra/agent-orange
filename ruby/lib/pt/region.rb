@@ -39,6 +39,10 @@ module PT
     attr_reader :start
     attr_reader :finish
     
+      # Region status, text export from Pro Tools version 10.2
+      
+      attr_accessor :status
+      
     # The character that should signal a line break to a cuesheeting.
     attr_accessor :line_break
     
@@ -54,6 +58,7 @@ module PT
       @start = 0
       @finish = 1
       @line_break = "^"
+      @status = "Unmuted"
       if block_given? then
         yield self
       end

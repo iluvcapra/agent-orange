@@ -172,6 +172,7 @@ module PT
         io.rewind
       end
       
+      status_index = nil
       
       io.each(my_line_ending) do |line| # for each line in the file
         row = parse[line]               # split it into cells
@@ -188,16 +189,23 @@ module PT
             @audio_file_count = row[1].to_i
           when 'TRACK NAME:'
             curr_tr = add_track(row[1])     # create a new track, and put us in a state
-                                            # for adding things to if
+                                            # for adding things to it
           when 'CHANNEL'
             reading = true if curr_tr && row[1] == 'EVENT' # put us in the +reading+ mode for
                                                            # the current track.
-          
+            status_index = row.find_index('STATE')
+            
           when '1'                                         # if the region is on channel 1
             if reading then                                # and we're reading
               name = row[2].strip
               name = "(blank)" unless name
-              r = curr_tr.add_region(name, row[3], row[4]) #create a new region on the +curr_tr+
+              if status_index
+                r = curr_tr.add_region(name, row[3], row[4], row[status_index])
+      
+              else 
+                r = curr_tr.add_region(name, row[3], row[4], 'Unmuted')
+      
+              end
             end
           when nil                            # if the line was blank
             curr_str , reading = nil , false  # put us out of track reading mode
