@@ -200,7 +200,8 @@ module PT
               name = row[2].strip
               name = "(blank)" unless name
               if status_index
-                r = curr_tr.add_region(name, row[3], row[4], row[status_index])
+                
+                r = curr_tr.add_region(name, row[3], row[4], row[status_index]) unless row[status_index] == 'Muted'
       
               else 
                 r = curr_tr.add_region(name, row[3], row[4], 'Unmuted')
