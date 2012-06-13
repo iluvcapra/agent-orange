@@ -141,7 +141,7 @@ class Cuesheet
       style.finish_time :italic => true
       style.regions :shading => true
     end
-
+    @hide_muted_regions = true
     if block_given? then
       yield self
     end
@@ -154,7 +154,7 @@ class Cuesheet
   def display_regions
     retval = display_tracks.inject([]) {|all , track| all + track.regions}
     if (@hide_muted_regions) then
-       retval.reject! {|region| region.status == 'Unmuted'} 
+       retval.reject! {|region| region.status == 'Muted'} 
     end
     
     retval

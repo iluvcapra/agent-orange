@@ -76,7 +76,7 @@ options = OpenStruct.new( :paper => 'LETTER',
                           :renumber_from => nil,
                           :print_track_numbers => true,
                           :decamelize => false,
-                          :hide_muted => false)
+                          :hide_muted_regions => false)
 
 opts = OptionParser.new do |opts|
   
@@ -122,7 +122,7 @@ opts = OptionParser.new do |opts|
     opts.on("-m",
             "Hide muted regions.  Text exports from Pro Tools ",
             "10.2 or greater indicate wether clips are muted or not.") do
-        options.hide_muted = true
+        options.hide_muted_regions = true
     end
     
   opts.on("-f" , 
@@ -287,8 +287,9 @@ files.each do |file|
         " '#{options.given_outfile}' : "+ $! +"\n"
       exit 1
     end
+     $stderr.print "Finished with #{File.basename(file_to_open)}.\n" if options.verbose
   end
-  $stderr.print "Finished with #{File.basename(file_to_open)}.\n" if options.verbose
+ 
 #end
 
 exit 0
